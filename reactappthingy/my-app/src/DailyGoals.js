@@ -1,38 +1,37 @@
 import React, { Component } from 'react';
 import './App.css';
-import ReactDOM from 'react-dom';
 
 class DailyGoals extends Component {
     render() {
         const{dailyGoals} = this.props;
         const displayCheckBoxes = (goal) =>{
-            let len = document.querySelector('.dailyheading').clientWidth;
+            // let len = document.querySelector('.dailyheading').clientWidth;
+            let len = 1000;
             len = len/80;
             for(let i = 0; i < len; i++){
-                console.log(i);
                 return(
                     <React.Fragment>
                     <li>
                         <label className="checkbox">
-                            <input type="checkbox" checked={goal.weeklyChecked[0]}/>
+                            <input type="checkbox" checked={goal.weeklyChecked[0]} readOnly={true}/>
                             <span className="checkmark"></span>
                         </label>
                     </li>
                     <li>
                         <label className="checkbox">
-                            <input type="checkbox" checked={goal.weeklyChecked[1]}/>
+                            <input type="checkbox" checked={goal.weeklyChecked[1]} readOnly={true}/>
                             <span className="checkmark"></span>
                         </label>
                     </li>
                     <li>
                         <label className="checkbox">
-                            <input type="checkbox" checked={goal.weeklyChecked[2]}/>
+                            <input type="checkbox" checked={goal.weeklyChecked[2]} readOnly={true}/>
                             <span className="checkmark"></span>
                         </label>
                     </li>
                     <li>
                         <label className="checkbox">
-                            <input type="checkbox" checked={goal.weeklyChecked[3]}/>
+                            <input type="checkbox" checked={goal.weeklyChecked[3]} readOnly={true}/>
                             <span className="checkmark"></span>
                         </label>
                     </li>
@@ -44,19 +43,19 @@ class DailyGoals extends Component {
                     </li>
                     <li>
                         <label className="checkbox">
-                            <input type="checkbox" checked={goal.weeklyChecked[5]}/>
+                            <input type="checkbox" readOnly={true}/>
                             <span className="checkmark"></span>
                         </label>
                     </li>
                     <li>
                         <label className="checkbox">
-                            <input type="checkbox" checked={goal.weeklyChecked[6]}/>
+                            <input type="checkbox" readOnly={true}/>
                             <span className="checkmark"></span>
                         </label>
                     </li>
                     <li>
                         <label className="checkbox">
-                            <input type="checkbox" checked={goal.weeklyChecked[7]}/>
+                            <input type="checkbox" readOnly={true}/>
                             <span className="checkmark"></span>
                         </label>
                     </li>
@@ -66,8 +65,8 @@ class DailyGoals extends Component {
         }
         const displayDailyGoals = dailyGoals.map(goal => {
             return(
-                <div className="onedailygoal">
-                    <div className="onedailygoalheading" key={goal.id}>
+                <div className="onedailygoal" key={goal.id}>
+                    <div className="onedailygoalheading" >
                         <h4>{goal.title}</h4>{goal.snippit}
                     </div>
                     <div className="onedailygoalcheckmark">
@@ -83,7 +82,6 @@ class DailyGoals extends Component {
             <div>
                 {console.log(dailyGoals)}
                 { displayDailyGoals }
-                {console.log(document.querySelector('.dailyheading').clientWidth/80)}
             </div>
         )
     }

@@ -1,22 +1,29 @@
 import React, { Component } from 'react';
 import './App.css';
-import ReactDOM from 'react-dom';
 
 class OtherGoals extends Component {
     render() {
-        // const{otherGoals} = this.props;
-        // const displayDailyGoals = dailyGoals.map(goal => {
+        const{otherGoalCategories} = this.props;
+        // const displayOtherGoals = otherGoalCategories.map(category => {
+        //     console.log(category)
+
         //     return(
-        //         <div className="onedailygoal">
-        //             <div className="onedailygoalheading" key={goal.id}>
-        //                 <h4>{goal.title}</h4>{goal.snippit}
-        //             </div>
+        //         <div className="otherheadingheading">
+        //           <h1>Goal Type</h1>
         //         </div>
         //     )
         // })
 
-        return (
-            <div className="othergoals">
+        return(
+        <div>
+            {console.log(otherGoalCategories)}
+            {console.log('23')}
+            {/* {displayOtherGoals} */}
+        </div>
+        )
+    }
+}
+{/* <div className="othergoals">
           <div className="otherheading">
               <div className="otherheadingheading">
                   <h1>Goal Type</h1>
@@ -42,9 +49,5 @@ class OtherGoals extends Component {
               </div>
               
           </div>
-      </div>
-        )
-    }
-}
-ReactDOM.render(<OtherGoals />, document.getElementById('root'));
+      </div> */}
 export default OtherGoals

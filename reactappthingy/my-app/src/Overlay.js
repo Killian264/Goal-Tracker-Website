@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 
 class Overlay extends Component {
     render() {
-        const displayChecks = () =>{
+        // const displayChecks = () =>{
             
-        }
+        // }
         return (
             <div className="creategoaloverlay" id="creategoaloverlay">
               <div className="creategoal">

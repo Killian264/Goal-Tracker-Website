@@ -35,46 +35,40 @@ class App extends Component {
             ],
             otherGoalsCategories:[
                 {
+                    id: 1,
                     category: 'Programming',
-                    otherGoals:[
-                        {
-                            id: 1,
-                            title: 'Learn React',
-                            snippit: 'Yea',
-                            startDate: new Date(2019, 7, 1),
-                            endDate: new Date(2019, 7, 15 ),
-                            percentComplete: 20
-                        },
-                        {
-                            id: 2,
-                            title: 'Learn to Code',
-                            snippit: 'Yea',
-                            startDate: new Date(2019, 5, 1),
-                            endDate: new Date(2019, 8, 16 ),
-                            percentComplete: 40
-                        }
-                    ]
+                    title: 'Learn React',
+                    snippit: 'Yea',
+                    startDate: new Date(2019, 7, 1),
+                    endDate: new Date(2019, 7, 15 ),
+                    percentComplete: 20
                 },
                 {
+                    id: 2,
+                    category: 'Programming',
+                    title: 'Learn to Code',
+                    snippit: 'Yea',
+                    startDate: new Date(2019, 5, 1),
+                    endDate: new Date(2019, 8, 16 ),
+                    percentComplete: 40
+                },
+                {
+                    id: 3,
                     category: 'Reading',
-                    otherGoals:[
-                        {
-                            id: 1,
-                            title: 'Read a book',
-                            snippit: 'Yea',
-                            startDate: new Date(2019, 7, 8),
-                            endDate: new Date(2019, 7, 30),
-                            percentComplete: 0
-                        },
-                        {
-                            id: 2,
-                            title: 'Read 20 books',
-                            snippit: 'Yea',
-                            startDate: new Date(2019, 1, 1),
-                            endDate: new Date(2020, 1, 1 ),
-                            percentComplete: 50
-                        }
-                    ]
+                    title: 'Read a book',
+                    snippit: 'Yea',
+                    startDate: new Date(2019, 7, 8),
+                    endDate: new Date(2019, 7, 30),
+                    percentComplete: 0
+                },
+                {
+                    id: 4,
+                    category: 'Reading',
+                    title: 'Read 20 books',
+                    snippit: 'Yea',
+                    startDate: new Date(2019, 1, 1),
+                    endDate: new Date(2020, 1, 1 ),
+                    percentComplete: 50
                 }
             ]
         }
@@ -85,13 +79,13 @@ class App extends Component {
             <div className="sidenav">
                 <div className="user">
                     <img src="Images/profile.png" alt=""/>
-                    <a href="">Guest</a>
+                    <a href="http://localhost:3000">Guest</a>
                 </div>
                 <div className="navlinks">
-                    <a href="#">Dashboard</a>
-                    <a href="#">Goals</a>
-                    <a href="#">Tasks</a>
-                    <a href="#">Portfolio Home</a>
+                    <a href= "http://localhost:3000" >Dashboard</a>
+                    <a href= "http://localhost:3000" >Goals</a>
+                    <a href= "http://localhost:3000" >Tasks</a>
+                    <a href="http://localhost:3000" >Portfolio Home</a>
                 </div>
             </div>
             <div className="main">
@@ -143,7 +137,7 @@ class App extends Component {
                 </div>
                 <Overlay />
             </div>
-                <OtherGoals otherGoals={this.state.goals.otherGoalsCategories} />
+                <OtherGoals otherGoalCategories={this.state.goals.otherGoalsCategories} />
     </div>
     );
     }
@@ -151,35 +145,35 @@ class App extends Component {
 
 export default App;
 
-const createGoalBtn = document.getElementById('button');
-const goalCreatePopup = document.getElementById('creategoaloverlay');
-const cancelBtn = document.getElementById('cancelbutton');
+// const createGoalBtn = document.getElementById('button');
+// const goalCreatePopup = document.getElementById('creategoaloverlay');
+// const cancelBtn = document.getElementById('cancelbutton');
 
-createGoalBtn.addEventListener('click', ()=>{
-    goalCreatePopup.style.display = "block";
-}, false)
+// createGoalBtn.addEventListener('click', ()=>{
+//     goalCreatePopup.style.display = "block";
+// }, false)
 
-cancelBtn.addEventListener('click', ()=>{
-    goalCreatePopup.style.display = "none";
-}, false)
+// cancelBtn.addEventListener('click', ()=>{
+//     goalCreatePopup.style.display = "none";
+// }, false)
 
-const navSlide = () => {
-    const navdropdown = document.querySelector('.navdropdown');
-    const nav = document.querySelector('.sidenav');
-    const navlinks = document.querySelectorAll('.navlinks a')
+// const navSlide = () => {
+//     const navdropdown = document.querySelector('.navdropdown');
+//     const nav = document.querySelector('.sidenav');
+//     const navlinks = document.querySelectorAll('.navlinks a')
 
-    navdropdown.addEventListener('click', ()=>{
-        nav.classList.toggle('nav-active');
-        navlinks.forEach((link, index)=>{
-            if(link.style.animation){
-                link.style.animation = '';
-            }
-            else{
-                link.style.animation = `navLinkFade 0.5s ease forwards ${(index / 7) + .15}s`;
-            }
-        });
+//     navdropdown.addEventListener('click', ()=>{
+//         nav.classList.toggle('nav-active');
+//         navlinks.forEach((link, index)=>{
+//             if(link.style.animation){
+//                 link.style.animation = '';
+//             }
+//             else{
+//                 link.style.animation = `navLinkFade 0.5s ease forwards ${(index / 7) + .15}s`;
+//             }
+//         });
 
-        navdropdown.classList.toggle('toggle');
-    });
-}
-navSlide();
+//         navdropdown.classList.toggle('toggle');
+//     });
+// }
+// navSlide();
