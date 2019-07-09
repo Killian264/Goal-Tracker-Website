@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import './App.css';
-import DailyGoals from './DailyGoals'
+import DailyGoals from './DailyGoals';
+import OtherGoals from './OtherGoals';
+import Overlay from './Overlay';
 
 class App extends Component {
     state = {
@@ -12,7 +14,7 @@ class App extends Component {
                     snippit: 'Write Code',
                     totalDays: 30,
                     daysChecked: 20,
-                    weeklyChecked: [true, false, true, true, false, null, null]
+                    weeklyChecked: [true, false, true, true, false, false, false]
                 },
                 {
                     id: 2,
@@ -20,7 +22,7 @@ class App extends Component {
                     snippit: 'Write Code',
                     totalDays: 30,
                     daysChecked: 20,
-                    weeklyChecked: [true, false, true, true, false, null, null]
+                    weeklyChecked: [true, true, false, true, false, false, false]
                 },
                 {
                     id: 3,
@@ -28,7 +30,7 @@ class App extends Component {
                     snippit: 'Yea',
                     totalDays: 30,
                     daysChecked: 20,
-                    weeklyChecked: [true, false, true, true, false, null, null]
+                    weeklyChecked: [false, true, true, true, false, false, false]
                 }
             ],
             otherGoalsCategories:[
@@ -79,22 +81,73 @@ class App extends Component {
     }
     render() {
         return (
-            <React.Fragment>
-                <DailyGoals dailyGoals={this.state.goals.dailyGoals} />
-            </React.Fragment>
-          );
+            <div>
+            <div className="sidenav">
+                <div className="user">
+                    <img src="Images/profile.png" alt=""/>
+                    <a href="">Guest</a>
+                </div>
+                <div className="navlinks">
+                    <a href="#">Dashboard</a>
+                    <a href="#">Goals</a>
+                    <a href="#">Tasks</a>
+                    <a href="#">Portfolio Home</a>
+                </div>
+            </div>
+            <div className="main">
+                <div className="goaltypeselector">
+                    <h2>Sort Goals</h2>
+                    <div className="sort">
+                        <ul>
+                            <li><img src="../src/Images/pressed.png" alt=""/><span>Show Current</span></li> 
+                            <li><img src="../src/Images/pressed.png" alt=""/><span>Show Completed</span></li>
+                        </ul>
+                    </div>
+                    <div className="goaltype">
+                        <h3>TimeFrame</h3>
+                        <ul>
+                            <li><img src="../src/Images/pressed.png" alt=""/><span>Daily Goals</span></li> 
+                            <li><img src="../src/Images/pressed.png" alt=""/><span>Weekly Goals</span></li>
+                        </ul>
+                    </div>
+                    <div className="catagories">
+                        <h3>Catagories</h3>
+                        <ul>
+                            <li><img src="../src/Images/pressed.png" alt=""/><span>Programming</span></li> 
+                            <li><img src="../src/Images/pressed.png" alt=""/><span>Knowledge</span></li>
+                            <li><img src="../src/Images/pressed.png" alt=""/><span>Workout</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div className="goals">
+                    <div className="dailygoals">
+                        <div className="dailyheading">
+                            <div className="dailyheadingheading">
+                                <h1>Daily Goals</h1>
+                            </div>
+                            <ul>
+                                <li>Mon<br/>1</li>
+                                <li>Tue<br/>2</li>
+                                <li>Wed<br/>3</li>
+                                <li>Thu<br/>4</li>
+                                <li>Fri<br/>5</li>
+                                <li>Sat<br/>6</li>
+                                <li>Sun<br/>7</li>
+                                <li>Mon<br/>8</li>
+                            </ul>
+                        </div>
+                        <div className="dailygoalslist" id="rendertest">
+                        <DailyGoals dailyGoals={this.state.goals.dailyGoals} />             
+                        </div>
+                    </div>    
+                </div>
+                <Overlay />
+            </div>
+                <OtherGoals otherGoals={this.state.goals.otherGoalsCategories} />
+    </div>
+    );
     }
 }
-{/* {this.state.dailyGoals.map(props => {
-                    return(
-                        <div className="onedailygoal">
-                            <div className="onedailygoalheading">
-                                <h4>{props.title}</h4>Write Code
-                            </div>
-                        </div>
-                    )
-                })
-                } */}
 
 export default App;
 
