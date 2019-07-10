@@ -238,7 +238,6 @@
     width: 190px;
     min-width: 190px;
     display: flex;
-    justify-content: space-around;
   }
   .otherdailygoal{
     padding-top: 10px;
@@ -251,7 +250,6 @@
     width: 300px;
     min-width: 190px;
     display: flex;
-    justify-content: space-around;
   }
   .otherdailygoalheadingheading{
     padding-left: 20px;
@@ -329,15 +327,9 @@
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
-/* .othergoalswrapper{
-  width: 75%;
-  padding-left: calc(30% + 12% +2%);
-} */
 .othergoals{
   margin-top: 3%;
   background: rgb(30, 176, 224);
-  width: 64.6%;
-  margin-left: calc(11.4% + 15% + 4%);
 }
 .creategoaloverlay{
   background: white;
@@ -346,7 +338,6 @@
   left: 35%;
   position: absolute;
   border-radius: 7px;
-  display: none;
 }
 .creategoal{
   padding: 5px;
@@ -362,6 +353,12 @@
 }
 .goalallinput li{
   padding-top: 15px;
+}
+.goalallinput .type{
+  height: 33px;
+}
+.goalallinput .dDay{
+  width: 0%;
 }
 .goalinput{
   width: 95%;
@@ -418,13 +415,12 @@ left padding is 20px */
   .goals{
     width: calc(92% - 120px);
   }
-  .othergoals{
-    width: 96%;
-    margin-left: 2%;
-  }
   .topnav{
     padding-left: 5%;
     position: fixed;
+  }
+  .othergoals h1{
+    font-size: 25px;
   }
   .sidenav{
     justify-content: space-around;
@@ -432,7 +428,8 @@ left padding is 20px */
     position: relative;
     top: 50px;
     height: 100%;
-    display: block;
+    /* display: block; */
+    display: none;
     margin-left: -200px;
     width: 200px;
     transform: translateX(100%);
@@ -453,6 +450,12 @@ left padding is 20px */
   .creategoaloverlay{
     width: 40%;
     left: calc(50% - 20%);
+  }
+}
+@media screen and (max-width: 1400px){
+  .othergoals h1{
+    font-size: 20px;
+    width: 
   }
 }
 @media screen and (max-width: 669px){

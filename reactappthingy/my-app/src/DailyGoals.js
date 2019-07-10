@@ -43,19 +43,19 @@ class DailyGoals extends Component {
                     </li>
                     <li>
                         <label className="checkbox">
-                            <input type="checkbox" readOnly={true}/>
+                            <input type="checkbox" checked={goal.weeklyChecked[5]} readOnly={true}/>
                             <span className="checkmark"></span>
                         </label>
                     </li>
                     <li>
                         <label className="checkbox">
-                            <input type="checkbox" readOnly={true}/>
+                            <input type="checkbox" checked={goal.weeklyChecked[6]} readOnly={true}/>
                             <span className="checkmark"></span>
                         </label>
                     </li>
                     <li>
                         <label className="checkbox">
-                            <input type="checkbox" readOnly={true}/>
+                            <input type="checkbox" checked={goal.weeklyChecked[7]} readOnly={true}/>
                             <span className="checkmark"></span>
                         </label>
                     </li>
@@ -80,7 +80,6 @@ class DailyGoals extends Component {
 
         return (
             <div>
-                {console.log(dailyGoals)}
                 { displayDailyGoals }
             </div>
         )

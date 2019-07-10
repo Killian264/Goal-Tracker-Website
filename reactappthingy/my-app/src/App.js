@@ -3,6 +3,7 @@ import './App.css';
 import DailyGoals from './DailyGoals';
 import OtherGoals from './OtherGoals';
 import Overlay from './Overlay';
+import TopNav from './TopNav';
 
 class App extends Component {
     state = {
@@ -12,7 +13,8 @@ class App extends Component {
                     id: 1,
                     title: 'Programme',
                     snippit: 'Write Code',
-                    totalDays: 30,
+                    startDate: '2019, 7, 1 00:00',
+                    endDate: '2019, 7, 15 00:00',
                     daysChecked: 20,
                     weeklyChecked: [true, false, true, true, false, false, false]
                 },
@@ -20,7 +22,8 @@ class App extends Component {
                     id: 2,
                     title: 'Learn React',
                     snippit: 'Write Code',
-                    totalDays: 30,
+                    startDate: '2019, 7, 1 00:00',
+                    endDate: '2019, 7, 15 00:00',
                     daysChecked: 20,
                     weeklyChecked: [true, true, false, true, false, false, false]
                 },
@@ -28,49 +31,149 @@ class App extends Component {
                     id: 3,
                     title: 'Be Cool',
                     snippit: 'Yea',
-                    totalDays: 30,
+                    startDate: '2019, 7, 1 00:00',
+                    endDate: '2019, 7, 15 00:00',
                     daysChecked: 20,
                     weeklyChecked: [false, true, true, true, false, false, false]
                 }
             ],
             otherGoalsCategories:[
                 {
+                    category: 'Programming',
                     id: 1,
-                    category: 'Programming',
-                    title: 'Learn React',
-                    snippit: 'Yea',
-                    startDate: new Date(2019, 7, 1),
-                    endDate: new Date(2019, 7, 15 ),
-                    percentComplete: 20
+                    otherGoals:[
+                        {
+                            id: 1,
+                            title: 'Learn React',
+                            snippit: 'Code a bunch of stuff',
+                            startDate: '2019, 7, 1 00:00',
+                            endDate: '2019, 7, 15 00:00',
+                            percentComplete: 20
+                        },
+                        {
+                            id: 2,
+                            title: 'Learn to Code',
+                            snippit: 'Learn React, C++, SQL, and more C#',
+                            startDate: '2019, 5, 1 00:00',
+                            endDate: '2019, 8, 16 00:00',
+                            percentComplete: 40
+                        }
+                    ]
                 },
                 {
+                    category: 'Reading',
                     id: 2,
-                    category: 'Programming',
-                    title: 'Learn to Code',
-                    snippit: 'Yea',
-                    startDate: new Date(2019, 5, 1),
-                    endDate: new Date(2019, 8, 16 ),
-                    percentComplete: 40
+                    otherGoals:[
+                        {
+                            id: 1,
+                            title: 'Read a book',
+                            snippit: 'Read the blade itself',
+                            startDate: '2019, 7, 8 00:00',
+                            endDate: '2019, 7, 30 00:00',
+                            percentComplete: 0
+                        },
+                        {
+                            id: 2,
+                            title: 'Read 20 books',
+                            snippit: "Should'nt be too hard he thought",
+                            startDate: '2019, 1, 1 00:00',
+                            endDate: '2020, 1, 1 00:00',
+                            percentComplete: 50
+                        }
+                    ]
                 },
                 {
+                    category: 'Goal Tracker Project',
                     id: 3,
-                    category: 'Reading',
-                    title: 'Read a book',
-                    snippit: 'Yea',
-                    startDate: new Date(2019, 7, 8),
-                    endDate: new Date(2019, 7, 30),
-                    percentComplete: 0
-                },
-                {
-                    id: 4,
-                    category: 'Reading',
-                    title: 'Read 20 books',
-                    snippit: 'Yea',
-                    startDate: new Date(2019, 1, 1),
-                    endDate: new Date(2020, 1, 1 ),
-                    percentComplete: 50
+                    otherGoals:[
+                        {
+                            id: 1,
+                            title: 'Add Goal Adding',
+                            snippit: 'Add Form and State Addition',
+                            startDate: '2019, 7, 9 00:00',
+                            endDate: '2019, 7, 11 00:00',
+                            percentComplete: 0
+                        },
+                        {
+                            id: 2,
+                            title: 'Add Goal Deletion',
+                            snippit: 'Add Form and State Deletion',
+                            startDate: '2019, 7, 9 00:00',
+                            endDate: '2019, 7, 11 00:00',
+                            percentComplete: 0
+                        },
+                        {
+                            id: 3,
+                            title: 'Fix Small bugs',
+                            snippit: 'SideNav Stuff',
+                            startDate: '2019, 7, 9 00:00',
+                            endDate: '2019, 7, 12 00:00',
+                            percentComplete: 0
+                        },
+                        {
+                            id: 4,
+                            title: 'Add Sorting Box',
+                            snippit: 'Should be easy after I learn add and delete stuff',
+                            startDate: '2019, 7, 9 00:00',
+                            endDate: '2019, 7, 12 00:00',
+                            percentComplete: 0
+                        },
+                        {
+                            id: 5,
+                            title: 'Add Login and backend stuff',
+                            snippit: 'This might be the hard part',
+                            startDate: '2019, 7, 9 00:00',
+                            endDate: '2019, 7, 19 00:00',
+                            percentComplete: 0
+                        }
+                        
+                    ]
                 }
             ]
+        },
+        otherStuffs:{
+            overlayIsHidden: true
+        }
+    }
+    closeGoalOverlay = () => {
+        let state = this.state
+        state.otherStuffs.overlayIsHidden = true;
+        this.setState({
+            state: state
+          })
+    }
+    displayGoalOverlay = () => {
+        let state = this.state
+        state.otherStuffs.overlayIsHidden = false;
+        this.setState({
+            state: state
+          })
+    }
+    // state = {
+    //     title: null,
+    //     snippit: null,
+    //     // '2019, 7, 1 00:00',
+    //     endDate: null,
+    //     type: 'daily',
+    //     category: 'newCategory',
+    //     newCategory: true
+    // }
+    stateAdd = (newGoal) => {
+        if(newGoal.type == 'daily'){
+            let state = this.state
+            newGoal = {
+                id: Math.random(),
+                title: state.title,
+                snippit: state.snippit,
+                startDate: new Date().toString(),
+                endDate: state.endDate,
+                daysChecked: 0,
+                weeklyChecked: [false, false, false, false, false, false, false]
+            }
+            state.goals.dailyGoals.push(newGoal);
+            this.setState({
+                state: state
+              })
         }
     }
     render() {
@@ -88,6 +191,17 @@ class App extends Component {
                     <a href="http://localhost:3000" >Portfolio Home</a>
                 </div>
             </div>
+            <div className="topnav">
+                    <div className = "navdropdown">
+                        <div className="line1"></div>
+                        <div className="line2"></div>
+                        <div className="line3"></div>
+                    </div>
+                    <h1>Current Goals</h1>
+                    <div className="creategoalbutton">
+                            <button id="button" onClick={this.displayGoalOverlay}>Create Goal</button>
+                    </div>
+                </div>
             <div className="main">
                 <div className="goaltypeselector">
                     <h2>Sort Goals</h2>
@@ -130,14 +244,14 @@ class App extends Component {
                                 <li>Mon<br/>8</li>
                             </ul>
                         </div>
-                        <div className="dailygoalslist" id="rendertest">
-                        <DailyGoals dailyGoals={this.state.goals.dailyGoals} />             
+                        <div className="dailygoalslist">
+                        <DailyGoals dailyGoals={this.state.goals.dailyGoals} />         
                         </div>
-                    </div>    
+                    </div>
+                    <OtherGoals otherGoalCategories={this.state.goals.otherGoalsCategories} />    
                 </div>
-                <Overlay />
+                {!this.state.otherStuffs.overlayIsHidden && <Overlay closeGoalOverlay={this.closeGoalOverlay} otherGoalCategories={this.state.goals.otherGoalsCategories} stateAdd={this.stateAdd} />}   
             </div>
-                <OtherGoals otherGoalCategories={this.state.goals.otherGoalsCategories} />
     </div>
     );
     }
