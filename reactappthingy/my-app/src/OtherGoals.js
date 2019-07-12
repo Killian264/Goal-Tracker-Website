@@ -4,7 +4,7 @@ import OtherGoalList from './OtherGoalList';
 
 class OtherGoals extends Component {
     render() {
-        const{otherGoalCategories} = this.props;
+        const{otherGoalCategories, deleteGoal} = this.props;
         const displayOtherGoals = otherGoalCategories.map(category => {
 
             return(
@@ -20,7 +20,7 @@ class OtherGoals extends Component {
                             <h1>Your Progress</h1>
                         </div>
                     </div>
-                    <OtherGoalList othergoals={category.otherGoals}/>
+                    <OtherGoalList othergoals={category} deleteGoal={deleteGoal}/>
                 </div>
             )
         })

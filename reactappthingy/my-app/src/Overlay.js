@@ -4,7 +4,6 @@ class Overlay extends Component {
     state = {
         title: null,
         snippit: null,
-        // '2019, 7, 1 00:00',
         endDate: null,
         type: 'daily',
         category: '',
@@ -16,21 +15,18 @@ class Overlay extends Component {
         })
     }
     categoryOnChange = (e) =>{
-        e.target.value == 'newCategory' ? this.state.newCategory = true : this.state.newCategory = false;
+        let tF;
+        e.target.value === 'newCategory' ? tF = true : tF = false;
         this.setState({
-            [e.target.id]: e.target.value
-        })
-    }
-    typeOnChange = (e) => {
-        this.setState({
-            type: e.target.value
+            [e.target.id]: e.target.value,
+            newCategory: tF
         })
     }
     onSubmit = (e) => {
         e.preventDefault();
-        if((this.state.title && this.state.endDate) && (!(this.state.newCategory) || !(this.state.category == 'newCategory')) ){
-            console.log(!(this.state.category == 'newCategory'))
-            this.props.stateAdd(this.state);
+        if((this.state.title && this.state.endDate) && (!(this.state.newCategory) || !(this.state.category === 'newCategory')) ){
+            console.log(!(this.state.category === 'newCategory'))
+            this.props.stateAdd(this.state, 'goals');
         }
         else{
             return(
@@ -40,7 +36,7 @@ class Overlay extends Component {
     }
 
     render() {
-        const{otherGoalCategories , closeGoalOverlay, stateAdd} = this.props;
+        const{otherGoalCategories , closeGoalOverlay} = this.props;
         const categories = otherGoalCategories.map(category => {
             return(
                 <option key={category.key} value={category.category}> {category.category}</option>
@@ -62,11 +58,11 @@ class Overlay extends Component {
                             </select>
                             </li>
                             Category:
-                            <select name="type" className="type" id='category' onChange={this.categoryOnChange} disabled={this.state.type == 'daily'}>
+                            <select name="type" className="type" id='category' onChange={this.categoryOnChange} disabled={this.state.type === 'daily'}>
                                 <option value="newCategory"> New Category</option>
                                 {categories}
                             </select>
-                            <li >New Category:<br/> <input className="goalinput category" id="category" type="text" name="category" onChange={this.onChange} disabled={this.state.type == 'daily' || !(this.state.newCategory)}/></li>
+                            <li >New Category:<br/> <input className="goalinput category" id="category" type="text" name="category" onChange={this.onChange} disabled={this.state.type === 'daily' || !(this.state.newCategory)}/></li>
                       </ul>
                   </div>
                     <div className="submitarea">

@@ -1,9 +1,12 @@
 import React, {Component} from 'react';
 import './App.css';
+import DailyGoalHeading from './DailyGoalHeading';
 import DailyGoals from './DailyGoals';
 import OtherGoals from './OtherGoals';
 import Overlay from './Overlay';
-import TopNav from './TopNav';
+// import TopNav from './TopNav';
+import uuid from 'uuid'
+import {getToday} from './commonCommands'
 
 class App extends Component {
     state = {
@@ -129,11 +132,105 @@ class App extends Component {
                         
                     ]
                 }
-            ]
+            ],
+            completed : {
+                dailyGoals : [
+                    {
+                        id: 1,
+                        title: 'Programme',
+                        snippit: 'Write Code',
+                        startDate: '2019, 7, 1 00:00',
+                        endDate: '2019, 7, 15 00:00',
+                        daysChecked: 20,
+                        weeklyChecked: [true, false, true, true, false, false, false]
+                    }
+                ],
+                otherGoalsCategories : [
+                    {
+                        category: 'Programming',
+                        id: 1,
+                        otherGoals:[
+                            {
+                                id: 1,
+                                title: 'Learn React',
+                                snippit: 'Code a bunch of stuff',
+                                startDate: '2019, 7, 1 00:00',
+                                endDate: '2019, 7, 15 00:00',
+                                percentComplete: 20
+                            }
+                        ]
+                    }
+                ]
+            }
         },
         otherStuffs:{
             overlayIsHidden: true
         }
+    }
+
+    deleteGoal = (key, category) => {
+        let state = this.state;
+        let toCompletedGoal;
+        if(category === 'daily'){
+            let deletedArr = this.state.goals.dailyGoals;
+            this.state.goals.dailyGoals.map((goal, index) =>{
+                if(goal.id === key){ 
+                    deletedArr.splice(index, 1); 
+                    toCompletedGoal = goal;
+                }
+            })
+            state.goals.dailyGoals = deletedArr
+            this.setState({
+                [state]: state
+              })
+        }
+        else{
+            this.state.goals.otherGoalsCategories.map((catagories, index) => {
+                if(catagories.category === category){
+                    // deleted arr removes goal
+                    let deletedArr = this.state.goals.otherGoalsCategories[index].otherGoals;
+                    // Finds and removes goal
+                    this.state.goals.otherGoalsCategories[index].otherGoals.map((goal, index) =>{
+                        if(goal.id === key){ 
+                            deletedArr.splice(index, 1); 
+                            toCompletedGoal = goal;
+                        }
+                    })
+                    state.goals.otherGoalsCategories[index].otherGoals = deletedArr
+                    //checks if category is empty
+                    if((state.goals.otherGoalsCategories[index].otherGoals).length === 0){
+                        state.goals.otherGoalsCategories.splice(index, 1);
+                    }
+                }
+            })
+            
+        }
+        this.setState({
+            [state]: state
+        })
+        let newCategory = false;
+        if(this.state.goals.completed.otherGoalCategories !== null){
+            this.state.goals.completed.otherGoalsCategories.map((catagories, index) => {
+                if(catagories.catagory === category){
+                    newCategory = true;
+                }
+            })
+        }
+        else{
+            newCategory = true;
+        }
+        // toCompletedGoal = {
+        //     toCompletedGoal,
+        //     'newCategory': newCategory,
+        //     'category': category
+        // }
+        toCompletedGoal['newCategory'] = newCategory
+        toCompletedGoal['category'] = category
+        this.stateAdd(toCompletedGoal, 'completed')
+        
+    }
+    completed = (goal, category, id) => {
+        
     }
     closeGoalOverlay = () => {
         let state = this.state
@@ -149,32 +246,87 @@ class App extends Component {
             state: state
           })
     }
-    // state = {
-    //     title: null,
-    //     snippit: null,
-    //     // '2019, 7, 1 00:00',
-    //     endDate: null,
-    //     type: 'daily',
-    //     category: 'newCategory',
-    //     newCategory: true
-    // }
-    stateAdd = (newGoal) => {
-        if(newGoal.type == 'daily'){
-            let state = this.state
+    stateAdd = (newGoal, goalType) => {
+        let state;
+        goalType === 'completed' ? state = this.state.goals : state = this.state;
+        let startDate = getToday();;
+        if(newGoal.type === 'daily'){
             newGoal = {
-                id: Math.random(),
-                title: state.title,
-                snippit: state.snippit,
-                startDate: new Date().toString(),
-                endDate: state.endDate,
+                id: uuid.v4(),
+                title: newGoal.title,
+                snippit: newGoal.snippit,
+                startDate: startDate,
+                endDate: newGoal.endDate + " 00:00",
                 daysChecked: 0,
                 weeklyChecked: [false, false, false, false, false, false, false]
             }
-            state.goals.dailyGoals.push(newGoal);
+            state[goalType].dailyGoals.push(newGoal);
+            console.log(state.completed);
+        }
+        else{
+            let category = newGoal.category;
+            let newCategory = newGoal.newCategory;
+            // make newGoal
+            newGoal = {
+                id: uuid.v4(),
+                title: newGoal.title,
+                snippit: newGoal.snippit,
+                startDate: startDate,
+                endDate: newGoal.endDate + " 00:00",
+                percentComplete: 0
+            }
+            //check if new category
+            if(newCategory === true){
+                newGoal = {
+                    category: category,
+                    id: uuid.v4(),
+                    otherGoals: [
+                        newGoal
+                    ]
+                }
+
+                state[goalType].otherGoalsCategories.push(newGoal);
+            }
+            else{
+                if(goalType === 'completed'){
+                    this.state.goals[goalType].otherGoalsCategories.map((catagories, index) => {
+                        if(catagories.category === category){
+                            state[goalType].otherGoalsCategories[index].otherGoals.push(newGoal)
+                        }
+                    })
+                }
+                else{
+                    this.state[goalType].otherGoalsCategories.map((catagories, index) => {
+                        if(catagories.category === category){
+                            state[goalType].otherGoalsCategories[index].otherGoals.push(newGoal)
+                        }
+                    })
+                }
+            }
+        }
+            if(goalType === 'completed'){
+                state = {
+                    goals:{
+                        dailyGoals : [
+                            state.dailyGoals
+                        ],
+                        otherGoalCategories:[
+                            state.otherGoalsCategories
+                        ],
+                        completed:[
+                            state.completed
+                        ]
+                    },
+                    otherStuffs:{
+                        overlayIsHidden: true
+                    }
+                }
+            }
+            state.otherStuffs.overlayIsHidden = true;
             this.setState({
                 state: state
               })
-        }
+            console.log(this.state.goals.completed)
     }
     render() {
         return (
@@ -229,26 +381,12 @@ class App extends Component {
                 </div>
                 <div className="goals">
                     <div className="dailygoals">
-                        <div className="dailyheading">
-                            <div className="dailyheadingheading">
-                                <h1>Daily Goals</h1>
-                            </div>
-                            <ul>
-                                <li>Mon<br/>1</li>
-                                <li>Tue<br/>2</li>
-                                <li>Wed<br/>3</li>
-                                <li>Thu<br/>4</li>
-                                <li>Fri<br/>5</li>
-                                <li>Sat<br/>6</li>
-                                <li>Sun<br/>7</li>
-                                <li>Mon<br/>8</li>
-                            </ul>
-                        </div>
+                        <DailyGoalHeading dailyGoals={this.state.goals.dailyGoals}/>    
                         <div className="dailygoalslist">
-                        <DailyGoals dailyGoals={this.state.goals.dailyGoals} />         
+                        <DailyGoals dailyGoals={this.state.goals.dailyGoals} deleteGoal={this.deleteGoal} />         
                         </div>
                     </div>
-                    <OtherGoals otherGoalCategories={this.state.goals.otherGoalsCategories} />    
+                    <OtherGoals otherGoalCategories={this.state.goals.otherGoalsCategories} deleteGoal={this.deleteGoal} />    
                 </div>
                 {!this.state.otherStuffs.overlayIsHidden && <Overlay closeGoalOverlay={this.closeGoalOverlay} otherGoalCategories={this.state.goals.otherGoalsCategories} stateAdd={this.stateAdd} />}   
             </div>

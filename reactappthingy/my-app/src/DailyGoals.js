@@ -2,15 +2,19 @@ import React, { Component } from 'react';
 import './App.css';
 
 class DailyGoals extends Component {
+    onClick = (e) => {
+        this.props.deleteGoal(e.target.title, 'daily')
+    }
     render() {
-        const{dailyGoals} = this.props;
+        const{dailyGoals, deleteGoal} = this.props;
         const displayCheckBoxes = (goal) =>{
             // let len = document.querySelector('.dailyheading').clientWidth;
-            let len = 1000;
-            len = len/80;
+            let len = 9
             for(let i = 0; i < len; i++){
                 return(
                     <React.Fragment>
+                    <div className="onedailygoalcheckmark">
+                    <ul>
                     <li>
                         <label className="checkbox">
                             <input type="checkbox" checked={goal.weeklyChecked[0]} readOnly={true}/>
@@ -53,12 +57,13 @@ class DailyGoals extends Component {
                             <span className="checkmark"></span>
                         </label>
                     </li>
-                    <li>
-                        <label className="checkbox">
-                            <input type="checkbox" checked={goal.weeklyChecked[7]} readOnly={true}/>
-                            <span className="checkmark"></span>
-                        </label>
+                    <li className="close-container"onClick={() => {this.props.deleteGoal(goal.id, 'daily')}}>
+                        <div className="leftright"onClick={() => {this.props.deleteGoal(goal.id, 'daily')}}></div>
+                        <div className="rightleft"onClick={() => {this.props.deleteGoal(goal.id, 'daily')}}></div>
+                        <label className="close">close</label>
                     </li>
+                    </ul>
+                    </div>
                     </React.Fragment>
                 )
             }
@@ -69,11 +74,7 @@ class DailyGoals extends Component {
                     <div className="onedailygoalheading" >
                         <h4>{goal.title}</h4>{goal.snippit}
                     </div>
-                    <div className="onedailygoalcheckmark">
-                        <ul>
-                        {displayCheckBoxes(goal)}
-                        </ul>
-                    </div>
+                    {displayCheckBoxes(goal)}
                 </div>
             )
         })
