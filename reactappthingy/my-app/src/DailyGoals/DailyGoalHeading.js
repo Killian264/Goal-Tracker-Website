@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './App.css';
 
 class DailyGoalHeading extends Component {
     render() {
@@ -10,6 +9,7 @@ class DailyGoalHeading extends Component {
 
                     </React.Fragment>
                 )
+
             }
             return(
                 <div className="dailyheading">

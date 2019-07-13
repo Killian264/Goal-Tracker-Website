@@ -25,8 +25,7 @@ class Overlay extends Component {
     onSubmit = (e) => {
         e.preventDefault();
         if((this.state.title && this.state.endDate) && (!(this.state.newCategory) || !(this.state.category === 'newCategory')) ){
-            console.log(!(this.state.category === 'newCategory'))
-            this.props.stateAdd(this.state, 'goals');
+            this.props.stateAdd(this.state);
         }
         else{
             return(

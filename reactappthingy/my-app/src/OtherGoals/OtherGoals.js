@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './App.css';
 import OtherGoalList from './OtherGoalList';
 
 class OtherGoals extends Component {

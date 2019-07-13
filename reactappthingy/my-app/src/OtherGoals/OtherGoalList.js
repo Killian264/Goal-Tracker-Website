@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
-import {getToday} from './commonCommands'
+import {getToday} from '../commonCommands'
 
 class OtherGoalsList extends Component {
     onClick = (e) => {

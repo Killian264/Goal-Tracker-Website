@@ -1,10 +1,10 @@
-import React, {Component} from 'react';
-import './App.css';
-import DailyGoalHeading from './DailyGoalHeading';
-import DailyGoals from './DailyGoals';
-import OtherGoals from './OtherGoals';
-import Overlay from './Overlay';
-// import TopNav from './TopNav';
+import React, {Component} from 'react'
+import './App.css'
+import DailyGoalHeading from './DailyGoals/DailyGoalHeading'
+import DailyGoals from './DailyGoals/DailyGoals'
+import OtherGoals from './OtherGoals/OtherGoals'
+import Overlay from './Overlay'
+import TypeSelector from './TypeSelector'
 import uuid from 'uuid'
 import {getToday} from './commonCommands'
 
@@ -135,15 +135,6 @@ class App extends Component {
             ],
             completed : {
                 dailyGoals : [
-                    {
-                        id: 1,
-                        title: 'Programme',
-                        snippit: 'Write Code',
-                        startDate: '2019, 7, 1 00:00',
-                        endDate: '2019, 7, 15 00:00',
-                        daysChecked: 20,
-                        weeklyChecked: [true, false, true, true, false, false, false]
-                    }
                 ],
                 otherGoalsCategories : [
                     {
@@ -167,70 +158,87 @@ class App extends Component {
             overlayIsHidden: true
         }
     }
-
+    
     deleteGoal = (key, category) => {
         let state = this.state;
         let toCompletedGoal;
         if(category === 'daily'){
-            let deletedArr = this.state.goals.dailyGoals;
+            // sets filtered Arr to goal then filters out the deleted goal
+            let filteredArr = this.state.goals.dailyGoals;
             this.state.goals.dailyGoals.map((goal, index) =>{
                 if(goal.id === key){ 
-                    deletedArr.splice(index, 1); 
+                    filteredArr.splice(index, 1); 
                     toCompletedGoal = goal;
                 }
+                return true;
             })
-            state.goals.dailyGoals = deletedArr
-            this.setState({
-                [state]: state
-              })
+            state.goals.dailyGoals = filteredArr
         }
         else{
+            //maps and finds category
             this.state.goals.otherGoalsCategories.map((catagories, index) => {
                 if(catagories.category === category){
-                    // deleted arr removes goal
-                    let deletedArr = this.state.goals.otherGoalsCategories[index].otherGoals;
+                    // sets filtered Arr to goal then filters out the deleted goal
+                    let filteredArr = this.state.goals.otherGoalsCategories[index].otherGoals;
                     // Finds and removes goal
                     this.state.goals.otherGoalsCategories[index].otherGoals.map((goal, index) =>{
                         if(goal.id === key){ 
-                            deletedArr.splice(index, 1); 
+                            filteredArr.splice(index, 1); 
                             toCompletedGoal = goal;
                         }
+                        return true;
                     })
-                    state.goals.otherGoalsCategories[index].otherGoals = deletedArr
+                    // sets local state
+                    state.goals.otherGoalsCategories[index].otherGoals = filteredArr
                     //checks if category is empty
                     if((state.goals.otherGoalsCategories[index].otherGoals).length === 0){
                         state.goals.otherGoalsCategories.splice(index, 1);
                     }
                 }
+                return true;
             })
-            
         }
         this.setState({
             [state]: state
         })
-        let newCategory = false;
-        if(this.state.goals.completed.otherGoalCategories !== null){
-            this.state.goals.completed.otherGoalsCategories.map((catagories, index) => {
-                if(catagories.catagory === category){
-                    newCategory = true;
-                }
-            })
+        this.completed(toCompletedGoal, category)
+        return;
+    }
+    completed = (newGoal, category) => {
+        let state = this.state
+        // check if daily
+        if(category === 'daily'){
+            state.goals.completed.dailyGoals.push(newGoal);
         }
         else{
-            newCategory = true;
+            let newCategory = true; // true of false if new category
+    
+            this.state.goals.completed.otherGoalsCategories.map((catagories, index) => {
+                if(catagories.category === category){
+                    state.goals.completed.otherGoalsCategories[index].otherGoals.push(newGoal)
+                    newCategory = false;
+                }
+                return true;
+            })
+            //check if new category
+            if(newCategory === true){
+                newGoal = {
+                    category: category,
+                    id: uuid.v4(),
+                    otherGoals: [
+                        newGoal
+                    ]
+                }
+                // push to local state
+                state.goals.completed.otherGoalsCategories.push(newGoal);
+            }
         }
-        // toCompletedGoal = {
-        //     toCompletedGoal,
-        //     'newCategory': newCategory,
-        //     'category': category
-        // }
-        toCompletedGoal['newCategory'] = newCategory
-        toCompletedGoal['category'] = category
-        this.stateAdd(toCompletedGoal, 'completed')
-        
-    }
-    completed = (goal, category, id) => {
-        
+        //push to state and close overlay
+        state.otherStuffs.overlayIsHidden = true;
+        this.setState({
+            state: state
+            })
+        return;
     }
     closeGoalOverlay = () => {
         let state = this.state
@@ -238,6 +246,7 @@ class App extends Component {
         this.setState({
             state: state
           })
+        return;
     }
     displayGoalOverlay = () => {
         let state = this.state
@@ -246,10 +255,10 @@ class App extends Component {
             state: state
           })
     }
-    stateAdd = (newGoal, goalType) => {
-        let state;
-        goalType === 'completed' ? state = this.state.goals : state = this.state;
-        let startDate = getToday();;
+    stateAdd = (newGoal) => {
+        let state = this.state
+        let startDate = getToday()
+        // check if daily
         if(newGoal.type === 'daily'){
             newGoal = {
                 id: uuid.v4(),
@@ -260,13 +269,12 @@ class App extends Component {
                 daysChecked: 0,
                 weeklyChecked: [false, false, false, false, false, false, false]
             }
-            state[goalType].dailyGoals.push(newGoal);
-            console.log(state.completed);
+            // push to local state
+            state.goals.dailyGoals.push(newGoal);
         }
         else{
-            let category = newGoal.category;
-            let newCategory = newGoal.newCategory;
-            // make newGoal
+            let category = newGoal.category; // the new category
+            let newCategory = newGoal.newCategory; // true of false if new category
             newGoal = {
                 id: uuid.v4(),
                 title: newGoal.title,
@@ -284,49 +292,25 @@ class App extends Component {
                         newGoal
                     ]
                 }
-
-                state[goalType].otherGoalsCategories.push(newGoal);
+                // push to local state
+                state.goals.otherGoalsCategories.push(newGoal);
             }
             else{
-                if(goalType === 'completed'){
-                    this.state.goals[goalType].otherGoalsCategories.map((catagories, index) => {
-                        if(catagories.category === category){
-                            state[goalType].otherGoalsCategories[index].otherGoals.push(newGoal)
-                        }
-                    })
-                }
-                else{
-                    this.state[goalType].otherGoalsCategories.map((catagories, index) => {
-                        if(catagories.category === category){
-                            state[goalType].otherGoalsCategories[index].otherGoals.push(newGoal)
-                        }
-                    })
-                }
+                //finds category to add to
+                this.state.goals.otherGoalsCategories.map((catagories, index) => {
+                    if(catagories.category === category){
+                        state.goals.otherGoalsCategories[index].otherGoals.push(newGoal)
+                    }
+                    return true;
+                })
             }
         }
-            if(goalType === 'completed'){
-                state = {
-                    goals:{
-                        dailyGoals : [
-                            state.dailyGoals
-                        ],
-                        otherGoalCategories:[
-                            state.otherGoalsCategories
-                        ],
-                        completed:[
-                            state.completed
-                        ]
-                    },
-                    otherStuffs:{
-                        overlayIsHidden: true
-                    }
-                }
-            }
-            state.otherStuffs.overlayIsHidden = true;
-            this.setState({
-                state: state
-              })
-            console.log(this.state.goals.completed)
+        //push to state and close overlay
+        state.otherStuffs.overlayIsHidden = true;
+        this.setState({
+            state: state
+        })
+        return;
     }
     render() {
         return (
@@ -344,41 +328,19 @@ class App extends Component {
                 </div>
             </div>
             <div className="topnav">
-                    <div className = "navdropdown">
-                        <div className="line1"></div>
-                        <div className="line2"></div>
-                        <div className="line3"></div>
-                    </div>
-                    <h1>Current Goals</h1>
-                    <div className="creategoalbutton">
-                            <button id="button" onClick={this.displayGoalOverlay}>Create Goal</button>
-                    </div>
+                <div className = "navdropdown">
+                    <div className="line1"></div>
+                    <div className="line2"></div>
+                    <div className="line3"></div>
                 </div>
+                <h1>Current Goals</h1>
+                <div className="creategoalbutton">
+                        <button id="button" onClick={this.displayGoalOverlay}>Create Goal</button>
+                </div>
+            </div>
             <div className="main">
-                <div className="goaltypeselector">
-                    <h2>Sort Goals</h2>
-                    <div className="sort">
-                        <ul>
-                            <li><img src="../src/Images/pressed.png" alt=""/><span>Show Current</span></li> 
-                            <li><img src="../src/Images/pressed.png" alt=""/><span>Show Completed</span></li>
-                        </ul>
-                    </div>
-                    <div className="goaltype">
-                        <h3>TimeFrame</h3>
-                        <ul>
-                            <li><img src="../src/Images/pressed.png" alt=""/><span>Daily Goals</span></li> 
-                            <li><img src="../src/Images/pressed.png" alt=""/><span>Weekly Goals</span></li>
-                        </ul>
-                    </div>
-                    <div className="catagories">
-                        <h3>Catagories</h3>
-                        <ul>
-                            <li><img src="../src/Images/pressed.png" alt=""/><span>Programming</span></li> 
-                            <li><img src="../src/Images/pressed.png" alt=""/><span>Knowledge</span></li>
-                            <li><img src="../src/Images/pressed.png" alt=""/><span>Workout</span></li>
-                        </ul>
-                    </div>
-                </div>
+
+                <TypeSelector goals={this.state.goals}/>
                 <div className="goals">
                     <div className="dailygoals">
                         <DailyGoalHeading dailyGoals={this.state.goals.dailyGoals}/>    

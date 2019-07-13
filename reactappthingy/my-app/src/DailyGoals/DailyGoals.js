@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './App.css';
 
 class DailyGoals extends Component {
     onClick = (e) => {
@@ -58,8 +57,8 @@ class DailyGoals extends Component {
                         </label>
                     </li>
                     <li className="close-container"onClick={() => {this.props.deleteGoal(goal.id, 'daily')}}>
-                        <div className="leftright"onClick={() => {this.props.deleteGoal(goal.id, 'daily')}}></div>
-                        <div className="rightleft"onClick={() => {this.props.deleteGoal(goal.id, 'daily')}}></div>
+                        <div className="leftright"></div>
+                        <div className="rightleft"></div>
                         <label className="close">close</label>
                     </li>
                     </ul>
