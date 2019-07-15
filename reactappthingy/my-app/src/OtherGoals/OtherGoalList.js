@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {getToday} from '../commonCommands'
+import {getYeseterday} from '../commonCommands'
 
 class OtherGoalsList extends Component {
     onClick = (e) => {
@@ -8,6 +9,11 @@ class OtherGoalsList extends Component {
     render() {
         const{othergoals} = this.props;
         const displayOtherGoals = othergoals.otherGoals.map(goal=> {
+            console.log(goal);
+            // Possibly rework this later to work after component did mount and make it run once only
+            if(Date.parse(goal.endDate) < Date.parse(getYeseterday())){
+                {this.props.deleteGoal(goal.id, othergoals.category)}
+            }
             let endDate = new Date(goal.endDate);
             let totalDays = Math.abs(new Date(goal.startDate) - endDate) / 8.64e+7;
             let today = getToday();

@@ -2,17 +2,8 @@ import React, { Component } from 'react';
 
 class DailyGoalHeading extends Component {
     render() {
-        const displayHeader = () =>{
-            if((this.props.dailyGoals).length === 0){
-                return(
-                    <React.Fragment>
-
-                    </React.Fragment>
-                )
-
-            }
-            return(
-                <div className="dailyheading">
+        return (
+            <div className="dailyheading">
                     <div className="dailyheadingheading">
                         <h1>Daily Goals</h1>
                     </div>
@@ -27,12 +18,6 @@ class DailyGoalHeading extends Component {
                         <li>Del<br/>▼</li>
                     </ul>
                 </div>
-            )
-        }
-        return (
-            <React.Fragment>
-                {displayHeader()}
-            </React.Fragment>
         )
     }
 }

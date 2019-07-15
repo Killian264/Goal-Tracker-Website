@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {getYeseterday} from '../commonCommands'
 
 class DailyGoals extends Component {
     onClick = (e) => {
@@ -68,6 +69,9 @@ class DailyGoals extends Component {
             }
         }
         const displayDailyGoals = dailyGoals.map(goal => {
+            if(Date.parse(goal.endDate) < Date.parse(getYeseterday())){
+                {this.props.deleteGoal(goal.id, 'daily')}
+            }
             return(
                 <div className="onedailygoal" key={goal.id}>
                     <div className="onedailygoalheading" >

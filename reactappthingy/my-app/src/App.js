@@ -7,6 +7,7 @@ import Overlay from './Overlay'
 import TypeSelector from './TypeSelector'
 import uuid from 'uuid'
 import {getToday} from './commonCommands'
+import { bigIntLiteral } from '@babel/types';
 
 class App extends Component {
     state = {
@@ -17,7 +18,7 @@ class App extends Component {
                     title: 'Programme',
                     snippit: 'Write Code',
                     startDate: '2019, 7, 1 00:00',
-                    endDate: '2019, 7, 15 00:00',
+                    endDate: '2019, 7, 10 00:00',
                     daysChecked: 20,
                     weeklyChecked: [true, false, true, true, false, false, false]
                 },
@@ -155,7 +156,11 @@ class App extends Component {
             }
         },
         otherStuffs:{
-            overlayIsHidden: true
+            overlayIsHidden: true,
+            renderCurrent: true,
+            renderCompleted: false,
+            renderDaily: true,
+            renderOther: true,
         }
     }
     
@@ -203,6 +208,43 @@ class App extends Component {
         })
         this.completed(toCompletedGoal, category)
         return;
+    }
+    updateRenderIfs = (whichClicked) => {
+        let otherStuffs = this.state.otherStuffs
+        if(this.state.otherStuffs[whichClicked] === false){
+            otherStuffs[whichClicked] = true;
+        }
+        console.log('which clicked', whichClicked)
+        switch(whichClicked){
+            case('allTypes'):
+                console.log('eeyfasdkfasjdfk')
+                otherStuffs.renderDaily = true;
+                otherStuffs.renderOther = true;
+                break;
+            case('renderCurrent'):
+                if(this.state.otherStuffs.renderCompleted === true){
+                    otherStuffs.renderCompleted = false;
+                }
+                break;
+            case('renderCompleted'):
+                if(this.state.otherStuffs.renderCurrent === true){
+                    otherStuffs.renderCurrent = false;
+                }
+                break;
+            case('renderDaily'):
+                if(this.state.otherStuffs.renderOther === true){
+                    otherStuffs.renderOther = false;
+                }
+                break;
+            case('renderOther'):
+                if(this.state.otherStuffs.renderDaily === true){
+                    otherStuffs.renderDaily = false;
+                }
+                break;
+        }
+        this.setState({
+            otherStuffs: otherStuffs
+        })
     }
     completed = (newGoal, category) => {
         let state = this.state
@@ -340,17 +382,27 @@ class App extends Component {
             </div>
             <div className="main">
 
-                <TypeSelector goals={this.state.goals}/>
+                <TypeSelector goals={this.state.goals} updateRenderIfs={this.updateRenderIfs}/>
                 <div className="goals">
-                    <div className="dailygoals">
-                        <DailyGoalHeading dailyGoals={this.state.goals.dailyGoals}/>    
+                    <div className="dailygoals"> 
+                        {this.state.otherStuffs.renderDaily && this.state.goals.dailyGoals.length !== 0 && <DailyGoalHeading/>}  
                         <div className="dailygoalslist">
-                        <DailyGoals dailyGoals={this.state.goals.dailyGoals} deleteGoal={this.deleteGoal} />         
+                         {this.state.otherStuffs.renderDaily && <DailyGoals dailyGoals={this.state.goals.dailyGoals} deleteGoal={this.deleteGoal} />} 
                         </div>
                     </div>
-                    <OtherGoals otherGoalCategories={this.state.goals.otherGoalsCategories} deleteGoal={this.deleteGoal} />    
+                    {this.state.otherStuffs.renderOther && <OtherGoals otherGoalCategories={this.state.goals.otherGoalsCategories} deleteGoal={this.deleteGoal} />}
                 </div>
-                {!this.state.otherStuffs.overlayIsHidden && <Overlay closeGoalOverlay={this.closeGoalOverlay} otherGoalCategories={this.state.goals.otherGoalsCategories} stateAdd={this.stateAdd} />}   
+                {/* Need new classes for these unless I componentDidMount map the dates n stuff */}
+                {/* <div className="goals">
+                    <div className="dailygoals"> 
+                        {this.state.otherStuffs.renderDaily && this.state.goals.completed.dailyGoals.length !== 0 &&<DailyGoalHeading />}  
+                        <div className="dailygoalslist">
+                         {this.state.otherStuffs.renderDaily && this.state.goals.completed.dailyGoals.length !==  0 &&<DailyGoals dailyGoals={this.state.goals.completed.dailyGoals} deleteGoal={this.deleteGoal} />} 
+                        </div>
+                    </div>
+                    {this.state.otherStuffs.renderOther && this.state.goals.completed.otherGoalsCategories.length !== 0 && <OtherGoals otherGoalCategories={this.state.goals.completed.otherGoalsCategories} deleteGoal={this.deleteGoal} />}
+                </div> */}
+                {!this.state.otherStuffs.overlayIsHidden && <Overlay closeGoalOverlay={this.closeGoalOverlay} otherGoalCategories={this.state.goals.completed.otherGoalsCategories} stateAdd={this.stateAdd} />}   
             </div>
     </div>
     );

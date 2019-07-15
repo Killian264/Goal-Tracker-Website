@@ -9,7 +9,9 @@ class TypeSelector extends Component {
     }
     render() {
         const{goals} = this.props.goals;
-
+        const updateRenderIfs = (e) =>{
+            this.props.updateRenderIfs(e.target.id)
+        }
         const getLengths = () =>{
             let state = this.state;
             let length = 0
@@ -46,16 +48,17 @@ class TypeSelector extends Component {
                 <div className="goaltypeselector">
                     <h2>Sort Goals</h2>
                     <div className="sort">
-                        <ul>
-                            <li><span>Current: {state.dailyLength + state.otherLength}</span></li> 
-                            <li><span>Completed: {state.completedLength}</span></li>
+                        <ul onClick={updateRenderIfs}>
+                            <li id='renderCurrent'>Current: {state.dailyLength + state.otherLength}</li> 
+                            <li id='renderCompleted'>Completed: {state.completedLength}</li>
                         </ul>
                     </div>
                     <div className="goaltype">
-                        <h3>TimeFrame</h3>
+                        <h3>Goal Type</h3>
                         <ul>
-                            <li><span>Daily Goals: {state.dailyLength}</span></li> 
-                            <li><span>Other Goals: {state.otherLength}</span></li>
+                            <li id='allTypes' onClick={updateRenderIfs}>All Types: {state.dailyLength + state.otherLength}</li> 
+                            <li id='renderDaily' onClick={updateRenderIfs}>Daily Goals: {state.dailyLength}</li> 
+                            <li id='renderOther' onClick={updateRenderIfs}>Other Goals: {state.otherLength}</li>
                         </ul>
                     </div>
                     <div className="catagories">
