@@ -6,14 +6,14 @@
 }
 
 .sidenav {
-    height: 100%;
+    height: 150%;
     width: 12%;
-    position: fixed;
     z-index: 1;
     top: 0;
     left: 0;
     background-color: #111;
     overflow-x: hidden;
+    position: fixed;
     padding-top: 20px;
     color: white;
   }
@@ -59,18 +59,23 @@
     text-decoration: none;
     line-height: 35px;
   }
-
   .topnav{
-    width: 100%;
-    background: rgba(0, 0, 0, .7);
+    width: 88%;
+    margin-left: 12%;
+    /* background-color: rgb(6, 66, 82 , .9); */
+    background-color: #111;
     color: white;
-    padding-left: calc(12% + 3%);
+    padding-left: 3%;
     padding-right: 5%;
     display: flex;
     align-content: center;
     justify-content: space-between;
-    position: absolute;
+    position: fixed;
     height: 50px;
+    z-index: 1;
+    border: white;
+    border-bottom:  1px;
+    border-bottom-style: solid;
   }
   .topnav h1{
     padding-top: .25%;
@@ -127,13 +132,18 @@
     color: rgb(0, 0, 0);
     height: 100%;
     min-width: 150px;
+    /* max-width: 300px; */
   }
   .goaltypeselector div{
     padding-top: 1vh;
   }
+  .goaltypeselector li{
+    font-size: 19px;
+  }
   .goaltypeselector h3{
     padding-bottom: .7vh;
     padding-top: 1vh;
+    font-size: 23px;
   }
   .goaltypeselector li{
     padding-bottom: .5vh;
@@ -224,7 +234,6 @@
     text-align: center;
     list-style: none;
     min-width: 80px;
-    width: 50px;
     padding-left: 23px;
   }
 
@@ -326,7 +335,6 @@
   display: block;
   position: relative;
   margin-bottom: 12px;
-  cursor: pointer;
   font-size: 22px;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -337,9 +345,11 @@
 .checkbox input {
   position: absolute;
   opacity: 0;
-  cursor: pointer;
   height: 0;
   width: 0;
+}
+.checkboxmain{
+  cursor: pointer;
 }
 
 .checkmark {
@@ -351,7 +361,7 @@
   background-color: #eee;
 }
 
-.checkbox:hover input ~ .checkmark {
+.checkboxmain:hover input ~ .checkmark {
   background-color: #ccc;
 }
 
@@ -469,26 +479,23 @@ left padding is 20px */
     width: calc(92% - 120px);
   }
   .topnav{
+    width: 100%;
     padding-left: 5%;
-    position: fixed;
+    z-index: 1;
+    margin-left: 0%;
   }
   .othergoals h1{
     font-size: 25px;
   }
   .sidenav{
-    justify-content: space-around;
-    align-items: center;
-    position: relative;
-    top: 50px;
     height: 100%;
     /* display: block; */
-    display: none;
+    padding-top: 55px;
     margin-left: -200px;
     width: 200px;
     transform: translateX(100%);
     transition: transform 0.3s ease-in;
     overflow-y: hidden;
-    position: fixed;
   }
   .navdropdown{
     display: block;

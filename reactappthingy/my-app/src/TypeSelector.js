@@ -77,7 +77,7 @@ class TypeSelector extends Component {
             })
         return (
             <React.Fragment>
-            {getLengths()}
+                {getLengths()}
             </React.Fragment>
         )
     }

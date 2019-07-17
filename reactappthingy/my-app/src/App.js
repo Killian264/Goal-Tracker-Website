@@ -18,7 +18,8 @@ class App extends Component {
                     title: 'Programme',
                     snippit: 'Write Code',
                     startDate: '2019, 7, 1 00:00',
-                    endDate: '2019, 7, 10 00:00',
+                    endDate: '2019, 7, 30 00:00',
+                    lastDayUpdated:'2019, 7, 14 00:00',
                     daysChecked: 20,
                     weeklyChecked: [true, false, true, true, false, false, false]
                 },
@@ -28,6 +29,7 @@ class App extends Component {
                     snippit: 'Write Code',
                     startDate: '2019, 7, 1 00:00',
                     endDate: '2019, 7, 15 00:00',
+                    lastDayUpdated:'2019, 7, 14 00:00',
                     daysChecked: 20,
                     weeklyChecked: [true, true, false, true, false, false, false]
                 },
@@ -37,6 +39,7 @@ class App extends Component {
                     snippit: 'Yea',
                     startDate: '2019, 7, 1 00:00',
                     endDate: '2019, 7, 15 00:00',
+                    lastDayUpdated:'2019, 7, 14 00:00',
                     daysChecked: 20,
                     weeklyChecked: [false, true, true, true, false, false, false]
                 }
@@ -79,7 +82,7 @@ class App extends Component {
                         {
                             id: 2,
                             title: 'Read 20 books',
-                            snippit: "Should'nt be too hard he thought",
+                            snippit: "Shouldn't be too hard he thought",
                             startDate: '2019, 1, 1 00:00',
                             endDate: '2020, 1, 1 00:00',
                             percentComplete: 50
@@ -130,7 +133,7 @@ class App extends Component {
                             endDate: '2019, 7, 19 00:00',
                             percentComplete: 0
                         }
-                        
+
                     ]
                 }
             ],
@@ -163,7 +166,7 @@ class App extends Component {
             renderOther: true,
         }
     }
-    
+
     deleteGoal = (key, category) => {
         let state = this.state;
         let toCompletedGoal;
@@ -171,8 +174,8 @@ class App extends Component {
             // sets filtered Arr to goal then filters out the deleted goal
             let filteredArr = this.state.goals.dailyGoals;
             this.state.goals.dailyGoals.map((goal, index) =>{
-                if(goal.id === key){ 
-                    filteredArr.splice(index, 1); 
+                if(goal.id === key){
+                    filteredArr.splice(index, 1);
                     toCompletedGoal = goal;
                 }
                 return true;
@@ -187,8 +190,8 @@ class App extends Component {
                     let filteredArr = this.state.goals.otherGoalsCategories[index].otherGoals;
                     // Finds and removes goal
                     this.state.goals.otherGoalsCategories[index].otherGoals.map((goal, index) =>{
-                        if(goal.id === key){ 
-                            filteredArr.splice(index, 1); 
+                        if(goal.id === key){
+                            filteredArr.splice(index, 1);
                             toCompletedGoal = goal;
                         }
                         return true;
@@ -214,10 +217,8 @@ class App extends Component {
         if(this.state.otherStuffs[whichClicked] === false){
             otherStuffs[whichClicked] = true;
         }
-        console.log('which clicked', whichClicked)
         switch(whichClicked){
             case('allTypes'):
-                console.log('eeyfasdkfasjdfk')
                 otherStuffs.renderDaily = true;
                 otherStuffs.renderOther = true;
                 break;
@@ -254,7 +255,7 @@ class App extends Component {
         }
         else{
             let newCategory = true; // true of false if new category
-    
+
             this.state.goals.completed.otherGoalsCategories.map((catagories, index) => {
                 if(catagories.category === category){
                     state.goals.completed.otherGoalsCategories[index].otherGoals.push(newGoal)
@@ -282,20 +283,25 @@ class App extends Component {
             })
         return;
     }
-    closeGoalOverlay = () => {
-        let state = this.state
-        state.otherStuffs.overlayIsHidden = true;
-        this.setState({
-            state: state
-          })
-        return;
-    }
     displayGoalOverlay = () => {
-        let state = this.state
-        state.otherStuffs.overlayIsHidden = false;
+        let state = this.state.otherStuffs
+        state.overlayIsHidden = !state.overlayIsHidden;
         this.setState({
-            state: state
+            [state.otherStuffs]: state
           })
+    }
+    updateCheckMark = (key) => {
+        let state = this.state.goals;
+        state.dailyGoals.map((goal, index) => {
+            if(goal.id === key){
+                state.dailyGoals[index].weeklyChecked[4] = !state.dailyGoals[index].weeklyChecked[4]
+                state.dailyGoals[index].weeklyChecked[4] ? state.dailyGoals[index].daysChecked++ : state.dailyGoals[index].daysChecked--
+            } 
+        })
+        this.setState({
+            [state.goals]: state
+        })
+        console.log(this.state.goals.dailyGoals)
     }
     stateAdd = (newGoal) => {
         let state = this.state
@@ -308,6 +314,7 @@ class App extends Component {
                 snippit: newGoal.snippit,
                 startDate: startDate,
                 endDate: newGoal.endDate + " 00:00",
+                lastDayUpdated: startDate,
                 daysChecked: 0,
                 weeklyChecked: [false, false, false, false, false, false, false]
             }
@@ -354,6 +361,32 @@ class App extends Component {
         })
         return;
     }
+    navSlideChange = ()=>{
+        const nav = document.querySelector('.sidenav');
+        nav.classList.toggle('nav-active');
+    }
+    updateDaily = () => {
+        let state = this.state;
+        let numDays = (((Date.parse(state.goals.dailyGoals[0].lastDayUpdated) - Date.parse(getToday()))/ 8.64e+7) * -1)
+        if(numDays > 5){
+            state.goals.dailyGoals.map(goal => {
+                goal.lastDayUpdated = getToday()
+            })
+        }
+        else{
+            state.goals.dailyGoals.map(goal => {
+                goal.lastDayUpdated = getToday;
+                for(let i = 0; i < (numDays - 5); i++){
+                    let weeklyChecked = [false, false, false, false, false, false, false]
+                    weeklyChecked[i] = goal.weeklyChecked[i + numDays]
+                }
+            })
+        }
+        console.log(state.goals.dailyGoals)
+        this.setState({
+            state: state
+        })
+    }
     render() {
         return (
             <div>
@@ -370,7 +403,7 @@ class App extends Component {
                 </div>
             </div>
             <div className="topnav">
-                <div className = "navdropdown">
+                <div className = "navdropdown" onClick={this.navSlideChange}>
                     <div className="line1"></div>
                     <div className="line2"></div>
                     <div className="line3"></div>
@@ -384,25 +417,25 @@ class App extends Component {
 
                 <TypeSelector goals={this.state.goals} updateRenderIfs={this.updateRenderIfs}/>
                 <div className="goals">
-                    <div className="dailygoals"> 
-                        {this.state.otherStuffs.renderDaily && this.state.goals.dailyGoals.length !== 0 && <DailyGoalHeading/>}  
+                    <div className="dailygoals">
+                        {this.state.otherStuffs.renderDaily && this.state.goals.dailyGoals.length !== 0 && <DailyGoalHeading/>}
                         <div className="dailygoalslist">
-                         {this.state.otherStuffs.renderDaily && <DailyGoals dailyGoals={this.state.goals.dailyGoals} deleteGoal={this.deleteGoal} />} 
+                         {this.state.otherStuffs.renderDaily && <DailyGoals updateCheckMark={this.updateCheckMark} dailyGoals={this.state.goals.dailyGoals} deleteGoal={this.deleteGoal} updateDaily={this.updateDaily}/>}
                         </div>
                     </div>
                     {this.state.otherStuffs.renderOther && <OtherGoals otherGoalCategories={this.state.goals.otherGoalsCategories} deleteGoal={this.deleteGoal} />}
                 </div>
                 {/* Need new classes for these unless I componentDidMount map the dates n stuff */}
                 {/* <div className="goals">
-                    <div className="dailygoals"> 
-                        {this.state.otherStuffs.renderDaily && this.state.goals.completed.dailyGoals.length !== 0 &&<DailyGoalHeading />}  
+                    <div className="dailygoals">
+                        {this.state.otherStuffs.renderDaily && this.state.goals.completed.dailyGoals.length !== 0 &&<DailyGoalHeading />}
                         <div className="dailygoalslist">
-                         {this.state.otherStuffs.renderDaily && this.state.goals.completed.dailyGoals.length !==  0 &&<DailyGoals dailyGoals={this.state.goals.completed.dailyGoals} deleteGoal={this.deleteGoal} />} 
+                         {this.state.otherStuffs.renderDaily && this.state.goals.completed.dailyGoals.length !==  0 &&<DailyGoals dailyGoals={this.state.goals.completed.dailyGoals} deleteGoal={this.deleteGoal} />}
                         </div>
                     </div>
                     {this.state.otherStuffs.renderOther && this.state.goals.completed.otherGoalsCategories.length !== 0 && <OtherGoals otherGoalCategories={this.state.goals.completed.otherGoalsCategories} deleteGoal={this.deleteGoal} />}
                 </div> */}
-                {!this.state.otherStuffs.overlayIsHidden && <Overlay closeGoalOverlay={this.closeGoalOverlay} otherGoalCategories={this.state.goals.completed.otherGoalsCategories} stateAdd={this.stateAdd} />}   
+                {!this.state.otherStuffs.overlayIsHidden && <Overlay closeGoalOverlay={this.displayGoalOverlay} otherGoalCategories={this.state.goals.completed.otherGoalsCategories} stateAdd={this.stateAdd} />}
             </div>
     </div>
     );
@@ -410,36 +443,3 @@ class App extends Component {
 }
 
 export default App;
-
-// const createGoalBtn = document.getElementById('button');
-// const goalCreatePopup = document.getElementById('creategoaloverlay');
-// const cancelBtn = document.getElementById('cancelbutton');
-
-// createGoalBtn.addEventListener('click', ()=>{
-//     goalCreatePopup.style.display = "block";
-// }, false)
-
-// cancelBtn.addEventListener('click', ()=>{
-//     goalCreatePopup.style.display = "none";
-// }, false)
-
-// const navSlide = () => {
-//     const navdropdown = document.querySelector('.navdropdown');
-//     const nav = document.querySelector('.sidenav');
-//     const navlinks = document.querySelectorAll('.navlinks a')
-
-//     navdropdown.addEventListener('click', ()=>{
-//         nav.classList.toggle('nav-active');
-//         navlinks.forEach((link, index)=>{
-//             if(link.style.animation){
-//                 link.style.animation = '';
-//             }
-//             else{
-//                 link.style.animation = `navLinkFade 0.5s ease forwards ${(index / 7) + .15}s`;
-//             }
-//         });
-
-//         navdropdown.classList.toggle('toggle');
-//     });
-// }
-// navSlide();
