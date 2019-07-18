@@ -3,14 +3,11 @@ import {getToday} from '../commonCommands'
 import {getYeseterday} from '../commonCommands'
 
 class OtherGoalsList extends Component {
-    onClick = (e) => {
-        this.props.deleteGoal(e.target.title, e.target.id)
-    }
     render() {
         const{othergoals} = this.props;
         const displayOtherGoals = othergoals.otherGoals.map(goal=> {
             // Possibly rework this later to work after component did mount and make it run once only
-            if(Date.parse(goal.endDate) < Date.parse(getYeseterday())){
+            if(Date.parse(goal.endDate) <= Date.parse(getYeseterday())){
                 {this.props.deleteGoal(goal.id, othergoals.category)}
             }
             let endDate = new Date(goal.endDate);
@@ -27,16 +24,18 @@ class OtherGoalsList extends Component {
                             <h4>{totalDays} Total Days<br/>{timeLeft} Days Left</h4>
                         </div>
                         <div className="otherdailygoalheading extendeddailygoalyourprogress">
-                        <h4>{goal.percentComplete}%</h4>
-                        <div className="close-container"onClick={() => {this.props.deleteGoal(goal.id, othergoals.category)}}>
-                            <div className="leftright"></div>
-                            <div className="rightleft"></div>
-                            -
+                            {/* <h1>-</h1>
+                            <h4>{goal.percentComplete}%</h4> */}
+                            <h1 onClick={() => {this.props.subtractPercentage(goal.id, othergoals.category)}}>−</h1>
+                            <h1 onClick={() => {this.props.addPercentage(goal.id, othergoals.category)}}>+</h1>
+                            <h4>{goal.percentComplete}%</h4>
+                            <div className="close-container"onClick={() => {this.props.deleteGoal(goal.id, othergoals.category)}}>
+                                <div className="leftright"></div>
+                                <div className="rightleft"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
-              
-          </div>
             )
         })
 

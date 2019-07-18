@@ -21,14 +21,14 @@ class App extends Component {
                     endDate: '2019, 7, 30 00:00',
                     lastDayUpdated:'2019, 7, 14 00:00',
                     daysChecked: 20,
-                    weeklyChecked: [true, false, true, true, false, false, false]
+                    weeklyChecked: [true, false, true, true, true, false, false]
                 },
                 {
                     id: 2,
                     title: 'Learn React',
                     snippit: 'Write Code',
                     startDate: '2019, 7, 1 00:00',
-                    endDate: '2019, 7, 15 00:00',
+                    endDate: '2019, 7, 17 00:00',
                     lastDayUpdated:'2019, 7, 14 00:00',
                     daysChecked: 20,
                     weeklyChecked: [true, true, false, true, false, false, false]
@@ -38,7 +38,7 @@ class App extends Component {
                     title: 'Be Cool',
                     snippit: 'Yea',
                     startDate: '2019, 7, 1 00:00',
-                    endDate: '2019, 7, 15 00:00',
+                    endDate: '2019, 7, 17 00:00',
                     lastDayUpdated:'2019, 7, 14 00:00',
                     daysChecked: 20,
                     weeklyChecked: [false, true, true, true, false, false, false]
@@ -171,15 +171,26 @@ class App extends Component {
         let state = this.state;
         let toCompletedGoal;
         if(category === 'daily'){
-            // sets filtered Arr to goal then filters out the deleted goal
+            //sets filtered Arr to goal then filters out the deleted goal
+            // console.log(this.state.goals.dailyGoals)
+            // let filteredArr = this.state.goals.dailyGoals;
+            // let index = this.mapFunc(this.state.goals.dailyGoals, 'id', key)
+            // this.state.goals.dailyGoals.map((goal, index) =>{
+            //     if(goal.id === key){
+            //         filteredArr.splice(index, 1);
+            //         toCompletedGoal = goal;
+            //     }
+            //     return true;
+            // })  
+            // console.log(toCompletedGoal)
+            // console.log(this.state.goals.dailyGoals)
+            // state.goals.dailyGoals = filteredArr
+
             let filteredArr = this.state.goals.dailyGoals;
-            this.state.goals.dailyGoals.map((goal, index) =>{
-                if(goal.id === key){
-                    filteredArr.splice(index, 1);
-                    toCompletedGoal = goal;
-                }
-                return true;
-            })
+            let index = this.mapFunc(this.state.goals.dailyGoals, 'id', key)
+            toCompletedGoal = this.state.goals.dailyGoals[index]
+            filteredArr.splice(index, 1);
+            console.log(toCompletedGoal)
             state.goals.dailyGoals = filteredArr
         }
         else{
@@ -217,6 +228,7 @@ class App extends Component {
         if(this.state.otherStuffs[whichClicked] === false){
             otherStuffs[whichClicked] = true;
         }
+        // switch to determine sort goals stuff can probably simplify
         switch(whichClicked){
             case('allTypes'):
                 otherStuffs.renderDaily = true;
@@ -256,14 +268,14 @@ class App extends Component {
         else{
             let newCategory = true; // true of false if new category
 
-            this.state.goals.completed.otherGoalsCategories.map((catagories, index) => {
-                if(catagories.category === category){
-                    state.goals.completed.otherGoalsCategories[index].otherGoals.push(newGoal)
+            // checks for category and pushes to category if it finds it
+            let index = this.mapFunc(this.state.goals.completed.otherGoalsCategories, 'category', category)
+            if(index !== null){
+                state.goals.completed.otherGoalsCategories[index].otherGoals.push(newGoal)
                     newCategory = false;
-                }
-                return true;
-            })
-            //check if new category
+            }
+
+            //makes new category and pushes
             if(newCategory === true){
                 newGoal = {
                     category: category,
@@ -292,12 +304,11 @@ class App extends Component {
     }
     updateCheckMark = (key) => {
         let state = this.state.goals;
-        state.dailyGoals.map((goal, index) => {
-            if(goal.id === key){
-                state.dailyGoals[index].weeklyChecked[4] = !state.dailyGoals[index].weeklyChecked[4]
-                state.dailyGoals[index].weeklyChecked[4] ? state.dailyGoals[index].daysChecked++ : state.dailyGoals[index].daysChecked--
-            } 
-        })
+        //finds index of item
+        let index = this.mapFunc(state.dailyGoals, 'id', key)
+        //updates index
+        state.dailyGoals[index].weeklyChecked[4] = !state.dailyGoals[index].weeklyChecked[4]
+        state.dailyGoals[index].weeklyChecked[4] ? state.dailyGoals[index].daysChecked++ : state.dailyGoals[index].daysChecked--
         this.setState({
             [state.goals]: state
         })
@@ -346,12 +357,8 @@ class App extends Component {
             }
             else{
                 //finds category to add to
-                this.state.goals.otherGoalsCategories.map((catagories, index) => {
-                    if(catagories.category === category){
-                        state.goals.otherGoalsCategories[index].otherGoals.push(newGoal)
-                    }
-                    return true;
-                })
+                let index = this.mapFunc(this.state.goals.otherGoalsCategories, 'category', category)
+                state.goals.otherGoalsCategories[index].otherGoals.push(newGoal)
             }
         }
         //push to state and close overlay
@@ -365,27 +372,73 @@ class App extends Component {
         const nav = document.querySelector('.sidenav');
         nav.classList.toggle('nav-active');
     }
+    // updateDaily = () => {
+    //     return;
+    // }
     updateDaily = () => {
         let state = this.state;
         let numDays = (((Date.parse(state.goals.dailyGoals[0].lastDayUpdated) - Date.parse(getToday()))/ 8.64e+7) * -1)
+        console.log(numDays)
         if(numDays > 5){
             state.goals.dailyGoals.map(goal => {
                 goal.lastDayUpdated = getToday()
+                goal.weeklyChecked = [false, false, false, false, false, false, false]
             })
         }
         else{
             state.goals.dailyGoals.map(goal => {
-                goal.lastDayUpdated = getToday;
-                for(let i = 0; i < (numDays - 5); i++){
-                    let weeklyChecked = [false, false, false, false, false, false, false]
+                goal.lastDayUpdated = getToday();
+                let weeklyChecked = [false, false, false, false, false, false, false]
+                for(let i = 0; i < (5 - numDays); i++){
                     weeklyChecked[i] = goal.weeklyChecked[i + numDays]
                 }
+                goal.weeklyChecked = weeklyChecked
             })
         }
-        console.log(state.goals.dailyGoals)
         this.setState({
             state: state
         })
+        console.log(this.state.goals.dailyGoals)
+    }
+    addPercentage = (id, category) => {
+        let state = this.state;
+
+        let categoryIndex = this.mapFunc(this.state.goals.otherGoalsCategories, 'category', category)
+        let goalIndex = this.mapFunc(this.state.goals.otherGoalsCategories[categoryIndex].otherGoals, 'id', id)
+        state.goals.otherGoalsCategories[categoryIndex].otherGoals[goalIndex].percentComplete+= 2;
+
+        if(state.goals.otherGoalsCategories[categoryIndex].otherGoals[goalIndex].percentComplete > 99){
+            this.deleteGoal(id, category);
+        }
+        else{
+            this.setState({
+                state: state
+            })
+        }
+    }
+    subtractPercentage = (id, category) => {
+        let state = this.state;
+
+        let categoryIndex = this.mapFunc(this.state.goals.otherGoalsCategories, 'category', category)
+        let goalIndex = this.mapFunc(this.state.goals.otherGoalsCategories[categoryIndex].otherGoals, 'id', id)
+
+        if(state.goals.otherGoalsCategories[categoryIndex].otherGoals[goalIndex].percentComplete <= 0){
+            return;
+        }
+        else{
+            state.goals.otherGoalsCategories[categoryIndex].otherGoals[goalIndex].percentComplete+= -2;
+            this.setState({
+                state: state
+            })
+        }
+    }
+    mapFunc = (list, category, find) =>{
+        for(let i = 0; i < list.length; i++){
+            if(list[i][category] === find){
+                return i;
+            }
+        }
+        return null;
     }
     render() {
         return (
@@ -423,7 +476,7 @@ class App extends Component {
                          {this.state.otherStuffs.renderDaily && <DailyGoals updateCheckMark={this.updateCheckMark} dailyGoals={this.state.goals.dailyGoals} deleteGoal={this.deleteGoal} updateDaily={this.updateDaily}/>}
                         </div>
                     </div>
-                    {this.state.otherStuffs.renderOther && <OtherGoals otherGoalCategories={this.state.goals.otherGoalsCategories} deleteGoal={this.deleteGoal} />}
+                    {this.state.otherStuffs.renderOther && <OtherGoals otherGoalCategories={this.state.goals.otherGoalsCategories} deleteGoal={this.deleteGoal}  addPercentage={this.addPercentage} subtractPercentage={this.subtractPercentage}/>}
                 </div>
                 {/* Need new classes for these unless I componentDidMount map the dates n stuff */}
                 {/* <div className="goals">

@@ -19,7 +19,7 @@ class OtherGoals extends Component {
                             <h1>Your Progress</h1>
                         </div>
                     </div>
-                    <OtherGoalList othergoals={category} deleteGoal={deleteGoal}/>
+                    <OtherGoalList othergoals={category} deleteGoal={deleteGoal} addPercentage={this.props.addPercentage} subtractPercentage={this.props.subtractPercentage}/>
                 </div>
             )
         })
