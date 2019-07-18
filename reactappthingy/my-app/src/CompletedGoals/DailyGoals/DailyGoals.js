@@ -1,92 +1,51 @@
 import React, { Component } from 'react';
-import {getYeseterday} from '../commonCommands'
+import {getToday} from '../../commonCommands'
+import {getYeseterday} from '../../commonCommands'
 
-class DailyGoals extends Component {
-    onClick = (e) => {
-        this.props.deleteGoal(e.target.title, 'daily')
-    }
+class OtherGoalsList extends Component {
     render() {
-        const{dailyGoals, deleteGoal} = this.props;
-        const displayCheckBoxes = (goal) =>{
-            // let len = document.querySelector('.dailyheading').clientWidth;
-            let len = 9
-            for(let i = 0; i < len; i++){
-                return(
-                    <React.Fragment>
-                    <div className="onedailygoalcheckmark">
-                    <ul>
-                    <li>
-                        <label className="checkbox">
-                            <input type="checkbox" checked={goal.weeklyChecked[0]} readOnly={true}/>
-                            <span className="checkmark"></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label className="checkbox">
-                            <input type="checkbox" checked={goal.weeklyChecked[1]} readOnly={true}/>
-                            <span className="checkmark"></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label className="checkbox">
-                            <input type="checkbox" checked={goal.weeklyChecked[2]} readOnly={true}/>
-                            <span className="checkmark"></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label className="checkbox">
-                            <input type="checkbox" checked={goal.weeklyChecked[3]} readOnly={true}/>
-                            <span className="checkmark"></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label className="checkbox">
-                            <input type="checkbox" />
-                            <span className="checkmark"></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label className="checkbox">
-                            <input type="checkbox" checked={goal.weeklyChecked[5]} readOnly={true}/>
-                            <span className="checkmark"></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label className="checkbox">
-                            <input type="checkbox" checked={goal.weeklyChecked[6]} readOnly={true}/>
-                            <span className="checkmark"></span>
-                        </label>
-                    </li>
-                    <li className="close-container"onClick={() => {this.props.deleteGoal(goal.id, 'daily')}}>
-                        <div className="leftright"></div>
-                        <div className="rightleft"></div>
-                        <label className="close">close</label>
-                    </li>
-                    </ul>
-                    </div>
-                    </React.Fragment>
-                )
-            }
-        }
-        const displayDailyGoals = dailyGoals.map(goal => {
-            if(Date.parse(goal.endDate) < Date.parse(getYeseterday())){
-                {this.props.deleteGoal(goal.id, 'daily')}
-            }
+        const{dailyGoals} = this.props;
+        const displayOtherGoals = dailyGoals.map(goal=> {
+            // Possibly rework this later to work after component did mount and make it run once only
+            let endDate = new Date(goal.endDate);
+            let totalDays = Math.abs(new Date(goal.startDate) - endDate) / 8.64e+7;
             return(
-                <div className="onedailygoal" key={goal.id}>
-                    <div className="onedailygoalheading" >
-                        <h4>{goal.title}</h4>{goal.snippit}
+                <div className="othergoalslist" key={goal.id}>
+                    <div className="otherdailygoal">
+                        <div className="otherdailygoalheading otherdailygoalheadingheading">
+                            <ul><h4>{goal.title}</h4>{goal.snippit}</ul>
+                        </div>
+                        <div className="otherdailygoalheading extendeddailygoaltimeframe">
+                            <h4>{totalDays} Total Days<br/> Ended {goal.endDate.split('00:00')[0]}</h4>
+                        </div>
+                        <div className="otherdailygoalheading extendeddailygoalyourprogress">
+                            {/* <h1>-</h1>
+                            <h4>{goal.percentComplete}%</h4> */}
+                            <h4>{goal.percentComplete}%<br/> Completed {goal.daysChecked} Days</h4>
+                        </div>
                     </div>
-                    {displayCheckBoxes(goal)}
                 </div>
             )
         })
-
-        return (
-            <div>
-                { displayDailyGoals }
-            </div>
+        return(
+        <div>
+            <div className="othergoals">
+                    <div className="otherheading">
+                        <div className="otherheadingheading">
+                            <h1>Daily</h1>
+                        </div>
+                        <div className="otherheadingheading otherheadingheadingtimeframe">
+                            <h1>TimeFrame</h1>
+                        </div>
+                        <div className="otherheadingheading otherheadingheadingyourprogress">
+                            <h1>Final Progress</h1>
+                        </div>
+                    </div>
+                    {displayOtherGoals}
+                </div>
+        </div>
         )
     }
 }
-export default DailyGoals
+// {goal.startDate.toString().slice(0,10).replace(/-/g,"")}<br/>{goal.endDate.toString().slice(0,10).replace(/-/g,"")}
+export default OtherGoalsList

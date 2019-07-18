@@ -16,10 +16,10 @@ class OtherGoals extends Component {
                             <h1>TimeFrame</h1>
                         </div>
                         <div className="otherheadingheading otherheadingheadingyourprogress">
-                            <h1>Your Progress</h1>
+                            <h1>Final Progress</h1>
                         </div>
                     </div>
-                    <OtherGoalList othergoals={category} deleteGoal={deleteGoal}/>
+                    <OtherGoalList othergoals={category}/>
                 </div>
             )
         })

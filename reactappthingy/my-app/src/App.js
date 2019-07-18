@@ -9,6 +9,9 @@ import uuid from 'uuid'
 import {getToday} from './commonCommands'
 import { bigIntLiteral } from '@babel/types';
 
+import CompletedDailyGoals from './CompletedGoals/DailyGoals/DailyGoals'
+import CompletedOtherGoals from './CompletedGoals/OtherGoals/OtherGoals'
+
 class App extends Component {
     state = {
         goals:{
@@ -30,7 +33,7 @@ class App extends Component {
                     startDate: '2019, 7, 1 00:00',
                     endDate: '2019, 7, 17 00:00',
                     lastDayUpdated:'2019, 7, 14 00:00',
-                    daysChecked: 20,
+                    daysChecked: 12,
                     weeklyChecked: [true, true, false, true, false, false, false]
                 },
                 {
@@ -40,7 +43,7 @@ class App extends Component {
                     startDate: '2019, 7, 1 00:00',
                     endDate: '2019, 7, 17 00:00',
                     lastDayUpdated:'2019, 7, 14 00:00',
-                    daysChecked: 20,
+                    daysChecked: 12,
                     weeklyChecked: [false, true, true, true, false, false, false]
                 }
             ],
@@ -139,6 +142,7 @@ class App extends Component {
             ],
             completed : {
                 dailyGoals : [
+                    
                 ],
                 otherGoalsCategories : [
                     {
@@ -262,7 +266,32 @@ class App extends Component {
     completed = (newGoal, category) => {
         let state = this.state
         // check if daily
+        // id: 1,`
+        // title: 'Programme',
+        // snippit: 'Write Code',
+        // startDate: '2019, 7, 1 00:00',
+        // endDate: '2019, 7, 30 00:00',
+        // lastDayUpdated:'2019, 7, 14 00:00',
+        // daysChecked: 20,
+        // weeklyChecked: [true, false, true, true, true, false, false]
+        // id: 1,
+        // title: 'Learn React',
+        // snippit: 'Code a bunch of stuff',
+        // startDate: '2019, 7, 1 00:00',
+        // endDate: '2019, 7, 15 00:00',
+        // percentComplete: 20
         if(category === 'daily'){
+            let endDate = new Date(newGoal.endDate);
+            let totalDays = Math.abs(new Date(newGoal.startDate) - endDate) / 8.64e+7;
+            newGoal = {
+                id: newGoal.id,
+                title: newGoal.title,
+                snippit: newGoal.snippit,
+                startDate: newGoal.startDate,
+                endDate: newGoal.endDate,
+                daysChecked: newGoal.daysChecked,
+                percentComplete: ((newGoal.daysChecked/totalDays * 100).toString().substr(0, 2))
+            }
             state.goals.completed.dailyGoals.push(newGoal);
         }
         else{
@@ -471,12 +500,14 @@ class App extends Component {
                 <TypeSelector goals={this.state.goals} updateRenderIfs={this.updateRenderIfs}/>
                 <div className="goals">
                     <div className="dailygoals">
-                        {this.state.otherStuffs.renderDaily && this.state.goals.dailyGoals.length !== 0 && <DailyGoalHeading/>}
+                        {this.state.otherStuffs.renderDaily && this.state.goals.dailyGoals.length !== 0 && this.state.otherStuffs.renderCurrent && <DailyGoalHeading/>}
                         <div className="dailygoalslist">
-                         {this.state.otherStuffs.renderDaily && <DailyGoals updateCheckMark={this.updateCheckMark} dailyGoals={this.state.goals.dailyGoals} deleteGoal={this.deleteGoal} updateDaily={this.updateDaily}/>}
+                        {this.state.otherStuffs.renderDaily && this.state.goals.completed.dailyGoals.length !==  0 && this.state.otherStuffs.renderCompleted &&<CompletedDailyGoals dailyGoals={this.state.goals.completed.dailyGoals} />}
+                         {this.state.otherStuffs.renderDaily && this.state.otherStuffs.renderCurrent && this.state.goals.otherGoalsCategories.length !== 0 &&<DailyGoals updateCheckMark={this.updateCheckMark} dailyGoals={this.state.goals.dailyGoals} deleteGoal={this.deleteGoal} updateDaily={this.updateDaily}/>}
                         </div>
                     </div>
-                    {this.state.otherStuffs.renderOther && <OtherGoals otherGoalCategories={this.state.goals.otherGoalsCategories} deleteGoal={this.deleteGoal}  addPercentage={this.addPercentage} subtractPercentage={this.subtractPercentage}/>}
+                    {this.state.otherStuffs.renderOther && this.state.otherStuffs.renderCurrent && this.state.goals.otherGoalsCategories.length !== 0 && <OtherGoals otherGoalCategories={this.state.goals.otherGoalsCategories} deleteGoal={this.deleteGoal}  addPercentage={this.addPercentage} subtractPercentage={this.subtractPercentage}/>}
+                    {this.state.otherStuffs.renderOther && this.state.goals.completed.otherGoalsCategories.length !== 0 && this.state.otherStuffs.renderCompleted && <CompletedOtherGoals otherGoalCategories={this.state.goals.completed.otherGoalsCategories}/>}
                 </div>
                 {/* Need new classes for these unless I componentDidMount map the dates n stuff */}
                 {/* <div className="goals">
@@ -486,9 +517,8 @@ class App extends Component {
                          {this.state.otherStuffs.renderDaily && this.state.goals.completed.dailyGoals.length !==  0 &&<DailyGoals dailyGoals={this.state.goals.completed.dailyGoals} deleteGoal={this.deleteGoal} />}
                         </div>
                     </div>
-                    {this.state.otherStuffs.renderOther && this.state.goals.completed.otherGoalsCategories.length !== 0 && <OtherGoals otherGoalCategories={this.state.goals.completed.otherGoalsCategories} deleteGoal={this.deleteGoal} />}
+                    {this.state.otherStuffs.renderOther && this.state.goals.completed.otherGoalsCategories.length !== 0 && this.state.otherStuffs.renderCompleted && <CompletedOtherGoals otherGoalCategories={this.state.goals.completed.otherGoalsCategories} deleteGoal={this.deleteGoal} />}
                 </div> */}
-                {!this.state.otherStuffs.overlayIsHidden && <Overlay closeGoalOverlay={this.displayGoalOverlay} otherGoalCategories={this.state.goals.completed.otherGoalsCategories} stateAdd={this.stateAdd} />}
             </div>
     </div>
     );

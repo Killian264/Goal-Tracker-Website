@@ -1,23 +1,14 @@
 import React, { Component } from 'react';
-import {getToday} from '../commonCommands'
-import {getYeseterday} from '../commonCommands'
+import {getToday} from '../../commonCommands'
+import {getYeseterday} from '../../commonCommands'
 
 class OtherGoalsList extends Component {
-    onClick = (e) => {
-        this.props.deleteGoal(e.target.title, e.target.id)
-    }
     render() {
         const{othergoals} = this.props;
         const displayOtherGoals = othergoals.otherGoals.map(goal=> {
-            console.log(goal);
             // Possibly rework this later to work after component did mount and make it run once only
-            if(Date.parse(goal.endDate) < Date.parse(getYeseterday())){
-                {this.props.deleteGoal(goal.id, othergoals.category)}
-            }
             let endDate = new Date(goal.endDate);
             let totalDays = Math.abs(new Date(goal.startDate) - endDate) / 8.64e+7;
-            let today = getToday();
-            let timeLeft = (Math.abs(endDate - new Date(today)) / 8.64e+7).toString().split('.')[0];
             return(
                 <div className="othergoalslist" key={goal.id}>
                     <div className="otherdailygoal">
@@ -25,19 +16,15 @@ class OtherGoalsList extends Component {
                             <ul><h4>{goal.title}</h4>{goal.snippit}</ul>
                         </div>
                         <div className="otherdailygoalheading extendeddailygoaltimeframe">
-                            <h4>{totalDays} Total Days<br/>{timeLeft} Days Left</h4>
+                            <h4>{totalDays} Total Days<br/> Ended {goal.endDate.split('00:00')[0]}</h4>
                         </div>
                         <div className="otherdailygoalheading extendeddailygoalyourprogress">
-                        <h4>{goal.percentComplete}%</h4>
-                        <div className="close-container"onClick={() => {this.props.deleteGoal(goal.id, othergoals.category)}}>
-                            <div className="leftright"></div>
-                            <div className="rightleft"></div>
-                            -
+                            {/* <h1>-</h1>
+                            <h4>{goal.percentComplete}%</h4> */}
+                            <h4>{goal.percentComplete}%</h4>
                         </div>
                     </div>
                 </div>
-              
-          </div>
             )
         })
 
