@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import {getYeseterday, getToday} from '../commonCommands'
 
 class DailyGoals extends Component {
     state = {
@@ -7,13 +6,13 @@ class DailyGoals extends Component {
     }
     heading = React.createRef();
     componentDidMount() {
-      let len = this.heading.current.offsetWidth
-      this.updateState(len);
+        let len = this.heading.current.offsetWidth
+        this.updateState(len);
     }
     updateState = (len)=> {
         // size of header is 200px checkmark is 80 px
         len = Math.floor((len - 200)/80)
-        len > 8 ? len = 8 : len = len
+        if(len > 8){len = 8}
         let state = this.state
         state.renderAmount = len
         this.setState({
@@ -22,7 +21,7 @@ class DailyGoals extends Component {
     }
     listElement = (goal, i) =>{
         return(
-            <li>
+            <li key={i}>
                 <label className="checkbox">
                     <input type="checkbox" checked={goal.weeklyChecked[i]} readOnly={true}/>
                     <span className="checkmark"></span>
@@ -65,35 +64,25 @@ class DailyGoals extends Component {
     render() {
         const{dailyGoals, deleteGoal, updateCheckMark} = this.props;
         const displayCheckBoxes = (goal) =>{
-                return(
-                    <React.Fragment>
-                        <div className="onedailygoalcheckmark">
-                            <ul>
-                                {this.negativedateRenders(goal, this.state.renderAmount )}
-                                <li>
-                                    <label className="checkbox checkboxmain">
-                                        <input type="checkbox" checked={goal.weeklyChecked[4]} readOnly={true} onClick={() => {this.props.updateCheckMark(goal.id)}} />
-                                        <span className="checkmark"></span>
-                                    </label>
-                                </li>
-                                {this.positivedateRenders(goal, Math.floor((this.state.renderAmount/2)) - 2) }
-                                <li className="close-container"onClick={() => {this.props.deleteGoal(goal.id, 'daily')}}>
-                                    <div className="leftright"></div>
-                                    <div className="rightleft"></div>
-                                    <label className="close">close</label>
-                                </li>
-                            </ul>
-                        </div>
-                    </React.Fragment>
-                )
+            return(
+                <ul key={goal.id}>
+                    {this.negativedateRenders(goal, this.state.renderAmount )}
+                    <li key={4}>
+                        <label className="checkbox checkboxmain">
+                            <input type="checkbox" checked={goal.weeklyChecked[4]} readOnly={true} onClick={() => {updateCheckMark(goal.id)}} />
+                            <span className="checkmark"></span>
+                        </label>
+                    </li>
+                    {this.positivedateRenders(goal, Math.floor((this.state.renderAmount/2)) - 2) }
+                    <li key={8} className="close-container"onClick={() => {deleteGoal(goal.id, 'daily')}}>
+                        <div className="leftright"></div>
+                        <div className="rightleft"></div>
+                        <label className="close">close</label>
+                    </li>
+                </ul>
+            )
         }
         const displayDailyGoals = dailyGoals.map(goal => {
-            if(Date.parse(goal.endDate) <= Date.parse(getYeseterday())){
-                {this.props.deleteGoal(goal.id, 'daily')}
-            }
-            if(Date.parse(goal.lastDayUpdated) < Date.parse(getToday())){
-                {this.props.updateDaily()}
-            }
             return(
                 <div className="onedailygoal" key={goal.id} ref={this.heading}>
                     <div className="onedailygoalheading" >
@@ -105,7 +94,7 @@ class DailyGoals extends Component {
         })
 
         return (
-            <div>
+            <div className="onedailygoalcheckmark">
                 { displayDailyGoals }
             </div>
         )

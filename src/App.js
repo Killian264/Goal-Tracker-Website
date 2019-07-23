@@ -3,12 +3,10 @@ import './App.css'
 import DailyGoalHeading from './DailyGoals/DailyGoalHeading'
 import DailyGoals from './DailyGoals/DailyGoals'
 import OtherGoals from './OtherGoals/OtherGoals'
-import Overlay from './Overlay'
 import TypeSelector from './TypeSelector'
 import uuid from 'uuid'
-import {getToday} from './commonCommands'
-import { bigIntLiteral } from '@babel/types';
-
+import Overlay from './Overlay'
+import {getToday, getYeseterday} from './commonCommands'
 import CompletedDailyGoals from './CompletedGoals/DailyGoals/DailyGoals'
 import CompletedOtherGoals from './CompletedGoals/OtherGoals/OtherGoals'
 
@@ -31,7 +29,7 @@ class App extends Component {
                     title: 'Learn React',
                     snippit: 'Write Code',
                     startDate: '2019, 7, 1 00:00',
-                    endDate: '2019, 7, 17 00:00',
+                    endDate: '2019, 7, 30 00:00',
                     lastDayUpdated:'2019, 7, 14 00:00',
                     daysChecked: 12,
                     weeklyChecked: [true, true, false, true, false, false, false]
@@ -39,6 +37,16 @@ class App extends Component {
                 {
                     id: 3,
                     title: 'Be Cool',
+                    snippit: 'Yea',
+                    startDate: '2019, 7, 1 00:00',
+                    endDate: '2019, 7, 10 00:00',
+                    lastDayUpdated:'2019, 7, 14 00:00',
+                    daysChecked: 12,
+                    weeklyChecked: [false, true, true, true, false, false, false]
+                },
+                {
+                    id: 5454,
+                    title: 'Be Cools',
                     snippit: 'Yea',
                     startDate: '2019, 7, 1 00:00',
                     endDate: '2019, 7, 17 00:00',
@@ -50,10 +58,10 @@ class App extends Component {
             otherGoalsCategories:[
                 {
                     category: 'Programming',
-                    id: 1,
+                    id: 4,
                     otherGoals:[
                         {
-                            id: 1,
+                            id: 5,
                             title: 'Learn React',
                             snippit: 'Code a bunch of stuff',
                             startDate: '2019, 7, 1 00:00',
@@ -61,7 +69,7 @@ class App extends Component {
                             percentComplete: 20
                         },
                         {
-                            id: 2,
+                            id: 6,
                             title: 'Learn to Code',
                             snippit: 'Learn React, C++, SQL, and more C#',
                             startDate: '2019, 5, 1 00:00',
@@ -72,10 +80,10 @@ class App extends Component {
                 },
                 {
                     category: 'Reading',
-                    id: 2,
+                    id: 7,
                     otherGoals:[
                         {
-                            id: 1,
+                            id: 8,
                             title: 'Read a book',
                             snippit: 'Read the blade itself',
                             startDate: '2019, 7, 8 00:00',
@@ -83,7 +91,7 @@ class App extends Component {
                             percentComplete: 0
                         },
                         {
-                            id: 2,
+                            id: 9,
                             title: 'Read 20 books',
                             snippit: "Shouldn't be too hard he thought",
                             startDate: '2019, 1, 1 00:00',
@@ -94,10 +102,10 @@ class App extends Component {
                 },
                 {
                     category: 'Goal Tracker Project',
-                    id: 3,
+                    id: 10,
                     otherGoals:[
                         {
-                            id: 1,
+                            id: 11,
                             title: 'Add Goal Adding',
                             snippit: 'Add Form and State Addition',
                             startDate: '2019, 7, 9 00:00',
@@ -105,7 +113,7 @@ class App extends Component {
                             percentComplete: 0
                         },
                         {
-                            id: 2,
+                            id: 12,
                             title: 'Add Goal Deletion',
                             snippit: 'Add Form and State Deletion',
                             startDate: '2019, 7, 9 00:00',
@@ -113,7 +121,7 @@ class App extends Component {
                             percentComplete: 0
                         },
                         {
-                            id: 3,
+                            id: 13,
                             title: 'Fix Small bugs',
                             snippit: 'SideNav Stuff',
                             startDate: '2019, 7, 9 00:00',
@@ -121,7 +129,7 @@ class App extends Component {
                             percentComplete: 0
                         },
                         {
-                            id: 4,
+                            id: 14,
                             title: 'Add Sorting Box',
                             snippit: 'Should be easy after I learn add and delete stuff',
                             startDate: '2019, 7, 9 00:00',
@@ -129,7 +137,7 @@ class App extends Component {
                             percentComplete: 0
                         },
                         {
-                            id: 5,
+                            id: 15,
                             title: 'Add Login and backend stuff',
                             snippit: 'This might be the hard part',
                             startDate: '2019, 7, 9 00:00',
@@ -147,10 +155,10 @@ class App extends Component {
                 otherGoalsCategories : [
                     {
                         category: 'Programming',
-                        id: 1,
+                        id: 16,
                         otherGoals:[
                             {
-                                id: 1,
+                                id: 17,
                                 title: 'Learn React',
                                 snippit: 'Code a bunch of stuff',
                                 startDate: '2019, 7, 1 00:00',
@@ -170,41 +178,113 @@ class App extends Component {
             renderOther: true,
         }
     }
+    componentDidMount(){
+        let localState = this.state
+        let updatedDailyGoals= []
+        this.state.goals.dailyGoals.forEach(goal => {
+            if(Date.parse(goal.endDate) <= Date.parse(getYeseterday())){
+                localState.goals.completed.dailyGoals.push(this.changeDailyToCompleted(goal))
+            }
+            else{
+                if(Date.parse(goal.lastDayUpdated) < Date.parse(getToday())){
+                    let numDays = (((Date.parse(goal.lastDayUpdated) - Date.parse(getToday()))/ 8.64e+7) * -1)
+                    updatedDailyGoals.push(this.updateLastUpdated(goal, numDays))
+                }   
+            }
+        })
+        // loop through categories
+        let updatedOtherCategories = []
+        this.state.goals.otherGoalsCategories.forEach(category => {
+            //loop through goals
+            let updatedOtherGoals= []
+            category.otherGoals.forEach(goal => {
+                if(Date.parse(goal.endDate) <= Date.parse(getYeseterday())){
+                    //do push thingies
+                    let pushed = false
+                    this.state.goals.completed.otherGoalsCategories.forEach((completedCategory, index) => {
+                        if(completedCategory.category === category.category){
+                            localState.goals.completed.otherGoalsCategories[index].otherGoals.push(goal)
+                            pushed = true
+                        }
+                    })
+                    if(pushed === false){
+                        localState.goals.completed.otherGoalsCategories.push(
+                            {
+                                category: category.category,
+                                id: category.id,
+                                otherGoals:[
+                                    goal
+                                ]
+                            }
+                        )
+                    }
 
+                }
+                else{
+                    updatedOtherGoals.push(goal)
+                }
+            })
+
+            if(updatedOtherGoals.length !== 0){
+                let categoryRet = category
+                categoryRet.otherGoals = updatedOtherGoals
+                updatedOtherCategories.push(categoryRet)
+            }
+        })
+        localState.goals.otherGoalsCategories = updatedOtherCategories
+        localState.goals.dailyGoals = updatedDailyGoals
+        this.setState({
+            state: localState
+        })
+
+    }
+    updateLastUpdated = (goal, numDays) =>{
+        if(numDays > 5){
+            goal.lastDayUpdated = getToday()
+            goal.weeklyChecked = [false, false, false, false, false, false, false]
+        }
+        else{
+            goal.lastDayUpdated = getToday()
+            let weeklyChecked = [false, false, false, false, false, false, false]
+            for(let i = 0; i < (5 - numDays); i++){
+                weeklyChecked[i] = goal.weeklyChecked[i + numDays]
+            }
+            goal.weeklyChecked = weeklyChecked
+        }
+        return goal
+    }
+    changeDailyToCompleted(newGoal){
+        let endDate = new Date(newGoal.endDate);
+        let totalDays = Math.abs(new Date(newGoal.startDate) - endDate) / 8.64e+7;
+        newGoal = {
+            id: newGoal.id,
+            title: newGoal.title,
+            snippit: newGoal.snippit,
+            startDate: newGoal.startDate,
+            endDate: newGoal.endDate,
+            daysChecked: newGoal.daysChecked,
+            percentComplete: ((newGoal.daysChecked/totalDays * 100).toString().substr(0, 2))
+        }
+        return newGoal
+    }
     deleteGoal = (key, category) => {
         let state = this.state;
         let toCompletedGoal;
         if(category === 'daily'){
-            //sets filtered Arr to goal then filters out the deleted goal
-            // console.log(this.state.goals.dailyGoals)
-            // let filteredArr = this.state.goals.dailyGoals;
-            // let index = this.mapFunc(this.state.goals.dailyGoals, 'id', key)
-            // this.state.goals.dailyGoals.map((goal, index) =>{
-            //     if(goal.id === key){
-            //         filteredArr.splice(index, 1);
-            //         toCompletedGoal = goal;
-            //     }
-            //     return true;
-            // })  
-            // console.log(toCompletedGoal)
-            // console.log(this.state.goals.dailyGoals)
-            // state.goals.dailyGoals = filteredArr
-
             let filteredArr = this.state.goals.dailyGoals;
             let index = this.mapFunc(this.state.goals.dailyGoals, 'id', key)
             toCompletedGoal = this.state.goals.dailyGoals[index]
             filteredArr.splice(index, 1);
-            console.log(toCompletedGoal)
             state.goals.dailyGoals = filteredArr
         }
         else{
             //maps and finds category
-            this.state.goals.otherGoalsCategories.map((catagories, index) => {
+            this.state.goals.otherGoalsCategories.forEach((catagories, index) => {
                 if(catagories.category === category){
                     // sets filtered Arr to goal then filters out the deleted goal
                     let filteredArr = this.state.goals.otherGoalsCategories[index].otherGoals;
                     // Finds and removes goal
-                    this.state.goals.otherGoalsCategories[index].otherGoals.map((goal, index) =>{
+                    this.state.goals.otherGoalsCategories[index].otherGoals.forEach((goal, index) =>{
                         if(goal.id === key){
                             filteredArr.splice(index, 1);
                             toCompletedGoal = goal;
@@ -258,6 +338,8 @@ class App extends Component {
                     otherStuffs.renderDaily = false;
                 }
                 break;
+            default:
+                break;
         }
         this.setState({
             otherStuffs: otherStuffs
@@ -265,21 +347,6 @@ class App extends Component {
     }
     completed = (newGoal, category) => {
         let state = this.state
-        // check if daily
-        // id: 1,`
-        // title: 'Programme',
-        // snippit: 'Write Code',
-        // startDate: '2019, 7, 1 00:00',
-        // endDate: '2019, 7, 30 00:00',
-        // lastDayUpdated:'2019, 7, 14 00:00',
-        // daysChecked: 20,
-        // weeklyChecked: [true, false, true, true, true, false, false]
-        // id: 1,
-        // title: 'Learn React',
-        // snippit: 'Code a bunch of stuff',
-        // startDate: '2019, 7, 1 00:00',
-        // endDate: '2019, 7, 15 00:00',
-        // percentComplete: 20
         if(category === 'daily'){
             let endDate = new Date(newGoal.endDate);
             let totalDays = Math.abs(new Date(newGoal.startDate) - endDate) / 8.64e+7;
@@ -341,7 +408,6 @@ class App extends Component {
         this.setState({
             [state.goals]: state
         })
-        console.log(this.state.goals.dailyGoals)
     }
     stateAdd = (newGoal) => {
         let state = this.state
@@ -400,34 +466,6 @@ class App extends Component {
     navSlideChange = ()=>{
         const nav = document.querySelector('.sidenav');
         nav.classList.toggle('nav-active');
-    }
-    // updateDaily = () => {
-    //     return;
-    // }
-    updateDaily = () => {
-        let state = this.state;
-        let numDays = (((Date.parse(state.goals.dailyGoals[0].lastDayUpdated) - Date.parse(getToday()))/ 8.64e+7) * -1)
-        console.log(numDays)
-        if(numDays > 5){
-            state.goals.dailyGoals.map(goal => {
-                goal.lastDayUpdated = getToday()
-                goal.weeklyChecked = [false, false, false, false, false, false, false]
-            })
-        }
-        else{
-            state.goals.dailyGoals.map(goal => {
-                goal.lastDayUpdated = getToday();
-                let weeklyChecked = [false, false, false, false, false, false, false]
-                for(let i = 0; i < (5 - numDays); i++){
-                    weeklyChecked[i] = goal.weeklyChecked[i + numDays]
-                }
-                goal.weeklyChecked = weeklyChecked
-            })
-        }
-        this.setState({
-            state: state
-        })
-        console.log(this.state.goals.dailyGoals)
     }
     addPercentage = (id, category) => {
         let state = this.state;
@@ -496,29 +534,19 @@ class App extends Component {
                 </div>
             </div>
             <div className="main">
-
                 <TypeSelector goals={this.state.goals} updateRenderIfs={this.updateRenderIfs}/>
                 <div className="goals">
                     <div className="dailygoals">
                         {this.state.otherStuffs.renderDaily && this.state.goals.dailyGoals.length !== 0 && this.state.otherStuffs.renderCurrent && <DailyGoalHeading/>}
                         <div className="dailygoalslist">
                         {this.state.otherStuffs.renderDaily && this.state.goals.completed.dailyGoals.length !==  0 && this.state.otherStuffs.renderCompleted &&<CompletedDailyGoals dailyGoals={this.state.goals.completed.dailyGoals} />}
-                         {this.state.otherStuffs.renderDaily && this.state.otherStuffs.renderCurrent && this.state.goals.otherGoalsCategories.length !== 0 &&<DailyGoals updateCheckMark={this.updateCheckMark} dailyGoals={this.state.goals.dailyGoals} deleteGoal={this.deleteGoal} updateDaily={this.updateDaily}/>}
+                         {this.state.otherStuffs.renderDaily && this.state.otherStuffs.renderCurrent && this.state.goals.dailyGoals.length !== 0 &&<DailyGoals updateCheckMark={this.updateCheckMark} dailyGoals={this.state.goals.dailyGoals} deleteGoal={this.deleteGoal}/>}
                         </div>
                     </div>
                     {this.state.otherStuffs.renderOther && this.state.otherStuffs.renderCurrent && this.state.goals.otherGoalsCategories.length !== 0 && <OtherGoals otherGoalCategories={this.state.goals.otherGoalsCategories} deleteGoal={this.deleteGoal}  addPercentage={this.addPercentage} subtractPercentage={this.subtractPercentage}/>}
                     {this.state.otherStuffs.renderOther && this.state.goals.completed.otherGoalsCategories.length !== 0 && this.state.otherStuffs.renderCompleted && <CompletedOtherGoals otherGoalCategories={this.state.goals.completed.otherGoalsCategories}/>}
                 </div>
-                {/* Need new classes for these unless I componentDidMount map the dates n stuff */}
-                {/* <div className="goals">
-                    <div className="dailygoals">
-                        {this.state.otherStuffs.renderDaily && this.state.goals.completed.dailyGoals.length !== 0 &&<DailyGoalHeading />}
-                        <div className="dailygoalslist">
-                         {this.state.otherStuffs.renderDaily && this.state.goals.completed.dailyGoals.length !==  0 &&<DailyGoals dailyGoals={this.state.goals.completed.dailyGoals} deleteGoal={this.deleteGoal} />}
-                        </div>
-                    </div>
-                    {this.state.otherStuffs.renderOther && this.state.goals.completed.otherGoalsCategories.length !== 0 && this.state.otherStuffs.renderCompleted && <CompletedOtherGoals otherGoalCategories={this.state.goals.completed.otherGoalsCategories} deleteGoal={this.deleteGoal} />}
-                </div> */}
+                {!this.state.otherStuffs.overlayIsHidden && <Overlay otherGoalCategories={this.state.goals.otherGoalsCategories} closeGoalOverlay={this.displayGoalOverlay} stateAdd={this.stateAdd}/>}
             </div>
     </div>
     );

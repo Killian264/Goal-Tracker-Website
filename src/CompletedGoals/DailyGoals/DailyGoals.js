@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import {getToday} from '../../commonCommands'
-import {getYeseterday} from '../../commonCommands'
 
 class OtherGoalsList extends Component {
     render() {
@@ -19,8 +17,6 @@ class OtherGoalsList extends Component {
                             <h4>{totalDays} Total Days<br/> Ended {goal.endDate.split('00:00')[0]}</h4>
                         </div>
                         <div className="otherdailygoalheading extendeddailygoalyourprogress">
-                            {/* <h1>-</h1>
-                            <h4>{goal.percentComplete}%</h4> */}
                             <h4>{goal.percentComplete}%<br/> Completed {goal.daysChecked} Days</h4>
                         </div>
                     </div>

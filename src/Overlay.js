@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import {getYeseterday} from './commonCommands'
 
 class Overlay extends Component {
     state = {
@@ -25,6 +26,10 @@ class Overlay extends Component {
     onSubmit = (e) => {
         e.preventDefault();
         if((this.state.title && this.state.endDate) && (!(this.state.newCategory) || !(this.state.category === 'newCategory')) ){
+            if(new Date(this.state.endDate) < new Date(getYeseterday())){
+                window.alert("Date must be today or later")
+                return;
+            }
             this.props.stateAdd(this.state);
         }
         else{
@@ -36,7 +41,7 @@ class Overlay extends Component {
 
     render() {
         const{otherGoalCategories , closeGoalOverlay} = this.props;
-        const categories = otherGoalCategories.map(category => {
+        const categories = otherGoalCategories.forEach(category => {
             return(
                 <option key={category.key} value={category.category}> {category.category}</option>
             )

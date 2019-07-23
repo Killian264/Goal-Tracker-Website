@@ -3,7 +3,7 @@ import OtherGoalList from './OtherGoalList';
 
 class OtherGoals extends Component {
     render() {
-        const{otherGoalCategories, deleteGoal} = this.props;
+        const{otherGoalCategories} = this.props;
         const displayOtherGoals = otherGoalCategories.map(category => {
 
             return(

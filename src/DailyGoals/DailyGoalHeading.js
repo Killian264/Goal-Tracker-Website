@@ -13,7 +13,7 @@ class DailyGoalHeading extends Component {
     updateState = (len)=> {
         // size of header is 200px checkmark is 80 px
         len = Math.floor((len - 200)/80)
-        len > 8 ? len = 8 : len = len
+        if(len > 8){len = 8}
         let state = this.state
         state.renderAmount = len
         this.setState({
@@ -22,7 +22,7 @@ class DailyGoalHeading extends Component {
     }
     listElement = (i) =>{
         return(
-            <li>{this.getWeekDay(i)}<br/>{this.getMonthDay(i)}</li>
+            <li key={i}>{this.getWeekDay(i)}<br/>{this.getMonthDay(i)}</li>
         )
     }
     positivedateRenders = (len) => {
@@ -51,14 +51,12 @@ class DailyGoalHeading extends Component {
         )
     }
     getWeekDay = (offset) => {
-        let weekdays = new Array(
-            "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"
-        );
-        let today = new Date;
+        let weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+        let today = new Date();
         return weekdays[new Date(today.getFullYear(), today.getMonth(),  today.getDate() + offset).getDay()]
     }
     getMonthDay = (offset) => {
-        let today = new Date;
+        let today = new Date();
         today = new Date(today.getFullYear(), today.getMonth(),  today.getDate() + offset);
         return today.getDate()
     }

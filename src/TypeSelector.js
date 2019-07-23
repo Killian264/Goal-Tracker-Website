@@ -8,7 +8,7 @@ class TypeSelector extends Component {
         completedLength: 0
     }
     render() {
-        const{goals} = this.props.goals;
+        // const{goals} = this.props.goals;
         const updateRenderIfs = (e) =>{
             this.props.updateRenderIfs(e.target.id)
         }
@@ -20,7 +20,7 @@ class TypeSelector extends Component {
             state.dailyLength = (this.props.goals.dailyGoals).length
 
             // otherGoals
-            this.props.goals.otherGoalsCategories.map(catagories => {
+            this.props.goals.otherGoalsCategories.forEach(catagories => {
                 lengthTemp = catagories.otherGoals.length
                 state[catagories.catagory] = lengthTemp
                 length += lengthTemp
@@ -36,7 +36,7 @@ class TypeSelector extends Component {
             length = (this.props.goals.completed.dailyGoals).length
 
             // otherGoals
-            this.props.goals.completed.otherGoalsCategories.map(catagories => {
+            this.props.goals.completed.otherGoalsCategories.forEach(catagories => {
                 lengthTemp = catagories.otherGoals.length
                 state[catagories.catagory] = lengthTemp
                 length += lengthTemp
@@ -70,7 +70,7 @@ class TypeSelector extends Component {
                 </div>
             )
         }
-        const renderSelector = this.props.goals.otherGoalsCategories.map(catagories => {
+        const renderSelector = this.props.goals.otherGoalsCategories.forEach(catagories => {
                 return(
                     <li key={catagories.id}><span>{catagories.category}: {catagories.otherGoals.length}</span></li> 
                 )
