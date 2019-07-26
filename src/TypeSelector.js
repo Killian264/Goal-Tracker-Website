@@ -48,17 +48,32 @@ class TypeSelector extends Component {
                 <div className="goaltypeselector">
                     <h2>Sort Goals</h2>
                     <div className="sort">
-                        <ul onClick={updateRenderIfs}>
-                            <li id='renderCurrent'>Current: {state.dailyLength + state.otherLength}</li> 
-                            <li id='renderCompleted'>Completed: {state.completedLength}</li>
+                        <ul>
+                            <label className="radiobtn">Current: {state.dailyLength + state.otherLength}
+                                <input type="radio" onClick={() =>  this.props.updateRenderIfs('renderCurrent')} name='currentOrCompleted'defaultChecked />
+                                <span id='renderCurrent' className="radiocheckmark"></span>
+                            </label>
+                            <label className="radiobtn">Completed: {state.completedLength}
+                                <input type="radio" onClick={() =>  this.props.updateRenderIfs('renderCompleted')} name='currentOrCompleted' />
+                                <span id='renderCompleted' className="radiocheckmark"></span>
+                            </label>
                         </ul>
                     </div>
                     <div className="goaltype">
                         <h3>Goal Type</h3>
                         <ul>
-                            <li id='allTypes' onClick={updateRenderIfs}>All Types: {state.dailyLength + state.otherLength}</li> 
-                            <li id='renderDaily' onClick={updateRenderIfs}>Daily Goals: {state.dailyLength}</li> 
-                            <li id='renderOther' onClick={updateRenderIfs}>Other Goals: {state.otherLength}</li>
+                            <label className="radiobtn">All Types: {state.dailyLength + state.otherLength}
+                                <input type="radio" onClick={() => this.props.updateRenderIfs('allTypes')} name="goaltype" defaultChecked />
+                                <span id='allTypes' className="radiocheckmark"></span>
+                            </label>
+                            <label className="radiobtn">Daily Goals: {state.dailyLength}
+                                <input type="radio" onClick={() => this.props.updateRenderIfs('renderDaily')} name="goaltype" />
+                                <span className="radiocheckmark"></span>
+                            </label>
+                            <label className="radiobtn">Other Goals: {state.otherLength}
+                                <input type="radio"  onClick={() => this.props.updateRenderIfs('renderOther')} name="goaltype" />
+                                <span className="radiocheckmark"></span>
+                            </label>
                         </ul>
                     </div>
                     <div className="catagories">
@@ -70,9 +85,12 @@ class TypeSelector extends Component {
                 </div>
             )
         }
-        const renderSelector = this.props.goals.otherGoalsCategories.forEach(catagories => {
+        const renderSelector = this.props.goals.otherGoalsCategories.map(categories => {
                 return(
-                    <li key={catagories.id}><span>{catagories.category}: {catagories.otherGoals.length}</span></li> 
+                    <label key={categories.id}className="radiobtn" id='renderDaily'>{categories.category}: {categories.otherGoals.length}
+                        <input type="checkbox" onClick={() => this.props.updateCategoryRender(categories.id)} name="category" defaultChecked />
+                        <span id='renderDaily' className="radiocheckmark"></span>
+                    </label>
                 )
             })
         return (

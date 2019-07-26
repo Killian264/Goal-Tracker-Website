@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import DailyGoals from './DailyGoals'
 
 class DailyGoalHeading extends Component {
     state = {
@@ -62,7 +63,8 @@ class DailyGoalHeading extends Component {
     }
     render() {
         return (
-            <div className="dailyheading" ref={this.heading}>
+            <div className="dailygoals">
+                <div className="dailyheading" ref={this.heading}>
                     <div className="dailyheadingheading">
                         <h1>Daily Goals</h1>
                     </div>
@@ -73,6 +75,10 @@ class DailyGoalHeading extends Component {
                         <li>Del<br/>▼</li>
                     </ul>
                 </div>
+                <div className="dailygoalslist">
+                {<DailyGoals updateCheckMark={this.props.updateCheckMark} dailyGoals={this.props.dailyGoals} deleteGoal={this.props.deleteGoal}/>}
+                </div>
+            </div>
         )
     }
 }

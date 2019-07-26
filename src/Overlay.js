@@ -41,7 +41,7 @@ class Overlay extends Component {
 
     render() {
         const{otherGoalCategories , closeGoalOverlay} = this.props;
-        const categories = otherGoalCategories.forEach(category => {
+        const categories = otherGoalCategories.map(category => {
             return(
                 <option key={category.key} value={category.category}> {category.category}</option>
             )

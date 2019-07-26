@@ -6,6 +6,8 @@ class OtherGoals extends Component {
         const{otherGoalCategories, deleteGoal} = this.props;
         const displayOtherGoals = otherGoalCategories.map(category => {
 
+            if(category.render === false) {return(null)}
+
             return(
                 <div className="othergoals" key={category.id}>
                     <div className="otherheading">

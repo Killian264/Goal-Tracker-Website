@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import './App.css'
 import DailyGoalHeading from './DailyGoals/DailyGoalHeading'
-import DailyGoals from './DailyGoals/DailyGoals'
 import OtherGoals from './OtherGoals/OtherGoals'
 import TypeSelector from './TypeSelector'
 import uuid from 'uuid'
@@ -59,6 +58,7 @@ class App extends Component {
                 {
                     category: 'Programming',
                     id: 4,
+                    render: true,
                     otherGoals:[
                         {
                             id: 5,
@@ -81,6 +81,7 @@ class App extends Component {
                 {
                     category: 'Reading',
                     id: 7,
+                    render: true,
                     otherGoals:[
                         {
                             id: 8,
@@ -103,6 +104,7 @@ class App extends Component {
                 {
                     category: 'Goal Tracker Project',
                     id: 10,
+                    render: true,
                     otherGoals:[
                         {
                             id: 11,
@@ -238,6 +240,21 @@ class App extends Component {
         })
 
     }
+    updateCategoryRender = (key) => {
+        let localState = this.state
+        this.state.goals.otherGoalsCategories.map((category, index) => {
+            console.log(category.id, key)
+            if(category.id === key){
+                localState.goals.otherGoalsCategories[index].render = !localState.goals.otherGoalsCategories[index].render
+                console.log('found it')
+            }
+        })
+        
+        this.setState({
+            state: localState
+        })
+    }
+
     updateLastUpdated = (goal, numDays) =>{
         if(numDays > 5){
             goal.lastDayUpdated = getToday()
@@ -443,6 +460,7 @@ class App extends Component {
                 newGoal = {
                     category: category,
                     id: uuid.v4(),
+                    render: true,
                     otherGoals: [
                         newGoal
                     ]
@@ -534,19 +552,25 @@ class App extends Component {
                 </div>
             </div>
             <div className="main">
-                <TypeSelector goals={this.state.goals} updateRenderIfs={this.updateRenderIfs}/>
+                {/* Side selector for what to render */}
+                <TypeSelector goals={this.state.goals} updateRenderIfs={this.updateRenderIfs}  updateCategoryRender={this.updateCategoryRender}/>
                 <div className="goals">
-                    <div className="dailygoals">
-                        {this.state.otherStuffs.renderDaily && this.state.goals.dailyGoals.length !== 0 && this.state.otherStuffs.renderCurrent && <DailyGoalHeading/>}
-                        <div className="dailygoalslist">
-                        {this.state.otherStuffs.renderDaily && this.state.goals.completed.dailyGoals.length !==  0 && this.state.otherStuffs.renderCompleted &&<CompletedDailyGoals dailyGoals={this.state.goals.completed.dailyGoals} />}
-                         {this.state.otherStuffs.renderDaily && this.state.otherStuffs.renderCurrent && this.state.goals.dailyGoals.length !== 0 &&<DailyGoals updateCheckMark={this.updateCheckMark} dailyGoals={this.state.goals.dailyGoals} deleteGoal={this.deleteGoal}/>}
-                        </div>
-                    </div>
-                    {this.state.otherStuffs.renderOther && this.state.otherStuffs.renderCurrent && this.state.goals.otherGoalsCategories.length !== 0 && <OtherGoals otherGoalCategories={this.state.goals.otherGoalsCategories} deleteGoal={this.deleteGoal}  addPercentage={this.addPercentage} subtractPercentage={this.subtractPercentage}/>}
-                    {this.state.otherStuffs.renderOther && this.state.goals.completed.otherGoalsCategories.length !== 0 && this.state.otherStuffs.renderCompleted && <CompletedOtherGoals otherGoalCategories={this.state.goals.completed.otherGoalsCategories}/>}
+                    {/* Daily Goals */}
+                    {this.state.otherStuffs.renderDaily && this.state.goals.dailyGoals.length !== 0 && this.state.otherStuffs.renderCurrent && 
+                    <DailyGoalHeading updateCheckMark={this.updateCheckMark} dailyGoals={this.state.goals.dailyGoals} deleteGoal={this.deleteGoal}/>}
+                    {/* Completed Daily Goals */}
+                    {this.state.otherStuffs.renderDaily && this.state.goals.completed.dailyGoals.length !==  0 && this.state.otherStuffs.renderCompleted && 
+                    <CompletedDailyGoals dailyGoals={this.state.goals.completed.dailyGoals} />}
+                    {/* Other Goals */}
+                    {this.state.otherStuffs.renderOther && this.state.otherStuffs.renderCurrent && this.state.goals.otherGoalsCategories.length !== 0 && 
+                    <OtherGoals otherGoalCategories={this.state.goals.otherGoalsCategories} deleteGoal={this.deleteGoal}  addPercentage={this.addPercentage} subtractPercentage={this.subtractPercentage}/>}
+                    {/* Completed Other Goals */}
+                    {this.state.otherStuffs.renderOther && this.state.goals.completed.otherGoalsCategories.length !== 0 && this.state.otherStuffs.renderCompleted && 
+                    <CompletedOtherGoals otherGoalCategories={this.state.goals.completed.otherGoalsCategories}/>}
                 </div>
-                {!this.state.otherStuffs.overlayIsHidden && <Overlay otherGoalCategories={this.state.goals.otherGoalsCategories} closeGoalOverlay={this.displayGoalOverlay} stateAdd={this.stateAdd}/>}
+                {/* Overlay */}
+                {!this.state.otherStuffs.overlayIsHidden && 
+                <Overlay otherGoalCategories={this.state.goals.otherGoalsCategories} closeGoalOverlay={this.displayGoalOverlay} stateAdd={this.stateAdd}/>}
             </div>
     </div>
     );

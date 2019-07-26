@@ -24,7 +24,6 @@ class OtherGoalsList extends Component {
             )
         })
         return(
-        <div>
             <div className="othergoals">
                     <div className="otherheading">
                         <div className="otherheadingheading">
@@ -39,7 +38,6 @@ class OtherGoalsList extends Component {
                     </div>
                     {displayOtherGoals}
                 </div>
-        </div>
         )
     }
 }
