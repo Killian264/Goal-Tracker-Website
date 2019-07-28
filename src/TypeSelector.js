@@ -8,10 +8,6 @@ class TypeSelector extends Component {
         completedLength: 0
     }
     render() {
-        // const{goals} = this.props.goals;
-        const updateRenderIfs = (e) =>{
-            this.props.updateRenderIfs(e.target.id)
-        }
         const getLengths = () =>{
             let state = this.state;
             let length = 0

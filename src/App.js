@@ -248,6 +248,7 @@ class App extends Component {
                 localState.goals.otherGoalsCategories[index].render = !localState.goals.otherGoalsCategories[index].render
                 console.log('found it')
             }
+            return true;
         })
         
         this.setState({
