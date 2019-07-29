@@ -11,7 +11,7 @@
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: #111;
+    background: rgb(40, 44, 52);
     overflow-x: hidden;
     position: fixed;
     padding-top: 20px;
@@ -63,7 +63,7 @@
     width: 88%;
     margin-left: 12%;
     /* background-color: rgb(6, 66, 82 , .9); */
-    background-color: #111;
+    background: rgb(40, 44, 52);
     color: white;
     padding-left: 3%;
     padding-right: 5%;
@@ -126,7 +126,7 @@
     display: flex;
   }
   .goaltypeselector{
-    background: rgb(63, 227, 248);
+    background: rgb(184, 184, 184);
     width: 15%;
     padding: .5% 1% 3%;
     color: rgb(0, 0, 0);
@@ -168,7 +168,7 @@
     padding-top: 9px;
   }
   .dailygoals{
-    background: rgb(30, 176, 224);
+    background: rgb(184, 184, 184);
     margin-bottom: 3%;
   }
 
@@ -180,7 +180,7 @@
     border-bottom-style: solid;
   }
   .dailyheading .dailyWeekdate{
-    background: rgb(40, 133, 156);
+    background: rgb(121, 120, 120);
     border-radius: 10px
   }
   .dailyheading ul{
@@ -250,8 +250,8 @@
     overflow: hidden;
   }
   .otherdailygoalheading{
-    width: 120px;
-    min-width: 190px;
+    width: 300px;
+    min-width: 140px;
     display: flex;
     padding-right: 15px;
     -moz-user-select: none;
@@ -343,18 +343,18 @@
   left: 0;
   height: 20px;
   width: 20px;
-  background-color: #eee;
+  background-color: rgb(255, 255, 255);
   border-radius: 50%;
 }
 
 /* On mouse-over, add a grey background color */
 .radiobtn:hover input ~ .radiocheckmark {
-  background-color: #ccc;
+  background-color: rgb(90, 89, 89);
 }
 
 /* When the radio button is checked, add a blue background */
 .radiobtn input:checked ~ .radiocheckmark {
-  background-color: #2196F3;
+  background-color: rgb(22, 87, 141);
 }
 
 /* Create the indicator (the dot/circle - hidden when not checked) */
@@ -432,7 +432,7 @@
   left: 0;
   height: 35px;
   width: 35px;
-  background-color: #eee;
+  background-color: rgb(255, 255, 255);
 }
 
 .checkboxmain:hover input ~ .checkmark {
@@ -440,7 +440,7 @@
 }
 
 .checkbox input:checked ~ .checkmark {
-  background-color: #2196F3;
+  background-color: rgb(22, 87, 141);
 }
 
 .checkmark:after {
@@ -466,7 +466,7 @@
 }
 .othergoals{
   margin-bottom: 3%;
-  background: rgb(30, 176, 224);
+  background: rgb(184, 184, 184);
 }
 .creategoaloverlay{
   background: white;
@@ -552,6 +552,7 @@ left padding is 20px */
   .goals{
     width: calc(92% - 120px);
   }
+  
   .topnav{
     width: 100%;
     padding-left: 5%;
@@ -592,6 +593,10 @@ left padding is 20px */
     width: 40%;
     left: calc(50% - 20%);
   }
+  .otherheadingheadingyourprogress{
+    min-width: 125px;
+    width: 125px;
+  }
 }
 @media screen and (max-width: 1400px){
   .othergoals h1{
@@ -600,18 +605,28 @@ left padding is 20px */
   .otherdailygoal h1{
     font-size: 40px;
   }
+  .otherdailygoal{
+    justify-content: space-between;
+  }
+  .otherheadingheading{
+    min-width: 140px;
+    width: 135px;
+  }
+  
 }
 @media screen and (max-width: 669px){
   .othergoals h1{
     font-size: 20px;
+  }
+  .otherheadingheadingyourprogress{
+    min-width: 150px;
+    width: 150px;
   }
   .otherdailygoalheading{
     min-width: 100px;
   }
   .otherheadingheading{
     min-width: 100px;
-    display: flex;
-    overflow: hidden;
   }
   .goals{
     width: 100%;
@@ -641,6 +656,7 @@ left padding is 20px */
   }
 
   body{
-    background: url(../src/Images/background.jpg);
+    background: rgb(27, 27, 27);
     background-size: cover;
   }
+  
