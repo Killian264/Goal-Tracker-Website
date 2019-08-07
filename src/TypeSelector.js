@@ -2,6 +2,15 @@ import React, { Component } from 'react';
 import './App.css';
 
 class TypeSelector extends Component {
+    // shouldComponentUpdate(nextProps){
+    //     if(this.props.goals.otherGoalCategories != nextProps.goals.otherGoalCategories){
+    //         return true;
+    //     }
+    //     if(this.props.goals.dailyGoals.length != nextProps.goals.dailyGoals.length){
+    //         return true;
+    //     }
+    //     return false
+    // }
     state = {
         dailyLength: 0,
         otherLength: 0,

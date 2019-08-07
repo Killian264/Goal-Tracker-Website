@@ -6,6 +6,14 @@ class DailyGoalHeading extends Component {
         renderAmount: 0
     }
     heading = React.createRef();
+
+    shouldComponentUpdate(nextProps){
+        if(this.props.dailyGoals !== nextProps.dailyGoals){
+            return true
+        }
+        return false
+    }
+
     componentDidMount() {
       let len = this.heading.current.offsetWidth
 

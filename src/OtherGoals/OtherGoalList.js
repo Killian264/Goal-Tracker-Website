@@ -2,6 +2,12 @@ import React, { Component } from 'react';
 import {getToday} from '../commonCommands'
 
 class OtherGoalsList extends Component {
+    shouldComponentUpdate(nextProps){
+        if(this.props.othergoals === nextProps.othergoals){
+            return false
+        }
+        return true;
+    }
     render() {
         const{othergoals} = this.props;
         const displayOtherGoals = othergoals.otherGoals.map(goal=> {

@@ -8,6 +8,8 @@ import Overlay from './Overlay'
 import {getToday, getYeseterday} from './commonCommands'
 import CompletedDailyGoals from './CompletedGoals/DailyGoals/DailyGoals'
 import CompletedOtherGoals from './CompletedGoals/OtherGoals/OtherGoals'
+import { fromJS } from 'immutable';
+const Immutable = require('immutable');
 
 class App extends Component {
     state = {
@@ -17,9 +19,9 @@ class App extends Component {
                     id: 1,
                     title: 'Programme',
                     snippit: 'Write Code',
-                    startDate: '2019, 7, 1 00:00',
-                    endDate: '2019, 7, 30 00:00',
-                    lastDayUpdated:'2019, 7, 14 00:00',
+                    startDate: '2019, 8, 1 00:00',
+                    endDate: '2019, 8, 30 00:00',
+                    lastDayUpdated:'2019, 8, 6 00:00',
                     daysChecked: 20,
                     weeklyChecked: [true, false, true, true, true, false, false]
                 },
@@ -27,9 +29,9 @@ class App extends Component {
                     id: 2,
                     title: 'Learn React',
                     snippit: 'Write Code',
-                    startDate: '2019, 7, 1 00:00',
-                    endDate: '2019, 7, 30 00:00',
-                    lastDayUpdated:'2019, 7, 14 00:00',
+                    startDate: '2019, 8, 1 00:00',
+                    endDate: '2019, 8, 30 00:00',
+                    lastDayUpdated:'2019, 8, 6 00:00',
                     daysChecked: 12,
                     weeklyChecked: [true, true, false, true, false, false, false]
                 },
@@ -37,7 +39,7 @@ class App extends Component {
                     id: 3,
                     title: 'Be Cool',
                     snippit: 'Yea',
-                    startDate: '2019, 7, 1 00:00',
+                    startDate: '2019, 6, 6 00:00',
                     endDate: '2019, 7, 10 00:00',
                     lastDayUpdated:'2019, 7, 14 00:00',
                     daysChecked: 12,
@@ -47,7 +49,7 @@ class App extends Component {
                     id: 5454,
                     title: 'Be Cools',
                     snippit: 'Yea',
-                    startDate: '2019, 7, 1 00:00',
+                    startDate: '2019, 6, 6 00:00',
                     endDate: '2019, 7, 17 00:00',
                     lastDayUpdated:'2019, 7, 14 00:00',
                     daysChecked: 12,
@@ -180,17 +182,93 @@ class App extends Component {
             renderOther: true,
         }
     }
+    makeCompletedDailyGoal(newGoal){
+        let endDate = new Date(newGoal.endDate);
+        let totalDays = Math.abs(new Date(newGoal.startDate) - endDate) / 8.64e+7;
+        newGoal = {
+            id: newGoal.id,
+            title: newGoal.title,
+            snippit: newGoal.snippit,
+            startDate: newGoal.startDate,
+            endDate: newGoal.endDate,
+            daysChecked: newGoal.daysChecked,
+            percentComplete: ((newGoal.daysChecked/totalDays * 100).toString().substr(0, 2))
+        }
+        return newGoal
+    }
+    makeCompletedOtherGoal(newGoal, category){
+        newGoal = {
+        category: category.category,
+            id: category.id,
+            otherGoals:[
+                newGoal
+            ]
+        }
+        return newGoal
+    }
+    makeCompletedOtherGoalCategory(newGoal, category){
+        newGoal = {
+            category: category,
+            id: uuid.v4(),
+            otherGoals: [
+                newGoal
+            ]
+        }
+        return newGoal
+    }
+    makeDailyGoal(newGoal){
+        let startDate = getToday()
+        newGoal = {
+            id: uuid.v4(),
+            title: newGoal.title,
+            snippit: newGoal.snippit,
+            startDate: startDate,
+            endDate: newGoal.endDate + " 00:00",
+            lastDayUpdated: startDate,
+            daysChecked: 0,
+            weeklyChecked: [false, false, false, false, false, false, false]
+        }
+        return newGoal
+    }
+    makeOtherGoal(newGoal){
+        let startDate = getToday()
+        newGoal = {
+            id: uuid.v4(),
+            title: newGoal.title,
+            snippit: newGoal.snippit,
+            startDate: startDate,
+            endDate: newGoal.endDate + " 00:00",
+            percentComplete: 0
+        }
+        return newGoal
+    }
+    makeOtherGoalCategory(newGoal, category){
+        newGoal = {
+            category: category,
+            id: uuid.v4(),
+            render: true,
+            otherGoals: [
+                newGoal
+            ]
+        }
+        return newGoal
+    }
+
     componentDidMount(){
         let localState = this.state
         let updatedDailyGoals= []
         this.state.goals.dailyGoals.forEach(goal => {
             if(Date.parse(goal.endDate) <= Date.parse(getYeseterday())){
-                localState.goals.completed.dailyGoals.push(this.changeDailyToCompleted(goal))
+                goal = this.makeCompletedDailyGoal(goal);
+                localState.goals.completed.dailyGoals = [...localState.goals.completed.dailyGoals, goal]
+                // localState.goals.completed.dailyGoals.push(goal)
             }
             else{
                 if(Date.parse(goal.lastDayUpdated) < Date.parse(getToday())){
                     let numDays = (((Date.parse(goal.lastDayUpdated) - Date.parse(getToday()))/ 8.64e+7) * -1)
-                    updatedDailyGoals.push(this.updateLastUpdated(goal, numDays))
+                    goal = this.updateLastUpdated(goal, numDays)
+                    updatedDailyGoals = [...updatedDailyGoals, goal]
+                    // updatedDailyGoals.push(goal)
                 }   
             }
         })
@@ -205,32 +283,29 @@ class App extends Component {
                     let pushed = false
                     this.state.goals.completed.otherGoalsCategories.forEach((completedCategory, index) => {
                         if(completedCategory.category === category.category){
-                            localState.goals.completed.otherGoalsCategories[index].otherGoals.push(goal)
+                            completedCategory.otherGoals = [...completedCategory.otherGoals, goal]
+                            // completedCategory.otherGoals.push(goal)
                             pushed = true
                         }
                     })
                     if(pushed === false){
-                        localState.goals.completed.otherGoalsCategories.push(
-                            {
-                                category: category.category,
-                                id: category.id,
-                                otherGoals:[
-                                    goal
-                                ]
-                            }
-                        )
+                        goal = this.makeCompletedOtherGoal(goal, category)
+                        localState.goals.completed.otherGoalsCategories = [...localState.goals.completed.otherGoalsCategories, goal]
+                        // localState.goals.completed.otherGoalsCategories.push(goal)
                     }
 
                 }
                 else{
-                    updatedOtherGoals.push(goal)
+                    updatedOtherGoals= [...updatedOtherGoals, goal]
+                    // updatedOtherGoals.push(goal)
                 }
             })
 
             if(updatedOtherGoals.length !== 0){
                 let categoryRet = category
                 categoryRet.otherGoals = updatedOtherGoals
-                updatedOtherCategories.push(categoryRet)
+                updatedOtherCategories = [...updatedOtherCategories, categoryRet]
+                // updatedOtherCategories.push(categoryRet)
             }
         })
         localState.goals.otherGoalsCategories = updatedOtherCategories
@@ -242,11 +317,9 @@ class App extends Component {
     }
     updateCategoryRender = (key) => {
         let localState = this.state
-        this.state.goals.otherGoalsCategories.map((category, index) => {
-            console.log(category.id, key)
+        this.state.goals.otherGoalsCategories.forEach((category, index) => {
             if(category.id === key){
                 localState.goals.otherGoalsCategories[index].render = !localState.goals.otherGoalsCategories[index].render
-                console.log('found it')
             }
             return true;
         })
@@ -257,31 +330,22 @@ class App extends Component {
     }
 
     updateLastUpdated = (goal, numDays) =>{
+        let newGoal;
+        let weeklyChecked = [false, false, false, false, false, false, false]
         if(numDays > 5){
-            goal.lastDayUpdated = getToday()
-            goal.weeklyChecked = [false, false, false, false, false, false, false]
+            newGoal = Object.assign({}, goal, {
+                lastDayUpdated: getToday(),
+                weeklyChecked: weeklyChecked
+            })
         }
         else{
-            goal.lastDayUpdated = getToday()
-            let weeklyChecked = [false, false, false, false, false, false, false]
             for(let i = 0; i < (5 - numDays); i++){
                 weeklyChecked[i] = goal.weeklyChecked[i + numDays]
             }
-            goal.weeklyChecked = weeklyChecked
-        }
-        return goal
-    }
-    changeDailyToCompleted(newGoal){
-        let endDate = new Date(newGoal.endDate);
-        let totalDays = Math.abs(new Date(newGoal.startDate) - endDate) / 8.64e+7;
-        newGoal = {
-            id: newGoal.id,
-            title: newGoal.title,
-            snippit: newGoal.snippit,
-            startDate: newGoal.startDate,
-            endDate: newGoal.endDate,
-            daysChecked: newGoal.daysChecked,
-            percentComplete: ((newGoal.daysChecked/totalDays * 100).toString().substr(0, 2))
+            newGoal = Object.assign({}, goal, {
+                weeklyChecked: weeklyChecked,
+                lastDayUpdated: getToday()
+            })
         }
         return newGoal
     }
@@ -290,9 +354,15 @@ class App extends Component {
         let toCompletedGoal;
         if(category === 'daily'){
             let filteredArr = this.state.goals.dailyGoals;
-            let index = this.mapFunc(this.state.goals.dailyGoals, 'id', key)
-            toCompletedGoal = this.state.goals.dailyGoals[index]
-            filteredArr.splice(index, 1);
+            this.state.goals.dailyGoals.forEach((goal, index) => {
+                if(goal.id === key){
+                    toCompletedGoal = goal
+                    filteredArr.splice(index, 1);
+                }
+            })
+            // let index = this.mapFunc(this.state.goals.dailyGoals, 'id', key)
+            // toCompletedGoal = this.state.goals.dailyGoals[index]
+            // filteredArr.splice(index, 1);
             state.goals.dailyGoals = filteredArr
         }
         else{
@@ -307,7 +377,6 @@ class App extends Component {
                             filteredArr.splice(index, 1);
                             toCompletedGoal = goal;
                         }
-                        return true;
                     })
                     // sets local state
                     state.goals.otherGoalsCategories[index].otherGoals = filteredArr
@@ -366,18 +435,9 @@ class App extends Component {
     completed = (newGoal, category) => {
         let state = this.state
         if(category === 'daily'){
-            let endDate = new Date(newGoal.endDate);
-            let totalDays = Math.abs(new Date(newGoal.startDate) - endDate) / 8.64e+7;
-            newGoal = {
-                id: newGoal.id,
-                title: newGoal.title,
-                snippit: newGoal.snippit,
-                startDate: newGoal.startDate,
-                endDate: newGoal.endDate,
-                daysChecked: newGoal.daysChecked,
-                percentComplete: ((newGoal.daysChecked/totalDays * 100).toString().substr(0, 2))
-            }
-            state.goals.completed.dailyGoals.push(newGoal);
+            newGoal = this.makeCompletedDailyGoal(newGoal)
+            state.goals.completed.dailyGoals = [...state.goals.completed.dailyGoals, newGoal]
+            // state.goals.completed.dailyGoals.push(newGoal)
         }
         else{
             let newCategory = true; // true of false if new category
@@ -385,21 +445,17 @@ class App extends Component {
             // checks for category and pushes to category if it finds it
             let index = this.mapFunc(this.state.goals.completed.otherGoalsCategories, 'category', category)
             if(index !== null){
-                state.goals.completed.otherGoalsCategories[index].otherGoals.push(newGoal)
+                state.goals.completed.otherGoalsCategories[index].otherGoals = [...state.goals.completed.otherGoalsCategories[index].otherGoals, newGoal]
+                // state.goals.completed.otherGoalsCategories[index].otherGoals.push(newGoal)
                     newCategory = false;
             }
 
             //makes new category and pushes
             if(newCategory === true){
-                newGoal = {
-                    category: category,
-                    id: uuid.v4(),
-                    otherGoals: [
-                        newGoal
-                    ]
-                }
+                newGoal = this.makeCompletedOtherGoalCategory(newGoal, category)
                 // push to local state
-                state.goals.completed.otherGoalsCategories.push(newGoal);
+                state.goals.completed.otherGoalsCategories = [...state.goals.completed.otherGoalsCategories, newGoal]
+                // state.goals.completed.otherGoalsCategories.push(newGoal)
             }
         }
         //push to state and close overlay
@@ -410,76 +466,70 @@ class App extends Component {
         return;
     }
     displayGoalOverlay = () => {
-        let state = this.state.otherStuffs
-        state.overlayIsHidden = !state.overlayIsHidden;
         this.setState({
-            [state.otherStuffs]: state
+            otherStuffs: Object.assign({}, this.state.otherStuffs, {
+                overlayIsHidden: !this.state.otherStuffs.overlayIsHidden
+            })
           })
     }
     updateCheckMark = (key) => {
-        let state = this.state.goals;
-        //finds index of item
-        let index = this.mapFunc(state.dailyGoals, 'id', key)
-        //updates index
-        state.dailyGoals[index].weeklyChecked[4] = !state.dailyGoals[index].weeklyChecked[4]
-        state.dailyGoals[index].weeklyChecked[4] ? state.dailyGoals[index].daysChecked++ : state.dailyGoals[index].daysChecked--
-        this.setState({
-            [state.goals]: state
+        let state = Object.assign({}, this.state)
+        state.goals.dailyGoals = state.goals.dailyGoals.map(goal => {
+            if(goal.id === key){
+                goal = Object.assign({}, goal, {
+                    daysChecked: !goal.weeklyChecked[4] ? goal.daysChecked + 1 : goal.daysChecked - 1,
+                    weeklyChecked: Object.assign({}, goal.weeklyChecked, {
+                        4: !goal.weeklyChecked[4]
+                    })
+                })
+            }
+            return goal
         })
+        this.setState(state)
     }
     stateAdd = (newGoal) => {
-        let state = this.state
+        let state = Object.assign({}, this.state)
         let startDate = getToday()
         // check if daily
         if(newGoal.type === 'daily'){
-            newGoal = {
-                id: uuid.v4(),
-                title: newGoal.title,
-                snippit: newGoal.snippit,
-                startDate: startDate,
-                endDate: newGoal.endDate + " 00:00",
-                lastDayUpdated: startDate,
-                daysChecked: 0,
-                weeklyChecked: [false, false, false, false, false, false, false]
-            }
+            newGoal = this.makeDailyGoal(newGoal)
             // push to local state
-            state.goals.dailyGoals.push(newGoal);
+            state.goals.dailyGoals = [...state.goals.dailyGoals, newGoal]
         }
         else{
             let category = newGoal.category; // the new category
             let newCategory = newGoal.newCategory; // true of false if new category
-            newGoal = {
-                id: uuid.v4(),
-                title: newGoal.title,
-                snippit: newGoal.snippit,
-                startDate: startDate,
-                endDate: newGoal.endDate + " 00:00",
-                percentComplete: 0
-            }
+            newGoal = this.makeOtherGoal(newGoal)
             //check if new category
             if(newCategory === true){
-                newGoal = {
-                    category: category,
-                    id: uuid.v4(),
-                    render: true,
-                    otherGoals: [
-                        newGoal
-                    ]
-                }
+                newGoal = this.makeOtherGoalCategory(newGoal, category)
                 // push to local state
-                state.goals.otherGoalsCategories.push(newGoal);
+                state.goals.otherGoalsCategories = [...state.goals.otherGoalsCategories, newGoal]
+                // state.goals.otherGoalsCategories.push(newGoal)
             }
             else{
                 //finds category to add to
-                let index = this.mapFunc(this.state.goals.otherGoalsCategories, 'category', category)
-                state.goals.otherGoalsCategories[index].otherGoals.push(newGoal)
+                this.state.goals.otherGoalsCategories.forEach((goal, index) =>{
+                    if(goal.category === category){
+                        // goal.otherGoals = [...goal.otherGoals, newGoal]
+                        // goal.otherGoals.push(newGoal)
+                        let test = [...state.goals.otherGoalsCategories[index].otherGoals, newGoal]
+                        state.goals.otherGoalsCategories[index] = Object.assign({}, state.goals.otherGoalsCategories[index], {
+                            otherGoals: test
+                        })
+                        console.log(goal, test)
+                        console.log(state)
+                        console.log(this.state)
+                        // state.goals.otherGoalsCategories[index] = [...state.goals.otherGoalsCategories[index], test]
+                    }
+                })
+                // let index = this.mapFunc(this.state.goals.otherGoalsCategories, 'category', category)
+                // state.goals.otherGoalsCategories[index].otherGoals.push(newGoal)
             }
         }
         //push to state and close overlay
         state.otherStuffs.overlayIsHidden = true;
-        this.setState({
-            state: state
-        })
+        this.setState(state);
         return;
     }
     navSlideChange = ()=>{
@@ -487,36 +537,50 @@ class App extends Component {
         nav.classList.toggle('nav-active');
     }
     addPercentage = (id, category) => {
-        let state = this.state;
-
-        let categoryIndex = this.mapFunc(this.state.goals.otherGoalsCategories, 'category', category)
-        let goalIndex = this.mapFunc(this.state.goals.otherGoalsCategories[categoryIndex].otherGoals, 'id', id)
-        state.goals.otherGoalsCategories[categoryIndex].otherGoals[goalIndex].percentComplete+= 2;
-
-        if(state.goals.otherGoalsCategories[categoryIndex].otherGoals[goalIndex].percentComplete > 99){
-            this.deleteGoal(id, category);
-        }
-        else{
-            this.setState({
-                state: state
-            })
-        }
+        let state = Object.assign({}, this.state)
+        state.goals.otherGoalsCategories = this.state.goals.otherGoalsCategories.map(categories =>{
+            if(categories.category === category){
+                let updatedOtherGoals = categories.otherGoals.map(goal =>{
+                    if(goal.id === id){
+                        goal = Object.assign({}, goal, {
+                            percentComplete: goal.percentComplete + 2,
+                        })
+                        if(goal.percentComplete > 99){
+                            this.deleteGoal(id, category);
+                        }
+                    }
+                    return goal
+                })
+                return Object.assign({}, categories, {
+                    otherGoals: updatedOtherGoals
+                })
+            }
+            return categories
+        })
+        this.setState(state);
     }
     subtractPercentage = (id, category) => {
-        let state = this.state;
-
-        let categoryIndex = this.mapFunc(this.state.goals.otherGoalsCategories, 'category', category)
-        let goalIndex = this.mapFunc(this.state.goals.otherGoalsCategories[categoryIndex].otherGoals, 'id', id)
-
-        if(state.goals.otherGoalsCategories[categoryIndex].otherGoals[goalIndex].percentComplete <= 0){
-            return;
-        }
-        else{
-            state.goals.otherGoalsCategories[categoryIndex].otherGoals[goalIndex].percentComplete+= -2;
-            this.setState({
-                state: state
-            })
-        }
+        let state = Object.assign({}, this.state)
+        state.goals.otherGoalsCategories = this.state.goals.otherGoalsCategories.map(categories =>{
+            if(categories.category === category){
+                let updatedOtherGoals = categories.otherGoals.map(goal =>{
+                    if(goal.id === id){
+                        if(goal.percentComplete <= 0){
+                            return goal
+                        }
+                        goal = Object.assign({}, goal, {
+                            percentComplete: goal.percentComplete - 2,
+                        })
+                    }
+                    return goal
+                })
+                return Object.assign({}, categories, {
+                    otherGoals: updatedOtherGoals
+                })
+            }
+            return categories
+        })
+        this.setState(state);
     }
     mapFunc = (list, category, find) =>{
         for(let i = 0; i < list.length; i++){

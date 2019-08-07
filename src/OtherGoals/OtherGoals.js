@@ -2,6 +2,12 @@ import React, { Component } from 'react';
 import OtherGoalList from './OtherGoalList';
 
 class OtherGoals extends Component {
+    shouldComponentUpdate(nextProps){
+        if(this.props.otherGoalCategories === nextProps.otherGoalCategories){
+            return false
+        }
+        return true;
+    }
     render() {
         const{otherGoalCategories, deleteGoal} = this.props;
         const displayOtherGoals = otherGoalCategories.map(category => {
