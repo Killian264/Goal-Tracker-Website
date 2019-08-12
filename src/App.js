@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
 import uuid from 'uuid';
-import { fromJS } from 'immutable';
 import DailyGoalHeading from './DailyGoals/DailyGoalHeading';
 import OtherGoals from './OtherGoals/OtherGoals';
 import TypeSelector from './TypeSelector';
@@ -9,8 +8,6 @@ import Overlay from './Overlay';
 import { getToday, getYeseterday } from './commonCommands';
 import CompletedDailyGoals from './CompletedGoals/DailyGoals/DailyGoals';
 import CompletedOtherGoals from './CompletedGoals/OtherGoals/OtherGoals';
-
-const Immutable = require('immutable');
 
 class App extends Component {
     state = {
@@ -143,7 +140,23 @@ class App extends Component {
               },
               {
                 id: 15,
-                title: 'Add Login and backend stuff',
+                title: 'Add Login and backend stuff1',
+                snippit: 'This might be the hard part',
+                startDate: '2019, 8, 9 00:00',
+                endDate: '2019, 8, 19 00:00',
+                percentComplete: 0,
+              },
+              {
+                id: 16,
+                title: 'Add Login and backend stuff2',
+                snippit: 'This might be the hard part',
+                startDate: '2019, 8, 9 00:00',
+                endDate: '2019, 8, 19 00:00',
+                percentComplete: 0,
+              },
+              {
+                id: 17,
+                title: 'Add Login and backend stuff3',
                 snippit: 'This might be the hard part',
                 startDate: '2019, 8, 9 00:00',
                 endDate: '2019, 8, 19 00:00',
@@ -261,25 +274,9 @@ class App extends Component {
       return newGoal;
     }
 
-    // this.state.goals.dailyGoals.forEach((goal) => {
-    //     if (Date.parse(goal.endDate) <= Date.parse(getYeseterday())) {
-    //       goal = this.makeCompletedDailyGoal(goal);
-    //       localState.goals.completed.dailyGoals = [...localState.goals.completed.dailyGoals, goal];
-    //       // localState.goals.completed.dailyGoals.push(goal)
-    //     } else if (Date.parse(goal.lastDayUpdated) < Date.parse(getToday())) {
-    //       const numDays = (((Date.parse(goal.lastDayUpdated) - Date.parse(getToday())) / 8.64e+7) * -1);
-    //       goal = this.updateLastUpdated(goal, numDays);
-    //       updatedDailyGoals = [...updatedDailyGoals, goal];
-    //       // updatedDailyGoals.push(goal)
-    //     }
-    //   });
-
     componentDidMount() {
-        console.log(this.state)
-      const localState = this.state;
-      let updatedOtherCategories = [];
       let updatedCompletedDailyGoals = this.state.goals.completed.dailyGoals;
-      let updatedCompletedOtherCategories;
+      let updatedCompletedOtherCategories = this.state.goals.completed.otherGoalsCategories;
       let filteredDailyGoals = this.state.goals.dailyGoals.filter((goal) => {
         if (Date.parse(goal.endDate) <= Date.parse(getYeseterday())) {
           updatedCompletedDailyGoals = [...updatedCompletedDailyGoals, this.makeCompletedDailyGoal(goal)];
@@ -294,48 +291,32 @@ class App extends Component {
             }
         return goal
         });
-        console.log('here1', updatedDailyGoals)
-        
-      // loop through categories
-      this.state.goals.otherGoalsCategories.forEach((category) => {
-        // loop through goals
-        let updatedOtherGoals = [];
-        category.otherGoals.forEach((goal) => {
-          if (Date.parse(goal.endDate) <= Date.parse(getYeseterday())) {
-            // do push thingies
-            let pushed = false;
-            this.state.goals.completed.otherGoalsCategories.forEach((completedCategory, index) => {
-              if (completedCategory.category === category.category) {
-                completedCategory.otherGoals = [...completedCategory.otherGoals, goal];
-                // completedCategory.otherGoals.push(goal)
-                pushed = true;
-              }
-            });
-            if (pushed === false) {
-              goal = this.makeCompletedOtherGoal(goal, category);
-              localState.goals.completed.otherGoalsCategories = [...localState.goals.completed.otherGoalsCategories, goal];
-              // localState.goals.completed.otherGoalsCategories.push(goal)
+        let updatedOtherGoalsCategories = this.state.goals.otherGoalsCategories.map(categories => {
+            let updatedOtherGoals = categories.otherGoals.filter(goal => {
+                if (Date.parse(goal.endDate) <= Date.parse(getYeseterday())) {
+                    updatedCompletedOtherCategories = this.updatedOtherCompleted(goal, categories.category, updatedCompletedOtherCategories)
+                    return false
+                }
+                return true
+            })
+            if(updatedOtherGoals.length <= 0){
+                return null
             }
-          } else {
-            updatedOtherGoals = [...updatedOtherGoals, goal];
-            // updatedOtherGoals.push(goal)
-          }
-        });
+            return Object.assign({}, categories, {
+                otherGoals: updatedOtherGoals
+            })
+        })
+        updatedOtherGoalsCategories = updatedOtherGoalsCategories.filter(categories => {
+            return categories !== null;
 
-        if (updatedOtherGoals.length !== 0) {
-          const categoryRet = category;
-          categoryRet.otherGoals = updatedOtherGoals;
-          updatedOtherCategories = [...updatedOtherCategories, categoryRet];
-          // updatedOtherCategories.push(categoryRet)
-        }
-      });
-      localState.goals.otherGoalsCategories = updatedOtherCategories;
-      localState.goals.dailyGoals = updatedDailyGoals;
+        })
       this.setState({
         goals: Object.assign({}, this.state.goals, {
             dailyGoals: updatedDailyGoals,
+            otherGoalsCategories: updatedOtherGoalsCategories,
             completed: Object.assign({}, this.state.goals.completed, {
-                dailyGoals: updatedCompletedDailyGoals
+                dailyGoals: updatedCompletedDailyGoals,
+                otherGoalsCategories: updatedCompletedOtherCategories
             })
         })
       });
@@ -406,7 +387,9 @@ class App extends Component {
                         }
                         return true
                     })
-                    return updatedOtherGoals
+                    return Object.assign({}, categories, {
+                        otherGoals: updatedOtherGoals
+                    })
                 }
                 toCompletedGoal = categories.otherGoals[0]
                 return null
@@ -421,17 +404,16 @@ class App extends Component {
             goals: Object.assign({}, state.goals, {
                 otherGoalsCategories: updatedOtherGoalsCategories,
                 completed: Object.assign({}, state.goals.completed, {
-                    otherGoalsCategories: this.updatedOtherCompleted(toCompletedGoal, category)
+                    otherGoalsCategories: this.updatedOtherCompleted(toCompletedGoal, category, this.state.goals.completed.otherGoalsCategories)
                 })
             })
         })
     }
-        console.log(state)
       this.setState(state);
     }
-    updatedOtherCompleted = (goal, category) =>{
+    updatedOtherCompleted = (goal, category, completed) =>{
         let found = false
-        let otherGoalsCategoryCompleted = this.state.goals.completed.otherGoalsCategories.map((categories, index) =>{
+        let otherGoalsCategoryCompleted = completed.map(categories =>{
             if(categories.category === category){
                 found = true
                 return Object.assign({}, categories, {
@@ -440,7 +422,7 @@ class App extends Component {
             }
             return categories
         })
-        return(found ? otherGoalsCategoryCompleted : this.state.goals.completed.otherGoalsCategories.concat(this.makeCompletedOtherGoalCategory(goal, category)))
+        return(found ? otherGoalsCategoryCompleted : completed.concat(this.makeCompletedOtherGoalCategory(goal, category)))
     }
 
     updateRenderIfs = (whichClicked) => {
@@ -607,15 +589,6 @@ class App extends Component {
         return categories;
       });
       this.setState(state);
-    }
-
-    mapFunc = (list, category, find) => {
-      for (let i = 0; i < list.length; i++) {
-        if (list[i][category] === find) {
-          return i;
-        }
-      }
-      return null;
     }
 
     render() {
