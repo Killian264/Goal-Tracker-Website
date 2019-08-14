@@ -3,15 +3,25 @@ import PropTypes from 'prop-types';
 import { getToday } from '../commonCommands';
 
 class OtherGoalsList extends Component {
+  static propTypes = {
+    othergoals: PropTypes.arrayOf(PropTypes.object).isRequired,
+    addPercentage: PropTypes.func.isRequired,
+    subtractPercentage: PropTypes.func.isRequired,
+    deleteGoal: PropTypes.func.isRequired,
+  };
+
   shouldComponentUpdate(nextProps) {
-    if (this.props.othergoals === nextProps.othergoals) {
+    const { othergoals } = this.props;
+    if (othergoals === nextProps.othergoals) {
       return false;
     }
     return true;
   }
 
   render() {
-    const { othergoals } = this.props;
+    const {
+      othergoals, subtractPercentage, addPercentage, deleteGoal,
+    } = this.props;
     const displayOtherGoals = othergoals.otherGoals.map((goal) => {
       // Possibly rework this later to work after component did mount and make it run once only
       const endDate = new Date(goal.endDate);
@@ -42,7 +52,7 @@ class OtherGoalsList extends Component {
               <div
                 tabIndex={0}
                 role="button"
-                onClick={() => { this.props.subtractPercentage(goal.id, othergoals.category); }}
+                onClick={() => { subtractPercentage(goal.id, othergoals.category); }}
                 onKeyPress={() => {}}
               >
                 <h1>−</h1>
@@ -53,7 +63,7 @@ class OtherGoalsList extends Component {
               <div
                 tabIndex={0}
                 role="button"
-                onClick={() => { this.props.addPercentage(goal.id, othergoals.category); }}
+                onClick={() => { addPercentage(goal.id, othergoals.category); }}
                 onKeyPress={() => {}}
               >
                 <h1>+</h1>
@@ -66,7 +76,7 @@ class OtherGoalsList extends Component {
                 tabIndex={0}
                 role="button"
                 className="close-container"
-                onClick={() => { this.props.deleteGoal(goal.id, othergoals.category); }}
+                onClick={() => { deleteGoal(goal.id, othergoals.category); }}
                 onKeyPress={() => {}}
               >
                 <div className="leftright" />
@@ -85,26 +95,5 @@ class OtherGoalsList extends Component {
     );
   }
 }
-
-// OtherGoalsList.propTypes = {
-//   othergoals: PropTypes.object(),
-// };
-OtherGoalsList.defaultProps = {
-  othergoals: {
-    category: 'Error',
-    id: 4,
-    render: false,
-    otherGoals: [
-      {
-        id: 5,
-        title: 'Prop did not load',
-        snippit: 'Err',
-        startDate: '2019, 7, 1 00:00',
-        endDate: '2019, 7, 15 00:00',
-        percentComplete: 99,
-      },
-    ],
-  },
-};
 
 export default OtherGoalsList;

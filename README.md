@@ -12,13 +12,8 @@ It works but needs heavy optimization.
 
 
 
-# TODO:
+# TODO: 
 
-Remove all object mutation.
+Implement shouldComponentUpdate.
 
--Implment Immutable JS or use functions that dont mutate. 
-
-Add shouldComponentUpdate after removal of all mutation.
-
-Add TODO Tracker
-
+Add TODO Tracker.
