@@ -1,27 +1,16 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import DeleteElement from './DeleteElement';
 
 class DailyGoals extends Component {
-    state = {
-      renderAmount: 0,
-    }
-
-    heading = React.createRef();
-
-    componentDidMount() {
-      const len = this.heading.current.offsetWidth;
-      this.updateState(len);
-    }
-
-    updateState = (len) => {
-      // size of header is 200px checkmark is 80 px
-      len = Math.floor((len - 200) / 80);
-      if (len > 8) { len = 8; }
-      const { state } = this;
-      state.renderAmount = len;
-      this.setState({
-        state,
-      });
-    }
+  static propTypes = {
+    dailyGoals: PropTypes.arrayOf(PropTypes.object).isRequired,
+    updateCheckMark: PropTypes.func.isRequired,
+    deleteGoal: PropTypes.func.isRequired,
+    negativeLen: PropTypes.number.isRequired,
+    positiveLen: PropTypes.number.isRequired,
+    renderAmount: PropTypes.number.isRequired,
+  };
 
     listElement = (goal, i) => (
       <li key={i}>
@@ -32,26 +21,25 @@ class DailyGoals extends Component {
       </li>
     )
 
-    positivedateRenders = (goal, len) => {
-      const list = [
-      ];
-      for (let i = 1; i <= len; i++) {
-        list.push(this.listElement(goal, (i + 4)));
+    dateRenders = (goal) => {
+      const {
+        renderAmount, updateCheckMark, positiveLen, negativeLen,
+      } = this.props;
+      const list = [];
+      if (renderAmount !== 2) {
+        for (let i = (4 - negativeLen); i <= 3; i += 1) {
+          list.push(this.listElement(goal, (i)));
+        }
       }
-      return (
-        [list]
+      list.push(
+        <li key={4}>
+          <label className="checkbox checkboxmain">
+            <input type="checkbox" checked={goal.weeklyChecked[4]} readOnly onClick={() => { updateCheckMark(goal.id); }} />
+            <span className="checkmark" />
+          </label>
+        </li>,
       );
-    }
-
-    negativedateRenders = (goal, len) => {
-      const list = [
-      ];
-      if (this.state.renderAmount === 2) {
-        return;
-      }
-      len /= 2;
-      len < 2 ? len = Math.floor(len) : len = Math.ceil(len);
-      for (let i = (4 - len); i <= 3; i++) {
+      for (let i = (4 - positiveLen); i <= 3; i += 1) {
         list.push(this.listElement(goal, (i)));
       }
       return (
@@ -59,31 +47,12 @@ class DailyGoals extends Component {
       );
     }
 
-    onClick = (e) => {
-      this.props.deleteGoal(e.target.title, 'daily');
-    }
-
-    updateCheckMark = (e) => {
-      this.props.updateCheckMark(e.target.id);
-    }
-
     render() {
-      const { dailyGoals, deleteGoal, updateCheckMark } = this.props;
+      const { dailyGoals, deleteGoal } = this.props;
       const displayCheckBoxes = goal => (
         <ul key={goal.id}>
-          {this.negativedateRenders(goal, this.state.renderAmount)}
-          <li key={4}>
-            <label className="checkbox checkboxmain">
-              <input type="checkbox" checked={goal.weeklyChecked[4]} readOnly onClick={() => { updateCheckMark(goal.id); }} />
-              <span className="checkmark" />
-            </label>
-          </li>
-          {this.positivedateRenders(goal, Math.floor((this.state.renderAmount / 2)) - 2) }
-          <li key={8} className="close-container" onClick={() => { deleteGoal(goal.id, 'daily'); }}>
-            <div className="leftright" />
-            <div className="rightleft" />
-            <label className="close">close</label>
-          </li>
+          {this.dateRenders(goal) }
+          <DeleteElement id={goal.id} deleteGoal={deleteGoal} />
         </ul>
       );
       const displayDailyGoals = dailyGoals.map(goal => (

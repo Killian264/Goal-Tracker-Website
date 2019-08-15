@@ -1,109 +1,87 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import DailyGoals from './DailyGoals';
+import DayElement from './DayElement';
+import { getWeekDay, getMonthDay } from '../commonCommands';
 
 class DailyGoalHeading extends Component {
+  static propTypes = {
+    dailyGoals: PropTypes.arrayOf(PropTypes.object).isRequired,
+    updateCheckMark: PropTypes.func.isRequired,
+    deleteGoal: PropTypes.func.isRequired,
+  };
+
     state = {
       renderAmount: 0,
+      negativeLen: 0,
+      positiveLen: 0,
     }
 
     heading = React.createRef();
 
-    shouldComponentUpdate(nextProps) {
-      if (this.props.dailyGoals !== nextProps.dailyGoals) {
-        return true;
-      }
-      return false;
-    }
+    // shouldComponentUpdate(nextProps) {
+    //   if (this.props.dailyGoals !== nextProps.dailyGoals) {
+    //     return true;
+    //   }
+    //   return false;
+    // }
 
     componentDidMount() {
-      const len = this.heading.current.offsetWidth;
-
-      this.updateState(len);
-    }
-
-    updateState = (len) => {
-      // size of header is 200px checkmark is 80 px
-      len = Math.floor((len - 200) / 80);
+      const startLen = this.heading.current.offsetWidth;
+      let len = Math.floor((startLen - 200) / 80);
       if (len > 8) { len = 8; }
-      const { state } = this;
-      state.renderAmount = len;
+      const negativeLen = len < 2 ? Math.floor(len / 2) : Math.ceil(len / 2);
+      const positiveLen = (len / 2) - 2;
       this.setState({
-        state,
+        renderAmount: len,
+        negativeLen,
+        positiveLen,
       });
     }
 
-    listElement = i => (
-      <li key={i}>
-        {this.getWeekDay(i)}
-        <br />
-        {this.getMonthDay(i)}
-      </li>
-    )
-
-    positivedateRenders = (len) => {
+    dateRenders = () => {
+      const { state } = this;
       const list = [
       ];
-      for (let i = 1; i <= len; i++) {
-        list.push(this.listElement(i));
+      if (state.renderAmount !== 2) {
+        for (let i = (4 - state.negativeLen); i <= 3; i += 1) {
+          list.push(<DayElement i={i - 4} />);
+        }
       }
+      list.push(
+        <li className="dailyWeekdate">
+          {getWeekDay(0)}
+          <br />
+          {getMonthDay(0)}
+        </li>,
+      );
+      for (let i = 1; i <= state.positiveLen; i += 1) {
+        list.push(<DayElement i={i} />);
+      }
+      list.push(
+        <li>
+          Del
+          <br />
+          ▼
+        </li>,
+      );
       return (
         [list]
       );
-    }
-
-    negativedateRenders = (len) => {
-      const list = [
-      ];
-      if (this.state.renderAmount === 2) {
-        return;
-      }
-      len /= 2;
-      len < 2 ? len = Math.floor(len) : len = Math.ceil(len);
-      for (let i = (4 - len); i <= 3; i++) {
-        list.push(this.listElement(i - 4));
-      }
-      return (
-        [list]
-      );
-    }
-
-    getWeekDay = (offset) => {
-      const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-      const today = new Date();
-      return weekdays[new Date(today.getFullYear(), today.getMonth(), today.getDate() + offset).getDay()];
-    }
-
-    getMonthDay = (offset) => {
-      let today = new Date();
-      today = new Date(today.getFullYear(), today.getMonth(), today.getDate() + offset);
-      return today.getDate();
     }
 
     render() {
+      const { state } = this;
+      const { updateCheckMark, dailyGoals, deleteGoal } = this.props;
       return (
         <div className="dailygoals">
           <div className="dailyheading" ref={this.heading}>
-            <div className="dailyheadingheading">
-              <h1>Daily Goals</h1>
-            </div>
+            <h1>Daily Goals</h1>
             <ul>
-              {this.negativedateRenders(this.state.renderAmount)}
-              <li className="dailyWeekdate">
-                {this.getWeekDay(0)}
-                <br />
-                {this.getMonthDay(0)}
-              </li>
-              {this.positivedateRenders((this.state.renderAmount / 2) - 2)}
-              <li>
-Del
-                <br />
-▼
-              </li>
+              {this.dateRenders()}
             </ul>
           </div>
-          <div className="dailygoalslist">
-            {<DailyGoals updateCheckMark={this.props.updateCheckMark} dailyGoals={this.props.dailyGoals} deleteGoal={this.props.deleteGoal} />}
-          </div>
+          {<DailyGoals updateCheckMark={updateCheckMark} dailyGoals={dailyGoals} deleteGoal={deleteGoal} negativeLen={state.negativeLen} positiveLen={state.positiveLen} renderAmount={state.renderAmount} />}
         </div>
       );
     }

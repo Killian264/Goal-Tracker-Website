@@ -415,45 +415,44 @@ class App extends Component {
     }
 
     updateRenderIfs = (whichClicked) => {
-      const { state, otherStuffs } = this.state;
-      let updatedOtherStuffs;
+      let { otherStuffs } = this.state;
       if (otherStuffs[whichClicked] === false) {
-        updatedOtherStuffs = Object.assign({}, otherStuffs, {
+        otherStuffs = Object.assign({}, otherStuffs, {
           [whichClicked]: true,
         });
       }
       // switch to determine sort goals stuff can probably simplify
       switch (whichClicked) {
         case ('allTypes'):
-          updatedOtherStuffs = Object.assign({}, otherStuffs, {
+          otherStuffs = Object.assign({}, otherStuffs, {
             renderDaily: true,
             renderOther: true,
           });
           break;
         case ('renderCurrent'):
           if (otherStuffs.renderCompleted === true) {
-            updatedOtherStuffs = Object.assign({}, otherStuffs, {
+            otherStuffs = Object.assign({}, otherStuffs, {
               renderCompleted: false,
             });
           }
           break;
         case ('renderCompleted'):
           if (otherStuffs.renderCurrent === true) {
-            updatedOtherStuffs = Object.assign({}, otherStuffs, {
+            otherStuffs = Object.assign({}, otherStuffs, {
               renderCurrent: false,
             });
           }
           break;
         case ('renderDaily'):
           if (otherStuffs.renderOther === true) {
-            updatedOtherStuffs = Object.assign({}, otherStuffs, {
+            otherStuffs = Object.assign({}, otherStuffs, {
               renderOther: false,
             });
           }
           break;
         case ('renderOther'):
           if (otherStuffs.renderDaily === true) {
-            updatedOtherStuffs = Object.assign({}, otherStuffs, {
+            otherStuffs = Object.assign({}, otherStuffs, {
               renderDaily: false,
             });
           }
@@ -462,7 +461,7 @@ class App extends Component {
           break;
       }
       this.setState({
-        otherStuffs: updatedOtherStuffs,
+        otherStuffs,
       });
     }
 

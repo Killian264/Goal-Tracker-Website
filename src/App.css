@@ -199,10 +199,15 @@
     font-size: 18px;
     font-weight: 500;
   }
-  .dailyheadingheading{
+  .dailyheading h1{
+    padding-left: 10px;
     width: 200px;
     min-width: 200px;
   }
+  /* .dailyheadingheading{
+    width: 200px;
+    min-width: 200px;
+  } */
 
   .onedailygoalheading{
     width: 200px;
