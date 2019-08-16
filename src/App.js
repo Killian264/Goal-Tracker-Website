@@ -6,15 +6,17 @@ import OtherGoals from './OtherGoals/OtherGoals';
 import TypeSelector from './TypeSelector';
 import Overlay from './Overlay';
 import { getToday, getYeseterday } from './commonCommands';
-import CompletedDailyGoals from './CompletedGoals/DailyGoals/DailyGoals';
-import CompletedOtherGoals from './CompletedGoals/OtherGoals/OtherGoals';
+import CompletedDailyGoals from './CompletedGoals/DailyGoals/DailyGoalsCompleted';
+import CompletedOtherGoals from './CompletedGoals/OtherGoals/OtherGoalsCompleted';
+import SideNav from './SideNav';
+import TopNav from './TopNav';
 
 class App extends Component {
     state = {
       goals: {
         dailyGoals: [
           {
-            id: 1,
+            id: uuid.v4(),
             title: 'Programme',
             snippit: 'Write Code',
             startDate: '2019, 8, 1 00:00',
@@ -24,7 +26,7 @@ class App extends Component {
             weeklyChecked: [true, false, true, true, true, false, false],
           },
           {
-            id: 2,
+            id: uuid.v4(),
             title: 'Learn React',
             snippit: 'Write Code',
             startDate: '2019, 8, 1 00:00',
@@ -34,7 +36,7 @@ class App extends Component {
             weeklyChecked: [true, true, false, true, false, false, false],
           },
           {
-            id: 3,
+            id: uuid.v4(),
             title: 'Be Cool',
             snippit: 'Yea',
             startDate: '2019, 6, 6 00:00',
@@ -44,7 +46,7 @@ class App extends Component {
             weeklyChecked: [false, true, true, true, false, false, false],
           },
           {
-            id: 5454,
+            id: uuid.v4(),
             title: 'Be Cools',
             snippit: 'Yea',
             startDate: '2019, 6, 6 00:00',
@@ -57,11 +59,11 @@ class App extends Component {
         otherGoalsCategories: [
           {
             category: 'Programming',
-            id: 4,
+            id: uuid.v4(),
             render: true,
             otherGoals: [
               {
-                id: 5,
+                id: uuid.v4(),
                 title: 'Learn React',
                 snippit: 'Code a bunch of stuff',
                 startDate: '2019, 7, 1 00:00',
@@ -69,7 +71,7 @@ class App extends Component {
                 percentComplete: 20,
               },
               {
-                id: 6,
+                id: uuid.v4(),
                 title: 'Learn to Code',
                 snippit: 'Learn React, C++, SQL, and more C#',
                 startDate: '2019, 5, 1 00:00',
@@ -80,11 +82,11 @@ class App extends Component {
           },
           {
             category: 'Reading',
-            id: 7,
+            id: uuid.v4(),
             render: true,
             otherGoals: [
               {
-                id: 8,
+                id: uuid.v4(),
                 title: 'Read a book',
                 snippit: 'Read the blade itself',
                 startDate: '2019, 7, 8 00:00',
@@ -92,7 +94,7 @@ class App extends Component {
                 percentComplete: 0,
               },
               {
-                id: 9,
+                id: uuid.v4(),
                 title: 'Read 20 books',
                 snippit: "Shouldn't be too hard he thought",
                 startDate: '2019, 1, 1 00:00',
@@ -103,11 +105,11 @@ class App extends Component {
           },
           {
             category: 'Goal Tracker Project',
-            id: 10,
+            id: uuid.v4(),
             render: true,
             otherGoals: [
               {
-                id: 11,
+                id: uuid.v4(),
                 title: 'Add Goal Adding',
                 snippit: 'Add Form and State Addition',
                 startDate: '2019, 7, 9 00:00',
@@ -115,7 +117,7 @@ class App extends Component {
                 percentComplete: 0,
               },
               {
-                id: 12,
+                id: uuid.v4(),
                 title: 'Add Goal Deletion',
                 snippit: 'Add Form and State Deletion',
                 startDate: '2019, 7, 9 00:00',
@@ -123,7 +125,7 @@ class App extends Component {
                 percentComplete: 0,
               },
               {
-                id: 13,
+                id: uuid.v4(),
                 title: 'Fix Small bugs',
                 snippit: 'SideNav Stuff',
                 startDate: '2019, 7, 9 00:00',
@@ -131,7 +133,7 @@ class App extends Component {
                 percentComplete: 0,
               },
               {
-                id: 14,
+                id: uuid.v4(),
                 title: 'Add Sorting Box',
                 snippit: 'Should be easy after I learn add and delete stuff',
                 startDate: '2019, 7, 9 00:00',
@@ -139,7 +141,7 @@ class App extends Component {
                 percentComplete: 0,
               },
               {
-                id: 15,
+                id: uuid.v4(),
                 title: 'Add Login and backend stuff1',
                 snippit: 'This might be the hard part',
                 startDate: '2019, 8, 9 00:00',
@@ -147,7 +149,7 @@ class App extends Component {
                 percentComplete: 0,
               },
               {
-                id: 16,
+                id: uuid.v4(),
                 title: 'Add Login and backend stuff2',
                 snippit: 'This might be the hard part',
                 startDate: '2019, 8, 9 00:00',
@@ -155,7 +157,7 @@ class App extends Component {
                 percentComplete: 0,
               },
               {
-                id: 17,
+                id: uuid.v4(),
                 title: 'Add Login and backend stuff3',
                 snippit: 'This might be the hard part',
                 startDate: '2019, 8, 9 00:00',
@@ -173,10 +175,10 @@ class App extends Component {
           otherGoalsCategories: [
             {
               category: 'Programming',
-              id: 16,
+              id: uuid.v4(),
               otherGoals: [
                 {
-                  id: 17,
+                  id: uuid.v4(),
                   title: 'Learn React',
                   snippit: 'Code a bunch of stuff',
                   startDate: '2019, 7, 1 00:00',
@@ -587,37 +589,16 @@ class App extends Component {
     render() {
       const { state } = this;
       return (
-        <div>
-          <div className="sidenav">
-            <div className="user">
-              <img src="Images/profile.png" alt="" />
-              <a href="http://localhost:3000">Guest</a>
-            </div>
-            <div className="navlinks">
-              <a href="http://localhost:3000">Dashboard</a>
-              <a href="http://localhost:3000">Goals</a>
-              <a href="http://localhost:3000">Tasks</a>
-              <a href="http://localhost:3000">Portfolio Home</a>
-            </div>
-          </div>
-          <div className="topnav">
-            <div className="navdropdown" onClick={this.navSlideChange}>
-              <div className="line1" />
-              <div className="line2" />
-              <div className="line3" />
-            </div>
-            <h1>Current Goals</h1>
-            <div className="creategoalbutton">
-              <button id="button" onClick={this.displayGoalOverlay}>Create Goal</button>
-            </div>
-          </div>
+        <React.Fragment>
+          <SideNav />
+          <TopNav navSlideChange={this.navSlideChange} displayGoalOverlay={this.displayGoalOverlay} />
           <div className="main">
             {/* Side selector for what to render */}
             <TypeSelector goals={state.goals} updateRenderIfs={this.updateRenderIfs} updateCategoryRender={this.updateCategoryRender} />
             <div className="goals">
               {/* Daily Goals */}
               {state.otherStuffs.renderDaily && state.goals.dailyGoals.length !== 0 && state.otherStuffs.renderCurrent
-                    && <DailyGoalHeading updateCheckMark={this.updateCheckMark} dailyGoals={state.goals.dailyGoals} deleteGoal={this.deleteGoal} />}
+                    && <DailyGoalHeading updateCheckMark={this.updateCheckMark} dailyGoals={state.goals.dailyGoals} deleteGoal={this.deleteGoal} otherStuffs={state.otherStuffs} />}
               {/* Completed Daily Goals */}
               {state.otherStuffs.renderDaily && state.goals.completed.dailyGoals.length !== 0 && state.otherStuffs.renderCompleted
                     && <CompletedDailyGoals dailyGoals={state.goals.completed.dailyGoals} />}
@@ -632,7 +613,7 @@ class App extends Component {
             {!state.otherStuffs.overlayIsHidden
                 && <Overlay otherGoalCategories={state.goals.otherGoalsCategories} closeGoalOverlay={this.displayGoalOverlay} stateAdd={this.stateAdd} />}
           </div>
-        </div>
+        </React.Fragment>
       );
     }
 }

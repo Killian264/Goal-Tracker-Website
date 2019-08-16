@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 class TypeSelector extends Component {
   static propTypes = {
-    goals: PropTypes.objectOf(PropTypes.object).isRequired,
+    goals: PropTypes.arrayOf(PropTypes.object).isRequired,
     updateCategoryRender: PropTypes.func.isRequired,
     updateRenderIfs: PropTypes.func.isRequired,
   };

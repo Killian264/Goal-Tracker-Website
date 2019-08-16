@@ -4,7 +4,7 @@ import { getToday } from '../commonCommands';
 
 class OtherGoalsList extends Component {
   static propTypes = {
-    othergoals: PropTypes.arrayOf(PropTypes.object).isRequired,
+    othergoals: PropTypes.objectOf(PropTypes.object).isRequired,
     addPercentage: PropTypes.func.isRequired,
     subtractPercentage: PropTypes.func.isRequired,
     deleteGoal: PropTypes.func.isRequired,

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import uuid from 'uuid';
 import DeleteElement from './DeleteElement';
 
 class DailyGoals extends Component {
@@ -12,8 +13,19 @@ class DailyGoals extends Component {
     renderAmount: PropTypes.number.isRequired,
   };
 
+  // shouldComponentUpdate(nextProps) {
+  //   console.log(this.props.dailyGoals, nextProps.dailyGoals);
+  //   if (this.props.dailyGoals !== nextProps.dailyGoals) {
+  //     return true;
+  //   }
+  //   if (this.props.renderAmount !== nextProps.renderAmount) {
+  //     return true;
+  //   }
+  //   return false;
+  // }
+
     listElement = (goal, i) => (
-      <li key={i}>
+      <li key={uuid.v4()}>
         <label className="checkbox">
           <input type="checkbox" checked={goal.weeklyChecked[i]} readOnly />
           <span className="checkmark" />
@@ -50,7 +62,7 @@ class DailyGoals extends Component {
     render() {
       const { dailyGoals, deleteGoal } = this.props;
       const displayCheckBoxes = goal => (
-        <ul key={goal.id}>
+        <ul>
           {this.dateRenders(goal) }
           <DeleteElement id={goal.id} deleteGoal={deleteGoal} />
         </ul>

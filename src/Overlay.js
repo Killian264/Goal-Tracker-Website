@@ -18,8 +18,8 @@ class Overlay extends Component {
     }
 
     categoryOnChange = (e) => {
-      let tF;
-      e.target.value === 'newCategory' ? tF = true : tF = false;
+      // let tF;
+      const tF = e.target.value === 'newCategory';
       this.setState({
         [e.target.id]: e.target.value,
         newCategory: tF,

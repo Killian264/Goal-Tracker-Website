@@ -12,6 +12,7 @@ class DailyGoalHeading extends Component {
   };
 
     state = {
+      width: 0,
       renderAmount: 0,
       negativeLen: 0,
       positiveLen: 0,
@@ -19,23 +20,32 @@ class DailyGoalHeading extends Component {
 
     heading = React.createRef();
 
-    // shouldComponentUpdate(nextProps) {
-    //   if (this.props.dailyGoals !== nextProps.dailyGoals) {
-    //     return true;
-    //   }
-    //   return false;
-    // }
+    shouldComponentUpdate(nextProps) {
+      if (this.state.width !== this.heading.current.offsetWidth) {
+        return true;
+      }
+      if (this.props.dailyGoals !== nextProps.dailyGoals) {
+        return true;
+      }
+      return false;
+    }
 
-    componentDidMount() {
+    componentDidUpdate() {
+      const width = this.heading.current.offsetWidth;
+      if (this.state.width !== width) {
+        this.updateWidths();
+      }
+    }
+
+    updateWidths= () => {
       const startLen = this.heading.current.offsetWidth;
       let len = Math.floor((startLen - 200) / 80);
       if (len > 8) { len = 8; }
-      const negativeLen = len < 2 ? Math.floor(len / 2) : Math.ceil(len / 2);
-      const positiveLen = (len / 2) - 2;
       this.setState({
+        width: startLen,
         renderAmount: len,
-        negativeLen,
-        positiveLen,
+        negativeLen: len < 2 ? Math.floor(len / 2) : Math.ceil(len / 2),
+        positiveLen: (len / 2) - 2,
       });
     }
 
@@ -49,7 +59,7 @@ class DailyGoalHeading extends Component {
         }
       }
       list.push(
-        <li className="dailyWeekdate">
+        <li className="dailyWeekdate" key={4}>
           {getWeekDay(0)}
           <br />
           {getMonthDay(0)}
@@ -59,7 +69,7 @@ class DailyGoalHeading extends Component {
         list.push(<DayElement i={i} />);
       }
       list.push(
-        <li>
+        <li key={8}>
           Del
           <br />
           ▼
