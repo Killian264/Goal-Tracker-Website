@@ -22,7 +22,6 @@
     padding-top: 20px;
   }
   .navlinks a {
-    /* padding: 15px 8px 16px 40px; */
     padding-top: 6.75%;
     padding-right: 3.6%;
     padding-bottom: 7.2%;
@@ -62,7 +61,6 @@
   .topnav{
     width: 88%;
     margin-left: 12%;
-    /* background-color: rgb(6, 66, 82 , .9); */
     background: rgb(40, 44, 52);
     color: white;
     padding-left: 3%;
@@ -132,7 +130,6 @@
     color: rgb(0, 0, 0);
     height: 100%;
     min-width: 150px;
-    /* max-width: 300px; */
   }
   .goaltypeselector h2{
     padding-bottom: .7vh;
@@ -204,10 +201,6 @@
     width: 200px;
     min-width: 200px;
   }
-  /* .dailyheadingheading{
-    width: 200px;
-    min-width: 200px;
-  } */
 
   .onedailygoalheading{
     width: 200px;
@@ -248,7 +241,6 @@
     display: flex;
   }
   .otherdailygoal{
-    padding-top: 10px;
     padding-bottom: 10px;
     display: flex;
     justify-content: space-between;
@@ -265,8 +257,12 @@
   -webkit-user-select: none;
   -webkit-touch-callout: none;
   }
+  .otherdailygoalheading li{
+    list-style: none;
+  }
   .otherdailygoalheadingheading{
     padding-left: 20px;
+    padding-top: 10px;
   }
   .otherdailygoal h1{
     padding: 0;
@@ -291,7 +287,36 @@
   .extendeddailygoalyourprogress h4{
     text-align: center;
     margin: auto;
-    padding-left: 0;
+    padding-left: 0%;
+  }
+  .extendeddailygoalyourprogress{
+    justify-content: flex-end;
+  }
+  .othergoalprogress{
+    display: flex;
+    padding: 0;
+    width: 180px;
+    justify-content: space-around;
+  }
+  .otherGoalFoldIn{
+    display: block;
+    justify-content: space-between;
+    width: 60px;
+  }
+  .otherGoalFoldIn{
+    display: flex;
+    justify-content: space-around;
+    width: 120px;
+  }
+  .othergoalfoldintop{
+    display: flex;
+    justify-content: space-around;
+    width: 70px;
+  }
+  .finalProgress h4{
+    text-align: center;
+    margin: auto;
+    padding-left: 55%;
   }
 
   .close-container{
@@ -318,7 +343,6 @@
     transform: rotate(45deg);
     transition: all .3s ease-in;
   }
-  /* Customize the label (the radiobtn) */
 .radiobtn {
   display: block;
   position: relative;
@@ -332,7 +356,6 @@
   user-select: none;
 }
 
-/* Hide the browser's default radio button */
 .radiobtn input {
   position: absolute;
   opacity: 0;
@@ -341,7 +364,6 @@
   width: 0;
 }
 
-/* Create a custom radio button */
 .radiocheckmark {
   position: absolute;
   top: 3.5px;
@@ -352,29 +374,24 @@
   border-radius: 50%;
 }
 
-/* On mouse-over, add a grey background color */
 .radiobtn:hover input ~ .radiocheckmark {
   background-color: rgb(90, 89, 89);
 }
 
-/* When the radio button is checked, add a blue background */
 .radiobtn input:checked ~ .radiocheckmark {
   background-color: rgb(22, 87, 141);
 }
 
-/* Create the indicator (the dot/circle - hidden when not checked) */
 .radiocheckmark:after {
   content: "";
   position: absolute;
   display: none;
 }
 
-/* Show the indicator (dot/circle) when checked */
 .radiobtn input:checked ~ .radiocheckmark:after {
   display: block;
 }
 
-/* Style the indicator (dot/circle) */
 .radiobtn .radiocheckmark:after {
   top: 6px;
   left: 6px;
@@ -457,7 +474,6 @@
 .checkbox input:checked ~ .checkmark:after {
   display: block;
 }
-
 .checkbox .checkmark:after {
   left: 11px;
   top: 4px;
@@ -476,7 +492,7 @@
 .creategoaloverlay{
   background: white;
   width: 30%;
-  height: 510px;
+  height: 533px;
   left: 35%;
   position: absolute;
   border-radius: 7px;
@@ -543,11 +559,6 @@
   background-color: rgb(67, 115, 179);
 }
 
-  /* padding:10px 5px 15px 20px;
-top padding is 10px
-right padding is 5px
-bottom padding is 15px
-left padding is 20px */
 @media screen and (max-width: 1400px){
   .main{
     padding-left: 2%;
@@ -576,7 +587,6 @@ left padding is 20px */
   }
   .sidenav{
     height: 100%;
-    /* display: block; */
     padding-top: 55px;
     margin-left: -200px;
     width: 200px;
@@ -619,6 +629,22 @@ left padding is 20px */
   }
   
 }
+@media screen and (max-width: 850px){
+  .othergoalprogress{
+    display: flex;
+    padding: 0;
+    width: 150px;
+    justify-content: space-around;
+  }
+  .otherGoalFoldIn{
+    display: block;
+    justify-content: space-between;
+    width: 60px;
+  }
+  .othergoalfoldintop{
+    display: flex;
+  }
+}
 @media screen and (max-width: 669px){
   .othergoals h1{
     font-size: 20px;
@@ -647,9 +673,6 @@ left padding is 20px */
   .creategoaloverlay{
     min-width: 80%;
     left: calc(50% - 40%);
-  }
-  body{
-    background: url(../src/Images/backgroundmobile.jpg);
   }
   .otherdailygoal h1{
     font-size: 40px;

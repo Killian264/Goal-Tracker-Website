@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import uuid from 'uuid';
 import { getWeekDay, getMonthDay } from '../commonCommands';
 
 function DayElement(props) {
   const { i } = props;
   return (
-    <li key={i}>
+    <li key={11}>
       {getWeekDay(i)}
       <br />
       {getMonthDay(i)}

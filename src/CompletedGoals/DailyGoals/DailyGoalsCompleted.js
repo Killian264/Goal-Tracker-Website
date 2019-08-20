@@ -1,7 +1,22 @@
 import React from 'react';
-import DailyGoalsList from './DailyGoalsCompletedList';
+import DailyGoalsList from '../GoalsCompletedList';
 
 function DailyGoalsCompleted(props) {
+  const functionProp = goal => (
+    <div className="otherdailygoalheading finalProgress">
+      <h4>
+        {goal.percentComplete}
+        %
+        <br />
+        {' '}
+        Completed
+        {' '}
+        {goal.daysChecked}
+        {' '}
+        Days
+      </h4>
+    </div>
+  );
   return (
     <div className="othergoals">
       <div className="otherheading">
@@ -15,7 +30,10 @@ function DailyGoalsCompleted(props) {
           <h1>Final Progress</h1>
         </div>
       </div>
-      <DailyGoalsList dailyGoals={props.dailyGoals} />
+      <DailyGoalsList
+        goals={props.dailyGoals}
+        functionProp={functionProp}
+      />
     </div>
   );
 }

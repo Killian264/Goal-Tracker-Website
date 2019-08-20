@@ -1,13 +1,20 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { getYeseterday } from './commonCommands';
 
 class Overlay extends Component {
+  static propTypes = {
+    otherGoalCategories: PropTypes.arrayOf(PropTypes.object).isRequired,
+    stateAdd: PropTypes.func.isRequired,
+    closeGoalOverlay: PropTypes.func.isRequired,
+  };
+
     state = {
       title: null,
       snippit: null,
       endDate: null,
       type: 'daily',
-      category: '',
+      category: null,
       newCategory: true,
     }
 
@@ -30,14 +37,21 @@ class Overlay extends Component {
       const { state } = this;
       const { stateAdd } = this.props;
       e.preventDefault();
-      if ((state.title && state.endDate) && (!(state.newCategory) || !(state.category === 'newCategory'))) {
+      console.log(state);
+      if ((state.title && state.endDate)) {
         if (new Date(state.endDate) < new Date(getYeseterday())) {
-          window.confirm('Please choose an End Date');
+          alert('Date cannot be before today.');
           return;
+        }
+        if ((!(state.type === 'daily'))) {
+          if (((state.newCategory) && (state.category === null))) {
+            alert('Please add a category.');
+            return;
+          }
         }
         stateAdd(state);
       } else {
-        window.confirm('please confirm');
+        alert('Plese fillout all fields.');
       }
     }
 
@@ -57,39 +71,39 @@ class Overlay extends Component {
             <div className="goalallinput">
               <ul>
                 <li>
-Goal:
+                  Goal:
                   <br />
                   <input className="goalinput goal" id="title" type="text" name="goal" onChange={this.onChange} />
                 </li>
                 <li>
-Short Description:
+                  Short Description:
                   <br />
                   {' '}
                   <input className="goalinput sDes" id="snippit" type="text" name="sDes" onChange={this.onChange} />
                 </li>
                 <li>
-Ends:
+                  Ends:
                   <br />
                   {' '}
                   <input type="date" className="goalinput dDate" id="endDate" name="dDate" onChange={this.onChange} />
                 </li>
                 <li>
-Type:
+                  Type:
                   <select name="type" id="type" className="type" onChange={this.onChange}>
                     <option value="daily"> Daily Goal</option>
                     <option value="default"> Default Goal</option>
                   </select>
                 </li>
-                            Category:
-                <select name="type" className="type" id="category" onChange={this.categoryOnChange} disabled={this.state.type === 'daily'}>
+                 Category:
+                <select name="type" className="type" id="category" onChange={this.categoryOnChange} disabled={state.type === 'daily'}>
                   <option value="newCategory"> New Category</option>
                   {categories}
                 </select>
                 <li>
-New Category:
+                  New Category:
                   <br />
                   {' '}
-                  <input className="goalinput category" id="category" type="text" name="category" onChange={this.onChange} disabled={this.state.type === 'daily' || !(this.state.newCategory)} />
+                  <input className="goalinput category" id="category" type="text" name="category" onChange={this.onChange} disabled={state.type === 'daily' || !(state.newCategory)} />
                 </li>
               </ul>
             </div>

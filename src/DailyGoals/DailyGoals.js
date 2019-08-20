@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import uuid from 'uuid';
 import DeleteElement from './DeleteElement';
 
 class DailyGoals extends Component {
@@ -25,7 +24,7 @@ class DailyGoals extends Component {
   // }
 
     listElement = (goal, i) => (
-      <li key={uuid.v4()}>
+      <li key={i}>
         <label className="checkbox">
           <input type="checkbox" checked={goal.weeklyChecked[i]} readOnly />
           <span className="checkmark" />
@@ -64,7 +63,7 @@ class DailyGoals extends Component {
       const displayCheckBoxes = goal => (
         <ul>
           {this.dateRenders(goal) }
-          <DeleteElement id={goal.id} deleteGoal={deleteGoal} />
+          <DeleteElement id={goal.id} deleteGoal={deleteGoal} category="daily" />
         </ul>
       );
       const displayDailyGoals = dailyGoals.map(goal => (

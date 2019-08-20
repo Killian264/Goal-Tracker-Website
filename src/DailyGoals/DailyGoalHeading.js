@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import ReactResizeDetector from 'react-resize-detector';
 import DailyGoals from './DailyGoals';
 import DayElement from './DayElement';
 import { getWeekDay, getMonthDay } from '../commonCommands';
@@ -30,24 +31,27 @@ class DailyGoalHeading extends Component {
       return false;
     }
 
-    componentDidUpdate() {
-      const width = this.heading.current.offsetWidth;
-      if (this.state.width !== width) {
-        this.updateWidths();
+    updateWidths = (handleWidth) => {
+      const { renderAmount } = this.state;
+      let len = Math.floor((handleWidth - 200) / 80);
+      if (len > 8) { len = 8; }
+      if ((len - renderAmount) >= 1 || (renderAmount - len) >= 1) {
+        this.setState({
+          width: handleWidth,
+          renderAmount: len,
+          negativeLen: len < 2 ? Math.floor(len / 2) : Math.ceil(len / 2),
+          positiveLen: (len / 2) - 2,
+        });
       }
     }
 
-    updateWidths= () => {
-      const startLen = this.heading.current.offsetWidth;
-      let len = Math.floor((startLen - 200) / 80);
-      if (len > 8) { len = 8; }
-      this.setState({
-        width: startLen,
-        renderAmount: len,
-        negativeLen: len < 2 ? Math.floor(len / 2) : Math.ceil(len / 2),
-        positiveLen: (len / 2) - 2,
-      });
-    }
+    listElement = i => (
+      <li key={i}>
+        {getWeekDay(i)}
+        <br />
+        {getMonthDay(i)}
+      </li>
+    )
 
     dateRenders = () => {
       const { state } = this;
@@ -55,18 +59,18 @@ class DailyGoalHeading extends Component {
       ];
       if (state.renderAmount !== 2) {
         for (let i = (4 - state.negativeLen); i <= 3; i += 1) {
-          list.push(<DayElement i={i - 4} />);
+          list.push(this.listElement(i - 4));
         }
       }
       list.push(
-        <li className="dailyWeekdate" key={4}>
+        <li className="dailyWeekdate" key={10}>
           {getWeekDay(0)}
           <br />
           {getMonthDay(0)}
         </li>,
       );
       for (let i = 1; i <= state.positiveLen; i += 1) {
-        list.push(<DayElement i={i} />);
+        list.push(this.listElement(i));
       }
       list.push(
         <li key={8}>
@@ -85,6 +89,7 @@ class DailyGoalHeading extends Component {
       const { updateCheckMark, dailyGoals, deleteGoal } = this.props;
       return (
         <div className="dailygoals">
+          <ReactResizeDetector handleWidth onResize={this.updateWidths} />
           <div className="dailyheading" ref={this.heading}>
             <h1>Daily Goals</h1>
             <ul>
@@ -93,6 +98,7 @@ class DailyGoalHeading extends Component {
           </div>
           {<DailyGoals updateCheckMark={updateCheckMark} dailyGoals={dailyGoals} deleteGoal={deleteGoal} negativeLen={state.negativeLen} positiveLen={state.positiveLen} renderAmount={state.renderAmount} />}
         </div>
+
       );
     }
 }

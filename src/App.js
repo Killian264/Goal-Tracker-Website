@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React, { Component } from 'react';
 import './App.css';
 import uuid from 'uuid';
@@ -10,6 +11,9 @@ import CompletedDailyGoals from './CompletedGoals/DailyGoals/DailyGoalsCompleted
 import CompletedOtherGoals from './CompletedGoals/OtherGoals/OtherGoalsCompleted';
 import SideNav from './SideNav';
 import TopNav from './TopNav';
+import {
+  makeCompletedDailyGoal, makeCompletedOtherGoal, makeDailyGoal, makeCompletedOtherGoalCategory, makeOtherGoal, makeOtherGoalCategory,
+} from './MakeGoals';
 
 class App extends Component {
     state = {
@@ -37,23 +41,13 @@ class App extends Component {
           },
           {
             id: uuid.v4(),
-            title: 'Be Cool',
-            snippit: 'Yea',
-            startDate: '2019, 6, 6 00:00',
-            endDate: '2019, 7, 10 00:00',
-            lastDayUpdated: '2019, 7, 14 00:00',
+            title: 'Attend Classes',
+            snippit: "Don't miss any classes",
+            startDate: '2019, 8, 26 00:00',
+            endDate: '2019, 12, 30 00:00',
+            lastDayUpdated: '2019, 8, 26 00:00',
             daysChecked: 12,
-            weeklyChecked: [false, true, true, true, false, false, false],
-          },
-          {
-            id: uuid.v4(),
-            title: 'Be Cools',
-            snippit: 'Yea',
-            startDate: '2019, 6, 6 00:00',
-            endDate: '2019, 7, 17 00:00',
-            lastDayUpdated: '2019, 7, 14 00:00',
-            daysChecked: 12,
-            weeklyChecked: [false, true, true, true, false, false, false],
+            weeklyChecked: [false, false, false, false, false, false, false],
           },
         ],
         otherGoalsCategories: [
@@ -68,15 +62,7 @@ class App extends Component {
                 snippit: 'Code a bunch of stuff',
                 startDate: '2019, 7, 1 00:00',
                 endDate: '2019, 7, 15 00:00',
-                percentComplete: 20,
-              },
-              {
-                id: uuid.v4(),
-                title: 'Learn to Code',
-                snippit: 'Learn React, C++, SQL, and more C#',
-                startDate: '2019, 5, 1 00:00',
-                endDate: '2019, 8, 16 00:00',
-                percentComplete: 40,
+                percentComplete: 100,
               },
             ],
           },
@@ -91,7 +77,7 @@ class App extends Component {
                 snippit: 'Read the blade itself',
                 startDate: '2019, 7, 8 00:00',
                 endDate: '2019, 7, 30 00:00',
-                percentComplete: 0,
+                percentComplete: 100,
               },
               {
                 id: uuid.v4(),
@@ -142,29 +128,59 @@ class App extends Component {
               },
               {
                 id: uuid.v4(),
-                title: 'Add Login and backend stuff1',
-                snippit: 'This might be the hard part',
+                title: 'Optimize Code',
+                snippit: 'Add shouldComponentUpdate where needed',
                 startDate: '2019, 8, 9 00:00',
                 endDate: '2019, 8, 19 00:00',
                 percentComplete: 0,
               },
               {
                 id: uuid.v4(),
-                title: 'Add Login and backend stuff2',
-                snippit: 'This might be the hard part',
+                title: 'Lint Code',
+                snippit: 'Use eslint',
                 startDate: '2019, 8, 9 00:00',
-                endDate: '2019, 8, 19 00:00',
+                endDate: '2019, 8, 15 00:00',
                 percentComplete: 0,
               },
               {
                 id: uuid.v4(),
-                title: 'Add Login and backend stuff3',
+                title: 'Add login and backend stuff',
                 snippit: 'This might be the hard part',
                 startDate: '2019, 8, 9 00:00',
-                endDate: '2019, 8, 19 00:00',
+                endDate: '2019, 12, 30 00:00',
                 percentComplete: 0,
               },
-
+            ],
+          },
+          {
+            category: 'Testing Testing 123',
+            id: uuid.v4(),
+            render: true,
+            otherGoals: [
+              {
+                id: uuid.v4(),
+                title: 'Seems to be working well',
+                snippit: 'Email any errors to KillianDebacker@gmail.com',
+                startDate: '2019, 8, 10 00:00',
+                endDate: '2040, 7, 11 00:00',
+                percentComplete: 98,
+              },
+              {
+                id: uuid.v4(),
+                title: 'Check out my other Projects',
+                snippit: 'You can find them at KillianDebacker.com',
+                startDate: '2019, 8, 10 00:00',
+                endDate: '2040, 7, 11 00:00',
+                percentComplete: 98,
+              },
+              {
+                id: uuid.v4(),
+                title: 'Infinity',
+                snippit: 'Big Numbers ->',
+                startDate: '2019, 8, 10 00:00',
+                endDate: '3000, 7, 11 00:00',
+                percentComplete: 2000,
+              },
             ],
           },
         ],
@@ -199,78 +215,13 @@ class App extends Component {
       },
     }
 
-    makeCompletedDailyGoal = newGoal => (
-      {
-        id: newGoal.id,
-        title: newGoal.title,
-        snippit: newGoal.snippit,
-        startDate: newGoal.startDate,
-        endDate: newGoal.endDate,
-        daysChecked: newGoal.daysChecked,
-        percentComplete: ((newGoal.daysChecked / (Math.abs(new Date(newGoal.startDate) - (new Date(newGoal.endDate))) / 8.64e+7) * 100).toString().substr(0, 2)),
-      }
-    )
-
-    makeCompletedOtherGoal = (newGoal, category) => (
-      {
-        category: category.category,
-        id: category.id,
-        otherGoals: [
-          newGoal,
-        ],
-      }
-    )
-
-    makeCompletedOtherGoalCategory = (newGoal, category) => (
-      {
-        category,
-        id: uuid.v4(),
-        otherGoals: [
-          newGoal,
-        ],
-      }
-    )
-
-    makeDailyGoal = newGoal => (
-      {
-        id: uuid.v4(),
-        title: newGoal.title,
-        snippit: newGoal.snippit,
-        startDate: getToday(),
-        endDate: `${newGoal.endDate} 00:00`,
-        lastDayUpdated: getToday(),
-        daysChecked: 0,
-        weeklyChecked: [false, false, false, false, false, false, false],
-      }
-    )
-
-    makeOtherGoal = newGoal => (
-      {
-        id: uuid.v4(),
-        title: newGoal.title,
-        snippit: newGoal.snippit,
-        startDate: getToday(),
-        endDate: `${newGoal.endDate} 00:00`,
-        percentComplete: 0,
-      }
-    )
-
-    makeOtherGoalCategory = (newGoal, category) => ({
-      category,
-      id: uuid.v4(),
-      render: true,
-      otherGoals: [
-        newGoal,
-      ],
-    })
-
     componentDidMount() {
       const { state } = this;
       let updatedCompletedDailyGoals = state.goals.completed.dailyGoals;
       let updatedCompletedOtherCategories = state.goals.completed.otherGoalsCategories;
       const filteredDailyGoals = state.goals.dailyGoals.filter((goal) => {
         if (Date.parse(goal.endDate) <= Date.parse(getYeseterday())) {
-          updatedCompletedDailyGoals = [...updatedCompletedDailyGoals, this.makeCompletedDailyGoal(goal)];
+          updatedCompletedDailyGoals = [...updatedCompletedDailyGoals, makeCompletedDailyGoal(goal)];
           return false;
         }
         return true;
@@ -299,7 +250,6 @@ class App extends Component {
       });
       updatedOtherGoalsCategories = updatedOtherGoalsCategories.filter(categories => categories !== null);
       this.setState({
-
         goals: Object.assign({}, state.goals, {
           dailyGoals: updatedDailyGoals,
           otherGoalsCategories: updatedOtherGoalsCategories,
@@ -365,7 +315,7 @@ class App extends Component {
           goals: Object.assign({}, state.goals, {
             dailyGoals: updatedDaily,
             completed: Object.assign({}, state.goals.completed, {
-              dailyGoals: [...state.goals.completed.dailyGoals, this.makeCompletedDailyGoal(toCompletedGoal)],
+              dailyGoals: [...state.goals.completed.dailyGoals, makeCompletedDailyGoal(toCompletedGoal)],
             }),
           }),
         });
@@ -413,7 +363,7 @@ class App extends Component {
         }
         return categories;
       });
-      return (found ? otherGoalsCategoryCompleted : completed.concat(this.makeCompletedOtherGoalCategory(goal, category)));
+      return (found ? otherGoalsCategoryCompleted : completed.concat(makeCompletedOtherGoalCategory(goal, category)));
     }
 
     updateRenderIfs = (whichClicked) => {
@@ -426,6 +376,9 @@ class App extends Component {
       // switch to determine sort goals stuff can probably simplify
       switch (whichClicked) {
         case ('allTypes'):
+          if (otherStuffs.renderDaily === true && otherStuffs.renderOther === true) {
+            return;
+          }
           otherStuffs = Object.assign({}, otherStuffs, {
             renderDaily: true,
             renderOther: true,
@@ -462,6 +415,9 @@ class App extends Component {
         default:
           break;
       }
+      if (otherStuffs === this.state.otherStuffs) {
+        return;
+      }
       this.setState({
         otherStuffs,
       });
@@ -497,16 +453,18 @@ class App extends Component {
       const { state } = this;
       let { goals } = this.state;
       if (newGoal.type === 'daily') {
-        newGoal = this.makeDailyGoal(newGoal);
+        newGoal = makeDailyGoal(newGoal);
         goals = Object.assign({}, goals, {
-          dailyGoals: [...state.goals.dailyGoals, newGoal],
+          dailyGoals: [...goals.dailyGoals, newGoal],
         });
       } else {
         const { category, newCategory } = newGoal;
-        newGoal = this.makeOtherGoal(newGoal);
+        newGoal = makeOtherGoal(newGoal);
         if (newCategory === true) {
-          newGoal = this.makeOtherGoalCategory(newGoal, category);
-          state.goals.otherGoalsCategories = [...state.goals.otherGoalsCategories, newGoal];
+          newGoal = makeOtherGoalCategory(newGoal, category);
+          goals = Object.assign({}, goals, {
+            otherGoalsCategories: [...goals.otherGoalsCategories, newGoal],
+          });
         } else {
           goals.otherGoalsCategories = goals.otherGoalsCategories.map((goal) => {
             if (goal.category === category) {
