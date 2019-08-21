@@ -16,6 +16,4 @@ It works but needs heavy optimization.
 
 # TODO: 
 
-Implement shouldComponentUpdate.
-
 Add TODO Tracker.
