@@ -1,4 +1,6 @@
 # Goal-Tracker-Website
+Live Preview: https://goal-tracker.killiandebacker.com/
+
 This website was built to learn React. 
 
 It works but needs heavy optimization.
