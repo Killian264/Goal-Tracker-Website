@@ -25,10 +25,16 @@ class OtherGoalsList extends Component {
     } = this.props;
     const displayOtherGoals = othergoals.otherGoals.map((goal) => {
       // Possibly rework this later to work after component did mount and make it run once only
+      // Delete when fixed
+      goal.endDate = new Date(goal.endDate);
+      goal.startDate = new Date(goal.startDate);
+      // const today2 = new Date();
+      // today2 = new Date(today2.getFullYear(), today2.getMonth(), today2.getDate());
+      // Delete when fixed
       const endDate = new Date(goal.endDate);
-      const totalDays = Math.abs(new Date(goal.startDate) - endDate) / 8.64e+7;
+      const totalDays = Math.abs(goal.startDate - endDate) / 8.64e+7;
       const today = getToday();
-      const timeLeft = (Math.abs(endDate - new Date(today)) / 8.64e+7).toString().split('.')[0];
+      const timeLeft = (Math.abs(endDate - new Date(getToday())) / 8.64e+7).toString().split('.')[0];
       return (
         <div className="othergoalslist" key={goal.id}>
           <div className="otherdailygoal">

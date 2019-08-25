@@ -90,7 +90,7 @@ class App extends Component {
             ],
           },
           {
-            category: 'Goal Tracker Project',
+            category: 'This.Project',
             id: uuid.v4(),
             render: true,
             otherGoals: [
@@ -153,7 +153,7 @@ class App extends Component {
             ],
           },
           {
-            category: 'Testing Testing 123',
+            category: 'Testing 123',
             id: uuid.v4(),
             render: true,
             otherGoals: [
@@ -219,8 +219,14 @@ class App extends Component {
       const { state } = this;
       let updatedCompletedDailyGoals = state.goals.completed.dailyGoals;
       let updatedCompletedOtherCategories = state.goals.completed.otherGoalsCategories;
+      // delete this
+      let today = new Date();
+      today = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+      // getYeseterday() <- replace today
       const filteredDailyGoals = state.goals.dailyGoals.filter((goal) => {
-        if (Date.parse(goal.endDate) <= Date.parse(getYeseterday())) {
+        // delete this
+        const busta = Date.parse(goal.endDate);
+        if (busta <= Date.parse(getYeseterday())) {
           updatedCompletedDailyGoals = [...updatedCompletedDailyGoals, makeCompletedDailyGoal(goal)];
           return false;
         }
