@@ -1,10 +1,10 @@
 export function getToday() {
   const dateObj = new Date();
-  return (`${dateObj.getFullYear().toString()}/${(dateObj.getMonth() + 1).toString()}/${dateObj.getDate().toString()} 00:00`);
+  return (`${dateObj.getFullYear().toString()}/${(dateObj.getMonth() + 1).toString()}/${dateObj.getDate().toString()}`);
 }
 export function getYeseterday() {
   const dateObj = new Date();
-  return (`${dateObj.getFullYear().toString()}/${(dateObj.getMonth() + 1).toString()}/${(dateObj.getDate() - 1).toString()} 00:00`);
+  return (`${dateObj.getFullYear().toString()}/${(dateObj.getMonth() + 1).toString()}/${(dateObj.getDate() - 1).toString()}`);
 }
 
 export function isCompleted(endDate) {

@@ -1,5 +1,5 @@
 import uuid from 'uuid';
-import { getToday, getYeseterday } from './commonCommands';
+import { getToday } from './commonCommands';
 
 export function makeCompletedDailyGoal(newGoal) {
   return ({
