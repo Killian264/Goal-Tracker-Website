@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { userService } from '../_services';
+import { userService } from '../services/user.service.js';
 
 class LoginPage extends React.Component {
     constructor(props) {
@@ -86,4 +86,4 @@ class LoginPage extends React.Component {
     }
 }
 
-export { LoginPage }; 
+export default LoginPage; 

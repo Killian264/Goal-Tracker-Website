@@ -1,4 +1,3 @@
-import config from 'config';
 import { authHeader } from '../_helpers';
 
 export const userService = {
@@ -6,7 +5,7 @@ export const userService = {
     logout,
     getAll
 };
-
+    const apiUrl = 'http://localhost:61487/';
 function login(username, password) {
     const requestOptions = {
         method: 'POST',

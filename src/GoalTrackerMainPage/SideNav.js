@@ -1,10 +1,9 @@
 import React from 'react';
-
 function DayElement() {
   return (
     <div className="sidenav">
       <div className="user">
-        <img src="Images/profile.png" alt="" />
+        <img src="./Images/profile.png" alt="" />
         <a href="http://localhost:3000">Guest</a>
       </div>
       <div className="navlinks">
