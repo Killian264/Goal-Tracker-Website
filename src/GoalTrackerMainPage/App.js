@@ -95,6 +95,7 @@ class App extends Component {
     // fetch('http://localhost:61487/api/values')
     //   .then(response => response.json())
     //   .then(data => this.setState(this.updateStateForMount(data)));
+    console.log(localStorage.getItem('user'));
   }
 
     updateCategoryRender = (key) => {

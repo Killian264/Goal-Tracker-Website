@@ -1,4 +1,7 @@
 import React from 'react';
+
+
+
 function DayElement() {
   return (
     <div className="sidenav">
@@ -11,6 +14,7 @@ function DayElement() {
         {/* <a href="http://localhost:3000">Goals</a>
         <a href="http://localhost:3000">Tasks</a> */}
         {/* <a href="https://goal-tracker.killiandebacker.com">Sign In</a> */}
+      <a href="http://localhost:3000/login">Log Out</a>
         Planned
 
       </div>

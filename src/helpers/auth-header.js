@@ -5,6 +5,6 @@ export function authHeader() {
     if (user && user.authdata) {
         return { 'Authorization': 'Basic ' + user.authdata };
     } else {
-        return {};
+        return {}``;
     }
 }
