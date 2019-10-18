@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.452
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoalTrackerAPI", "GoalTrackerAPI\GoalTrackerAPI.csproj", "{305752DA-E6D8-4391-9635-500D5BD727EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserDataAccess", "UserDataAccess\UserDataAccess.csproj", "{24472D03-96BC-4934-891B-0B9CE82EC80C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{305752DA-E6D8-4391-9635-500D5BD727EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{305752DA-E6D8-4391-9635-500D5BD727EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{305752DA-E6D8-4391-9635-500D5BD727EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{305752DA-E6D8-4391-9635-500D5BD727EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24472D03-96BC-4934-891B-0B9CE82EC80C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24472D03-96BC-4934-891B-0B9CE82EC80C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24472D03-96BC-4934-891B-0B9CE82EC80C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24472D03-96BC-4934-891B-0B9CE82EC80C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {373E676E-2211-4C50-BBF5-FC63D8E93259}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="UsersInfoModelStoreContainer" CdmEntityContainer="UsersEntities">
+    <EntitySetMapping Name="userModels">
+      <EntityTypeMapping TypeName="UsersInfoModel.userModel">
+        <MappingFragment StoreEntitySet="users">
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Lastlogin" ColumnName="Lastlogin" />
+          <ScalarProperty Name="OtherDB" ColumnName="OtherDB" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

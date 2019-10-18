@@ -1,0 +1,13 @@
+C:\Users\Killian\Desktop\Projects\GoalTrackerAPI\UserDataAccess\bin\Debug\Users.mdf
+C:\Users\Killian\Desktop\Projects\GoalTrackerAPI\UserDataAccess\bin\Debug\Users_log.ldf
+C:\Users\Killian\Desktop\Projects\GoalTrackerAPI\UserDataAccess\bin\Debug\UserDataAccess.dll.config
+C:\Users\Killian\Desktop\Projects\GoalTrackerAPI\UserDataAccess\bin\Debug\UserDataAccess.dll
+C:\Users\Killian\Desktop\Projects\GoalTrackerAPI\UserDataAccess\bin\Debug\UserDataAccess.pdb
+C:\Users\Killian\Desktop\Projects\GoalTrackerAPI\UserDataAccess\bin\Debug\EntityFramework.dll
+C:\Users\Killian\Desktop\Projects\GoalTrackerAPI\UserDataAccess\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Killian\Desktop\Projects\GoalTrackerAPI\UserDataAccess\bin\Debug\EntityFramework.xml
+C:\Users\Killian\Desktop\Projects\GoalTrackerAPI\UserDataAccess\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Killian\Desktop\Projects\GoalTrackerAPI\UserDataAccess\obj\Debug\UserDataAccess.csprojAssemblyReference.cache
+C:\Users\Killian\Desktop\Projects\GoalTrackerAPI\UserDataAccess\obj\Debug\UserDataAccess.csproj.CopyComplete
+C:\Users\Killian\Desktop\Projects\GoalTrackerAPI\UserDataAccess\obj\Debug\UserDataAccess.dll
+C:\Users\Killian\Desktop\Projects\GoalTrackerAPI\UserDataAccess\obj\Debug\UserDataAccess.pdb

@@ -1,0 +1,194 @@
+﻿{
+  "goals": {
+    "dailyGoals": [
+      {
+        "id": "a05ccc24-b391-4085-be70-f48f2712294c",
+        "title": "Attend Classes",
+        "snippit": "Don't miss any classes",
+        "startDate": "2019/8/26",
+        "endDate": "2019/12/30",
+        "lastDayUpdated": "2019/8/27",
+        "daysChecked": 12,
+        "weeklyChecked": [ false, false, false, false, false, false, false ]
+      }
+    ],
+    "otherGoalsCategories": [
+      {
+        "category": "This.Project",
+        "id": "e72ad877-9f38-47ac-8521-139e4fcd0030",
+        "render": true,
+        "otherGoals": [
+          {
+            "id": "c5efdc03-72c3-4cbe-96a6-abfa02355bf3",
+            "title": "Add login and backend stuff",
+            "snippit": "This might be the hard part",
+            "startDate": "2019/8/9",
+            "endDate": "2019/12/30",
+            "percentComplete": 0
+          }
+        ]
+      },
+      {
+        "category": "Testing 123",
+        "id": "dd9d91fa-1f23-41d0-b299-442ca3dbcb84",
+        "render": true,
+        "otherGoals": [
+          {
+            "id": "872bc620-afe1-454f-80e0-d08a0a19ac0d",
+            "title": "Working Well",
+            "snippit": "Email any errors to KillianDebacker@gmail.com",
+            "startDate": "2019/8/10",
+            "endDate": "2040/7/11",
+            "percentComplete": 98
+          },
+          {
+            "id": "f06dd963-245f-418f-a9eb-43b410f24a43",
+            "title": "Check out my other Projects",
+            "snippit": "You can find them at KillianDebacker.com",
+            "startDate": "2019/8/10",
+            "endDate": "2040/7/11",
+            "percentComplete": 98
+          },
+          {
+            "id": "f5259b92-c6bd-4155-9051-2d30d2e04b5d",
+            "title": "Infinity",
+            "snippit": "Big Numbers ->",
+            "startDate": "2019/8/10",
+            "endDate": "4000/7/11",
+            "percentComplete": 12345
+          }
+        ]
+      }
+    ],
+    "completed": {
+      "dailyGoals": [
+        {
+          "id": "0c2a6e8f-363c-4a86-b2f1-6ca4f896fd01",
+          "title": "Build a Website",
+          "snippit": "Write Code",
+          "startDate": "2019/7/1",
+          "endDate": "2019/7/30",
+          "daysChecked": 20,
+          "percentComplete": "68"
+        },
+        {
+          "id": "11c4a563-30b5-4373-8581-2c9da2442a32",
+          "title": "Programme",
+          "snippit": "Write Code",
+          "startDate": "2019/8/1",
+          "endDate": "2019/8/30",
+          "daysChecked": 20,
+          "percentComplete": "68"
+        },
+        {
+          "id": "69b0ab90-14b8-4249-b50c-ca7842051ef3",
+          "title": "Learn React",
+          "snippit": "Write Code",
+          "startDate": "2019/8/1 ",
+          "endDate": "2019/8/30",
+          "daysChecked": 12,
+          "percentComplete": "41"
+        }
+      ],
+      "otherGoalsCategories": [
+        {
+          "category": "Programming",
+          "id": "b3758262-21a6-458d-be39-9cb5ac414175",
+          "otherGoals": [
+            {
+              "id": "601076df-d515-440f-85cd-810c27f61ad3",
+              "title": "Learn React",
+              "snippit": "Code a bunch of stuff",
+              "startDate": "2019/7/1",
+              "endDate": "2019/7/15",
+              "percentComplete": 100
+            }
+          ]
+        },
+        {
+          "category": "Reading",
+          "id": "ba97f322-923e-4941-a124-c9a6eac05820",
+          "otherGoals": [
+            {
+              "id": "282e7e4f-36bc-4874-ad27-a0bdbc17b287",
+              "title": "Read a book",
+              "snippit": "Read the blade itself",
+              "startDate": "2019/7/8",
+              "endDate": "2019/7/30",
+              "percentComplete": 100
+            },
+            {
+              "id": "200e239f-3c16-4fb0-b162-e164318063f6",
+              "title": "Read 20 books",
+              "snippit": "Shouldn't be too hard he thought",
+              "startDate": "2019/1/1",
+              "endDate": "2020/1/1",
+              "percentComplete": 50
+            }
+          ]
+        },
+        {
+          "category": "This.Project",
+          "id": "f092264f-5953-4049-aa74-2deb2b5d1137",
+          "otherGoals": [
+            {
+              "id": "0593ef7e-0a5e-4e95-83d2-528938d618af",
+              "title": "Add Goal Adding",
+              "snippit": "Add Form and State Addition",
+              "startDate": "2019/7/9",
+              "endDate": "2019/7/11",
+              "percentComplete": 0
+            },
+            {
+              "id": "b58aaf0d-895a-41de-a1a7-1630b27d4a25",
+              "title": "Add Goal Deletion",
+              "snippit": "Add Form and State Deletion",
+              "startDate": "2019/7/9",
+              "endDate": "2019/7/11",
+              "percentComplete": 0
+            },
+            {
+              "id": "9ef02627-80d3-4518-a2b5-7fed65af5b42",
+              "title": "Fix Small bugs",
+              "snippit": "SideNav Stuff",
+              "startDate": "2019/7/9",
+              "endDate": "2019/7/12",
+              "percentComplete": 0
+            },
+            {
+              "id": "4cd8387a-3231-4e45-9747-ccc8b68147fa",
+              "title": "Add Sorting Box",
+              "snippit": "Should be easy after I learn add and delete stuff",
+              "startDate": "2019/7/9",
+              "endDate": "2019/7/12",
+              "percentComplete": 0
+            },
+            {
+              "id": "e637da2f-adb0-4c9e-99db-b4a800e56d5c",
+              "title": "Optimize Code",
+              "snippit": "Add shouldComponentUpdate where needed",
+              "startDate": "2019/8/9",
+              "endDate": "2019/8/19",
+              "percentComplete": 0
+            },
+            {
+              "id": "03979e44-223f-4017-b159-1051a65926d1",
+              "title": "Lint Code",
+              "snippit": "Use eslint",
+              "startDate": "2019/8/9",
+              "endDate": "2019/8/15",
+              "percentComplete": 0
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "otherStuffs": {
+    "overlayIsHidden": true,
+    "renderCurrent": true,
+    "renderCompleted": false,
+    "renderDaily": true,
+    "renderOther": true
+  }
+}
