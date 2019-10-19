@@ -1,11 +1,9 @@
 import React from 'react';
-import './App.css';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import MainPage from './GoalTrackerMainPage/App';
 import LoginPage from './LoginPage/LoginPage'
 import PrivateRoute from './components/PrivateRoute'
-import Register from './register/register'
 
 function App() {
   var test = true;

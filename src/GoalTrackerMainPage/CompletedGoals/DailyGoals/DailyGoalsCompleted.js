@@ -21,7 +21,7 @@ function DailyGoalsCompleted(props) {
     <div className="othergoals">
       <div className="otherheading">
         <div className="otherheadingheading">
-          <h1>Daily</h1>
+          <h1>Completed Daily</h1>
         </div>
         <div className="otherheadingheading otherheadingheadingtimeframe">
           <h1>TimeFrame</h1>

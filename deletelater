@@ -1,0 +1,22 @@
+The object is always going to be the type
+and the blueprint.
+	False
+In C#, the this keyword provides access to the current instance that has been created and want to initialize.
+	True
+Constructors are special class methods that are automatically executed when we create an instance of a given type.
+	True
+The var keyword to lets C# automatically assign the type to a variable.
+	True
+Specific arguments may need to be available when we are creating an instance.
+	True
+You can define at most three constructors for a class.
+	False
+Garbage-reduction is a mechanism in C# that
+automatically deallocates memory used by instances that aren't referenced anymore.
+	False
+Constructors are extremely useful when we want to define the attributes of the instances of a class right after their creation.
+	True
+You can use a destructor to perform any necessary cleanup before the object is destroyed and removed from memory.
+	True
+Any new class you create that doesn't specify a superclass will be a subclass of the System.Object class in C#.
+	True

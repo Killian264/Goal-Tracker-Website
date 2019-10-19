@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import uuid from 'uuid';
 import { getWeekDay, getMonthDay } from '../commonCommands';
 
 function DayElement(props) {

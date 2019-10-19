@@ -93,7 +93,7 @@
     border: none;
   }
   #button:hover{
-    background-color: rgb(190, 189, 189);
+    background-color: rgb(255, 255, 255);
   }
   .navdropdown{
     display: block;
@@ -163,10 +163,10 @@
     padding-top: 9px;
   }
   .othergoals h1{
-    padding: .7% 5% .5%;
+    padding: .7% 6% .5%;
     white-space: nowrap;
     letter-spacing: 1px;
-    padding-top: 9px;
+    /* font-size: 30px; */
   }
   .dailygoals{
     background: rgb(184, 184, 184);
@@ -191,8 +191,8 @@
     overflow: hidden;
   }
   .dailyheading li{
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-top: 8px;
+    padding-bottom: 8px; 
     text-align: center;
     overflow: hidden;
     min-width: 80px;
@@ -237,7 +237,7 @@
     justify-content: space-between;
     border-bottom:  1px;
     border-bottom-style: solid;
-    padding-bottom: 12px;
+    /* padding-bottom: 12px; */
   }
   .otherheadingheading{
     width: 190px;
@@ -245,7 +245,8 @@
     display: flex;
   }
   .otherdailygoal{
-    padding-bottom: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
     display: flex;
     justify-content: space-between;
     overflow: hidden;
@@ -266,7 +267,6 @@
   }
   .otherdailygoalheadingheading{
     padding-left: 20px;
-    padding-top: 10px;
   }
   .otherdailygoal h1{
     padding: 0;
@@ -279,10 +279,10 @@
     cursor: pointer;
     color: rgb(93, 93, 93);
   }
-  .otherheadingheadingtimeframe h1{
+  /* .otherheadingheadingtimeframe h1{
     text-align: center;
     margin: auto;
-  }
+  } */
 
   .extendeddailygoaltimeframe h4{
     text-align: center;
@@ -300,9 +300,9 @@
     display: flex;
     padding: 0;
     width: 180px;
-    justify-content: space-around;
+    justify-content: space-between;
   }
-  .otherGoalFoldIn{
+  /* .otherGoalFoldIn{
     display: block;
     justify-content: space-between;
     width: 60px;
@@ -316,7 +316,7 @@
     display: flex;
     justify-content: space-around;
     width: 70px;
-  }
+  } */
   .finalProgress h4{
     text-align: center;
     margin: auto;
@@ -612,10 +612,10 @@
     width: 40%;
     left: calc(50% - 20%);
   }
-  .otherheadingheadingyourprogress{
+  /* .otherheadingheadingyourprogress{
     min-width: 125px;
     width: 125px;
-  }
+  } */
 }
 @media screen and (max-width: 1400px){
   .othergoals h1{
@@ -644,23 +644,23 @@
     width: 150px;
     justify-content: space-around;
   }
-  .otherGoalFoldIn{
+  /* .otherGoalFoldIn{
     display: block;
     justify-content: space-between;
     width: 60px;
   }
   .othergoalfoldintop{
     display: flex;
-  }
+  } */
 }
 @media screen and (max-width: 669px){
   .othergoals h1{
     font-size: 20px;
   }
-  .otherheadingheadingyourprogress{
+  /* .otherheadingheadingyourprogress{
     min-width: 150px;
     width: 150px;
-  }
+  } */
   .otherdailygoalheading{
     min-width: 100px;
   }
@@ -692,7 +692,15 @@
   }
 
   body{
-    background: rgb(27, 27, 27);
+    background: -webkit-linear-gradient(-135deg, #44464d, #0e1e24);
+    background: -o-linear-gradient(-135deg,      #44464d, #0e1e24);
+    background: -moz-linear-gradient(-135deg,    #44464d, #0e1e24);
+    background: linear-gradient(-135deg,         #44464d, #0e1e24);
+    /* background: -webkit-linear-gradient(-135deg, #44464d, rgb(27, 27, 27));
+    background: -o-linear-gradient(-135deg,      #44464d, rgb(27, 27, 27));
+    background: -moz-linear-gradient(-135deg,    #44464d, rgb(27, 27, 27));
+    background: linear-gradient(-135deg,         #44464d, rgb(27, 27, 27)); */
+    /* background: rgb(27, 27, 27); */
     background-size: cover;
   }
   

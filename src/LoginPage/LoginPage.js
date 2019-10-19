@@ -35,7 +35,6 @@ class LoginPage extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
-
         this.setState({ submitted: true });
         const { username, password, returnUrl, passwordCheck, registering } = this.state;
         if(!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(username))){
@@ -43,7 +42,7 @@ class LoginPage extends React.Component {
             return;
         }
         // stop here if form is invalid
-        if ((!password && !registering) || !(password, passwordCheck)) {
+        if ((!(password) || registering) && !(password, passwordCheck)) {
             return;
         }
         if(registering && !(password === passwordCheck)){
@@ -54,7 +53,6 @@ class LoginPage extends React.Component {
             this.setState({error: "Password cannot contain semicolons"});
             return;
         }
-
         this.setState({ loading: true });
         if(registering){
             userService.register(username, password)

@@ -54,6 +54,7 @@ export function makeOtherGoal(newGoal) {
     startDate: getToday(),
     endDate: newGoal.endDate,
     percentComplete: 0,
+    isCompleted: false
   }
   );
 }
