@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { getToday } from '../commonCommands';
 import DeleteElement from '../DailyGoals/DeleteElement';
 import Checkmark from './Checkmark';
-import OtherGoalsCompleted from '../CompletedGoals/OtherGoals/OtherGoalsCompleted'
+// import OtherGoalsCompleted from '../CompletedGoals/OtherGoals/OtherGoalsCompleted'
 
 class OtherGoalsList extends Component {
 	static propTypes = {
@@ -12,13 +12,13 @@ class OtherGoalsList extends Component {
 		completeGoal: PropTypes.func.isRequired,
 	};
 
-	shouldComponentUpdate(nextProps) {
-		const { othergoals } = this.props;
-		if (othergoals === nextProps.othergoals) {
-			return false;
-		}
-		return true;
-	}
+	// shouldComponentUpdate(nextProps) {
+	// 	const { othergoals } = this.props;
+	// 	if (othergoals === nextProps.othergoals) {
+	// 		return false;
+	// 	}
+	// 	return true;
+	// }
 
 	TimeFrame = (goal) => {
 		const endDate = new Date(goal.endDate);
@@ -36,39 +36,37 @@ class OtherGoalsList extends Component {
 			</div>
 		)
 	}
-
 	render() {
 		const { othergoals, deleteGoal, completeGoal, categoryLoc, displayCompleted } = this.props;
+		let strikethrough = {
+			'textDecoration': 'line-through'
+		};
 		const displayOtherGoals = othergoals.otherGoals.map((goal, index) => {
 			// add stuff for daily thingy
-			if(goal.isCompleted && !displayCompleted) return;
+			if((goal.isCompleted && !displayCompleted) || (!(goal.isCompleted) && displayCompleted)) return null;
 			return (
 				<div className="otherdailygoal" key={goal.id}>
 					<div className="otherdailygoalheading otherdailygoalheadingheading">
-						<div>
-							<h4>{goal.title}</h4>
+						<div style={goal.isCompleted ? strikethrough : {} }>
+							<h4 >{goal.title}</h4>
 							{goal.snippit}
 						</div>
 					</div>
 					{this.TimeFrame(goal)}
 					<div className="extendeddailygoalyourprogress otherdailygoalheading">
-						<div className="othergoalprogress">
-							{
-								goal.isCompleted 
-									?
-									<div className="othergoalprogress">
-										<h4>
-											{goal.percentComplete}
-											%
-										</h4>
-									</div>
-									:
-									<div className="othergoalprogress">
-										<Checkmark completeGoal={completeGoal} goalLoc={index} categoryLoc={categoryLoc} />
-										<DeleteElement deleteGoal={deleteGoal} goalLoc={index} categoryLoc={categoryLoc} isDaily={false} />
-									</div>
-							}
-						</div>
+						{
+							goal.isCompleted 
+								?
+								// needs to be fixed
+								<div className="othergoalprogress">
+									<DeleteElement deleteGoal={deleteGoal} goalLoc={index} categoryLoc={categoryLoc} isDaily={false} />
+								</div>
+								:
+								<div className="othergoalprogress">
+									<Checkmark completeGoal={completeGoal} goalLoc={index} categoryLoc={categoryLoc} />
+									<DeleteElement deleteGoal={deleteGoal} goalLoc={index} categoryLoc={categoryLoc} isDaily={false} />
+								</div>
+						}
 					</div>
 				</div>
 			);

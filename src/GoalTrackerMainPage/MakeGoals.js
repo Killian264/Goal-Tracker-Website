@@ -1,40 +1,43 @@
-import uuid from 'uuid';
-import { getToday } from './commonCommands';
+import uuid from "uuid";
+import { getToday } from "./commonCommands";
 
 export function makeCompletedDailyGoal(newGoal) {
-  return ({
+  return {
     id: newGoal.id,
     title: newGoal.title,
     snippit: newGoal.snippit,
     startDate: newGoal.startDate,
     endDate: newGoal.endDate,
     daysChecked: newGoal.daysChecked,
-    percentComplete: ((newGoal.daysChecked / (Math.abs(new Date(newGoal.startDate) - (new Date(newGoal.endDate))) / 8.64e+7) * 100).toString().substr(0, 2)),
-  });
+    percentComplete: (
+      (newGoal.daysChecked /
+        (Math.abs(new Date(newGoal.startDate) - new Date(newGoal.endDate)) /
+          8.64e7)) *
+      100
+    )
+      .toString()
+      .substr(0, 2)
+  };
 }
 
 export function makeCompletedOtherGoal(newGoal, category) {
-  return ({
+  return {
     category: category.category,
     id: category.id,
-    otherGoals: [
-      newGoal,
-    ],
-  });
+    otherGoals: [newGoal]
+  };
 }
 
 export function makeCompletedOtherGoalCategory(newGoal, category) {
-  return ({
+  return {
     category,
     id: uuid.v4(),
-    otherGoals: [
-      newGoal,
-    ],
-  });
+    otherGoals: [newGoal]
+  };
 }
 
 export function makeDailyGoal(newGoal) {
-  return ({
+  return {
     id: uuid.v4(),
     title: newGoal.title,
     snippit: newGoal.snippit,
@@ -42,12 +45,12 @@ export function makeDailyGoal(newGoal) {
     endDate: newGoal.endDate,
     lastDayUpdated: getToday(),
     daysChecked: 0,
-    weeklyChecked: [false, false, false, false, false, false, false],
-  });
+    weeklyChecked: [false, false, false, false, false, false, false]
+  };
 }
 
 export function makeOtherGoal(newGoal) {
-  return ({
+  return {
     id: uuid.v4(),
     title: newGoal.title,
     snippit: newGoal.snippit,
@@ -55,17 +58,14 @@ export function makeOtherGoal(newGoal) {
     endDate: newGoal.endDate,
     percentComplete: 0,
     isCompleted: false
-  }
-  );
+  };
 }
 
 export function makeOtherGoalCategory(newGoal, category) {
-  return ({
+  return {
     category,
     id: uuid.v4(),
     render: true,
-    otherGoals: [
-      newGoal,
-    ],
-  });
+    otherGoals: [newGoal]
+  };
 }

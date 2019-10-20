@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import OtherGoalList from './OtherGoalList';
-import OtherGoalsCompleted from '../CompletedGoals/OtherGoals/OtherGoalsCompleted'
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import OtherGoalList from "./OtherGoalList";
+// import OtherGoalsCompleted from '../CompletedGoals/OtherGoals/OtherGoalsCompleted'
 
 class OtherGoals extends Component {
   static propTypes = {
@@ -12,17 +12,34 @@ class OtherGoals extends Component {
   };
 
   shouldComponentUpdate(nextProps) {
-    const { otherGoalCategories } = this.props;
-    if (otherGoalCategories === nextProps.otherGoalCategories) {
+    const { otherGoalCategories, displayCompleted } = this.props;
+    if (
+      otherGoalCategories === nextProps.otherGoalCategories &&
+      displayCompleted === nextProps.displayCompleted
+    ) {
       return false;
     }
     return true;
   }
 
   render() {
-    const {otherGoalCategories, deleteGoal, completeGoal, displayCompleted} = this.props;
+    const {
+      otherGoalCategories,
+      deleteGoal,
+      completeGoal,
+      displayCompleted
+    } = this.props;
     const displayOtherGoals = otherGoalCategories.map((category, index) => {
-      if (category.render === false) { return (null); }
+      if (category.render === false) {
+        return null;
+      }
+      if (
+        (!displayCompleted && category.unCompleted === 0) ||
+        (displayCompleted &&
+          category.unCompleted - category.otherGoals.length === 0)
+      ) {
+        return null;
+      }
       return (
         <div className="othergoals" key={category.id}>
           <div className="otherheading">
@@ -36,16 +53,18 @@ class OtherGoals extends Component {
               <h1>Your Progress</h1>
             </div> */}
           </div>
-          <OtherGoalList othergoals={category} deleteGoal={deleteGoal} completeGoal={completeGoal} categoryLoc={index} displayCompleted={displayCompleted}/>
+          <OtherGoalList
+            othergoals={category}
+            deleteGoal={deleteGoal}
+            completeGoal={completeGoal}
+            categoryLoc={index}
+            displayCompleted={displayCompleted}
+          />
         </div>
       );
     });
 
-    return (
-      <div>
-        {displayOtherGoals}
-      </div>
-    );
+    return <div>{displayOtherGoals}</div>;
   }
 }
 export default OtherGoals;

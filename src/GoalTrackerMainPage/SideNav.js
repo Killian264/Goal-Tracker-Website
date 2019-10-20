@@ -1,6 +1,4 @@
-import React from 'react';
-
-
+import React from "react";
 
 function DayElement() {
   return (
@@ -14,9 +12,8 @@ function DayElement() {
         {/* <a href="http://localhost:3000">Goals</a>
         <a href="http://localhost:3000">Tasks</a> */}
         {/* <a href="https://goal-tracker.killiandebacker.com">Sign In</a> */}
-      <a href="http://localhost:3000/login">Log Out</a>
+        <a href="http://localhost:3000/login">Log Out</a>
         Planned
-
       </div>
       <div className="navlinksfootnote">
         -Note this is a guest account and changes are NOT saved.

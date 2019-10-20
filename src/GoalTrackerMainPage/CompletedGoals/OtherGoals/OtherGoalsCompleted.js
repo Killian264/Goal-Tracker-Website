@@ -1,14 +1,11 @@
-import React from 'react';
-import OtherGoalList from '../GoalsCompletedList';
+import React from "react";
+import OtherGoalList from "../GoalsCompletedList";
 
 function OtherGoals(props) {
   const { otherGoalCategories } = props;
   const functionProp = goal => (
     <div className="otherdailygoalheading finalProgress">
-      <h4>
-        {goal.percentComplete}
-        %
-      </h4>
+      <h4>{goal.percentComplete}%</h4>
     </div>
   );
   const displayOtherGoals = otherGoalCategories.map(category => (

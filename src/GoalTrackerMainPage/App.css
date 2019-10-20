@@ -298,7 +298,7 @@
   }
   .othergoalprogress{
     display: flex;
-    padding: 0;
+    padding-left: 13%;
     width: 180px;
     justify-content: space-between;
   }
@@ -479,8 +479,8 @@
   display: block;
 }
 .checkbox .checkmark:after {
-  left: 11px;
-  top: 4px;
+  left: 12.5px;
+  top: 5px;
   width: 10px;
   height: 20px;
   border: solid white;
@@ -642,7 +642,7 @@
     display: flex;
     padding: 0;
     width: 150px;
-    justify-content: space-around;
+    justify-content: flex-end;
   }
   /* .otherGoalFoldIn{
     display: block;

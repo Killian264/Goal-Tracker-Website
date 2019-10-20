@@ -1,6 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { getWeekDay, getMonthDay } from '../commonCommands';
+import React from "react";
+import PropTypes from "prop-types";
+import { getWeekDay, getMonthDay } from "../commonCommands";
 
 function DayElement(props) {
   const { i } = props;
@@ -14,7 +14,7 @@ function DayElement(props) {
 }
 
 DayElement.propTypes = {
-  i: PropTypes.number.isRequired,
+  i: PropTypes.number.isRequired
 };
 
 export default DayElement;

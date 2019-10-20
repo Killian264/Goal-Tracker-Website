@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
 function TopNav(props) {
   const { navSlideChange, displayGoalOverlay } = props;
@@ -12,7 +12,9 @@ function TopNav(props) {
       </div>
       <h1>Current Goals</h1>
       <div className="creategoalbutton">
-        <button id="button" onClick={displayGoalOverlay}>Create Goal</button>
+        <button id="button" onClick={displayGoalOverlay}>
+          Create Goal
+        </button>
       </div>
     </div>
   );
@@ -20,7 +22,7 @@ function TopNav(props) {
 
 TopNav.propTypes = {
   navSlideChange: PropTypes.func.isRequired,
-  displayGoalOverlay: PropTypes.func.isRequired,
+  displayGoalOverlay: PropTypes.func.isRequired
 };
 
 export default TopNav;

@@ -28,11 +28,12 @@ class TypeSelector extends Component {
         {categories.category}
           :
         {' '}
-        {categories.otherGoals.length}
+        {categories.unCompleted}
         <input type="checkbox" onClick={() => updateCategoryRender(categories.id)} name="category" defaultChecked />
         <span id="renderDaily" className="radiocheckmark" />
       </label>
     ));
+
     const sortLabels = (mainLabel, renderIf, name, length, defaultChecked) => (
       <label className="radiobtn">
         {mainLabel}
@@ -48,10 +49,10 @@ class TypeSelector extends Component {
       const dailyLength = (goals.dailyGoals).length;
 
       let otherLength = 0;
-      goals.otherGoalsCategories.forEach((catagories) => { otherLength += catagories.otherGoals.length; });
+      goals.otherGoalsCategories.forEach((catagories) => { otherLength += catagories.unCompleted; });
 
       let completedLength = (goals.completed.dailyGoals).length;
-      goals.completed.otherGoalsCategories.forEach((catagories) => { completedLength += catagories.otherGoals.length; });
+      goals.otherGoalsCategories.forEach((categories) => { completedLength += categories.otherGoals.length -  categories.unCompleted; });
 
       return (
         <div className="goaltypeselector">
