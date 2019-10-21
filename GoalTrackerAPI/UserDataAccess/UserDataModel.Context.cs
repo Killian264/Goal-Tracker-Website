@@ -25,6 +25,7 @@ namespace UserDataAccess
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<userModel> userModels { get; set; }
+        public virtual DbSet<session> sessions { get; set; }
+        public virtual DbSet<user> users { get; set; }
     }
 }

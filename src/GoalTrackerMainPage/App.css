@@ -91,6 +91,7 @@
   #button{
     padding: 5px 10px;
     border: none;
+    background-color: gray;
   }
   #button:hover{
     background-color: rgb(255, 255, 255);
@@ -279,10 +280,11 @@
     cursor: pointer;
     color: rgb(93, 93, 93);
   }
-  /* .otherheadingheadingtimeframe h1{
+  .otherheadingheadingtimeframe h1{
     text-align: center;
-    margin: auto;
-  } */
+    padding-left: 11%;
+    /* margin: auto; */
+  }
 
   .extendeddailygoaltimeframe h4{
     text-align: center;
@@ -320,7 +322,7 @@
   .finalProgress h4{
     text-align: center;
     margin: auto;
-    padding-left: 55%;
+    padding-left: 45%;
   }
 
   .close-container{
@@ -612,10 +614,10 @@
     width: 40%;
     left: calc(50% - 20%);
   }
-  /* .otherheadingheadingyourprogress{
+  .otherheadingheadingyourprogress{
     min-width: 125px;
     width: 125px;
-  } */
+  }
 }
 @media screen and (max-width: 1400px){
   .othergoals h1{
@@ -654,13 +656,16 @@
   } */
 }
 @media screen and (max-width: 669px){
+  .finalProgress h4{
+    padding-left: 0%;
+  }
   .othergoals h1{
     font-size: 20px;
   }
-  /* .otherheadingheadingyourprogress{
+  .otherheadingheadingyourprogress{
     min-width: 150px;
     width: 150px;
-  } */
+  }
   .otherdailygoalheading{
     min-width: 100px;
   }

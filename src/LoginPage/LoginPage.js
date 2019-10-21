@@ -207,7 +207,7 @@ class LoginPage extends React.Component {
 						</a>
                     </div> */}
               <div className="text-center p-t-136">
-                <div className="txt2" onClick={() => this.test()}>
+                <div className="txt2 cursorthingy" onClick={() => this.test()}>
                   {this.state.registering ? "Login" : "Create Your Account"}{" "}
                   <i
                     className="fa fa-long-arrow-right m-l-5"

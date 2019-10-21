@@ -67,6 +67,12 @@
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="session.cs">
+      <DependentUpon>UserDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="user.cs">
+      <DependentUpon>UserDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="UserDataModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -82,9 +88,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>UserDataModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="userModel.cs">
-      <DependentUpon>UserDataModel.tt</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="UserDataModel.Context.tt">
@@ -92,6 +95,7 @@
       <LastGenOutput>UserDataModel.Context.cs</LastGenOutput>
       <DependentUpon>UserDataModel.edmx</DependentUpon>
     </Content>
+    <Content Include="UserDataModel.edmx.sql" />
     <Content Include="UserDataModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>UserDataModel.edmx</DependentUpon>

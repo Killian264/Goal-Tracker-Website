@@ -1,8 +1,8 @@
 import React from "react";
-
+import DeleteElement from "../DailyGoals/DeleteElement";
 function GoalsCompletedList(props) {
   const { goals, functionProp } = props;
-  const displayGoals = goals.map(goal => {
+  const displayGoals = goals.map((goal, index) => {
     const totalDays =
       Math.abs(new Date(goal.endDate) - new Date(goal.startDate)) / 8.64e7;
     return (
@@ -20,7 +20,7 @@ function GoalsCompletedList(props) {
               <br /> Ended {goal.endDate.toString().split("00:00:00")[0]}
             </h4>
           </div>
-          {functionProp(goal)}
+          {functionProp(goal, index)}
         </div>
       </div>
     );

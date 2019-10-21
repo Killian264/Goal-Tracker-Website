@@ -12,7 +12,7 @@ namespace GoalTrackerAPI.Classes
         {
             using (UsersEntities users = new UsersEntities())
             {
-                return users.userModels.Any(user => user.Email.Equals(username, StringComparison.OrdinalIgnoreCase) && user.Password == password);
+                return users.users.Any(user => user.Email.Equals(username, StringComparison.OrdinalIgnoreCase) && user.Password == password);
             }
         }
     }

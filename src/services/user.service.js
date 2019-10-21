@@ -4,7 +4,8 @@ export const userService = {
   login,
   logout,
   getAll,
-  register
+  register,
+  getData
 };
 const apiUrl = "http://localhost:61487/api/User";
 function login(username, password) {
@@ -23,7 +24,8 @@ function login(username, password) {
         // store user details and basic auth credentials in local storage
         // to keep user logged in between page refreshes
         // user.authdata = window.btoa(username + ':' + password);
-        localStorage.setItem("user", JSON.stringify(user));
+        console.log(user, JSON.stringify(user));
+        localStorage.setItem("user", user);
       }
       return user;
     });
@@ -37,6 +39,26 @@ function register(email, password) {
   return fetch(`${apiUrl}/register`, requestOptions)
     .then(handleResponse)
     .then(user => {
+      return user;
+    });
+}
+
+function getData() {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Basic " + window.btoa(localStorage.getItem("user"))
+    }
+  };
+  return fetch(`http://localhost:61487/api/values`, requestOptions)
+    .then(response => {
+      if (response.status === 401 || response.status === 400) {
+        localStorage.removeItem("user");
+      }
+    })
+    .then(user => {
+      console.log(user);
       return user;
     });
 }

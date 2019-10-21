@@ -175,6 +175,9 @@ iframe {
   background: -moz-linear-gradient(-135deg,    #44464d, #0e1e24);
   background: linear-gradient(-135deg,         #44464d, #0e1e24);
 }
+.cursorthingy{
+  cursor: pointer;
+}
 
 .wrap-login100 {
   width: 960px;

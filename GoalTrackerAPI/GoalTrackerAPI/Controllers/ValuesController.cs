@@ -9,6 +9,8 @@ using Newtonsoft.Json;
 using System.IO;
 using System.Web.Http.Cors;
 using System.Reflection;
+using UserDataAccess;
+using System.Text;
 
 namespace GoalTrackerAPI.Controllers
 {
@@ -22,18 +24,17 @@ namespace GoalTrackerAPI.Controllers
             var goals = JsonConvert.DeserializeObject<AllGoals>(json);
             return goals;
         }
-        // GET api/values
-        public AllGoals Get()
+        [TokenAuthenticationAttribute]
+        public string Get()
         {
-            return GoalController();
+            string authToken = Encoding.UTF8.GetString(Convert.FromBase64String(Request.Headers.Authorization.Parameter));
+            using (UsersEntities entities = new UsersEntities())
+            {
+                var userSession = entities.sessions.FirstOrDefault(session => (session.sessionID.Equals(authToken)));
+                var test = entities.users.First(user => (user.Email.Equals(userSession.userEmail))).goals;
+                return entities.users.First(user => (user.Email.Equals(userSession.userEmail))).goals;
+            }
         }
-
-        // GET api/values/5
-        public string Get(int id)
-        {
-            return "value";
-        }
-
         // POST api/values
         public void Post(DailyGoal test)
         {

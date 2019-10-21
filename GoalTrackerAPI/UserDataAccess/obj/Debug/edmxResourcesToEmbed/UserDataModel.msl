@@ -1,13 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="UsersInfoModelStoreContainer" CdmEntityContainer="UsersEntities">
-    <EntitySetMapping Name="userModels">
-      <EntityTypeMapping TypeName="UsersInfoModel.userModel">
+    <EntitySetMapping Name="sessions">
+      <EntityTypeMapping TypeName="IsTypeOf(UsersInfoModel.session)">
+        <MappingFragment StoreEntitySet="sessions">
+          <ScalarProperty Name="sessionID" ColumnName="sessionID" />
+          <ScalarProperty Name="userEmail" ColumnName="userEmail" />
+          <ScalarProperty Name="issued" ColumnName="issued" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="users">
+      <EntityTypeMapping TypeName="UsersInfoModel.user">
         <MappingFragment StoreEntitySet="users">
-          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="goals" ColumnName="goals" />
           <ScalarProperty Name="Password" ColumnName="Password" />
-          <ScalarProperty Name="Lastlogin" ColumnName="Lastlogin" />
-          <ScalarProperty Name="OtherDB" ColumnName="OtherDB" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

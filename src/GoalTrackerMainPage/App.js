@@ -18,6 +18,7 @@ import {
   makeOtherGoal,
   makeOtherGoalCategory
 } from "./MakeGoals";
+import { userService } from "../services/user.service";
 // import {
 //   makeCompletedDailyGoal, makeCompletedOtherGoal, makeDailyGoal, makeCompletedOtherGoalCategory, makeOtherGoal, makeOtherGoalCategory,
 // } from './MakeGoals';
@@ -109,9 +110,32 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch("http://localhost:61487/api/values")
-      .then(response => response.json())
-      .then(data => this.setState(this.updateStateForMount(data)));
+    const requestOptions = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Basic " + window.btoa(localStorage.getItem("user"))
+      }
+    };
+    return fetch(`http://localhost:61487/api/values`, requestOptions)
+      .then(response => {
+        if (response.status === 401 || response.status === 400) {
+          localStorage.removeItem("user");
+        }
+      })
+      .then(user => {
+        console.log(user);
+        this.setState(this.updateStateForMount(user));
+        // return user;
+      });
+    // let data = userService.getData();
+    // if (data === null) {
+    //   console.log("null");
+    // }
+    // this.updateStateForMount(data);
+    // fetch("http://localhost:61487/api/values")
+    //   .then(response => response.json())
+    //   .then(data => this.setState(this.updateStateForMount(data)));
   }
 
   updateCategoryRender = key => {
@@ -155,10 +179,10 @@ class App extends Component {
   };
   deleteGoal = (isDaily, categoryLoc, goalLoc) => {
     if (isDaily) {
-      if (categoryLoc !== -1) {
+      if (categoryLoc === -1) {
         this.setState(
           update(this.state, {
-            goals: { dailyGoals: { $splice: [[goalLoc, 1]] } }
+            goals: { completed: { dailyGoals: { $splice: [[goalLoc, 1]] } } }
           })
         );
       } else {
@@ -383,6 +407,7 @@ class App extends Component {
               state.otherStuffs.renderCompleted && (
                 <CompletedDailyGoals
                   dailyGoals={state.goals.completed.dailyGoals}
+                  deleteGoal={this.deleteGoal}
                 />
               )}
             {/* Other Goals */}
