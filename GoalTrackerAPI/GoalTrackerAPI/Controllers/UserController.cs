@@ -30,10 +30,12 @@ namespace GoalTrackerAPI.Controllers
                 {
                     entities.sessions.Remove(entities.sessions.FirstOrDefault(session => (session.userEmail.Equals(email, StringComparison.OrdinalIgnoreCase))));
                 }
-                var newSession = new session();
-                newSession.issued = DateTime.Now;
-                newSession.sessionID = Guid.NewGuid().ToString();
-                newSession.userEmail = email;
+                var newSession = new session
+                {
+                    issued = DateTime.Now,
+                    sessionID = Guid.NewGuid().ToString(),
+                    userEmail = email
+                };
                 entities.sessions.Add(newSession);
                 entities.SaveChanges();
                 return newSession.sessionID;
@@ -45,14 +47,11 @@ namespace GoalTrackerAPI.Controllers
         {
             try
             {
-                string json = File.ReadAllText(@"C:\Users\Killian\Desktop\Projects\Goal-Tracker with Login\goal-tracker\GoalTrackerAPI\GoalTrackerAPI\base.json");
+                // ADD THIS LATER
                 user.Username = "Test Account";
                 using (UsersEntities entities = new UsersEntities())
                 {
-                    //users.users.Add(user);
-                    //users.SaveChanges();
                     entities.users.Add(user);
-                    //entities.users.Add(user);
                     entities.SaveChanges();
                     var message = Request.CreateResponse(HttpStatusCode.Created, user);
                     message.Headers.Location = new Uri(Request.RequestUri + user.Email.ToString());
@@ -64,12 +63,5 @@ namespace GoalTrackerAPI.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
             }
         }
-        //[EnableCors(origins: "http://localhost:3000", headers: "*", methods: "*")]
-        //[TokenAuthenticationAttribute]
-        //[Route("api/User/authCheck")]
-        //public HttpResponseMessage Post()
-        //{
-        //    return Request.CreateResponse(HttpStatusCode.Continue);
-        //}
     }
 }

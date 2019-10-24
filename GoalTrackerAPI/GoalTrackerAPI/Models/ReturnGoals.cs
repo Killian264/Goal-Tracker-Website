@@ -8,8 +8,8 @@ namespace GoalTrackerAPI.Models
 {
     public class ReturnGoals
     {
-        public daily[] daily { get; set; }
-        public otherCategory[] otherGoalsCategory {get; set;}
+        public dailyGoal[] dailyGoals { get; set; }
+        public otherCategory[] otherGoalsCategories { get; set;}
         public Completed completed { get; set; }
     }
 }

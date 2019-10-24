@@ -22,3 +22,5 @@ C:\Users\Killian\Desktop\Projects\Goal-Tracker with Login\goal-tracker\GoalTrack
 C:\Users\Killian\Desktop\Projects\Goal-Tracker with Login\goal-tracker\GoalTrackerAPI\UserDataAccess\obj\Debug\UserDataAccess.dll
 C:\Users\Killian\Desktop\Projects\Goal-Tracker with Login\goal-tracker\GoalTrackerAPI\UserDataAccess\obj\Debug\UserDataAccess.pdb
 C:\Users\Killian\Desktop\Projects\Goal-Tracker with Login\goal-tracker\GoalTrackerAPI\UserDataAccess\obj\Debug\UserDataAccess.csprojAssemblyReference.cache
+C:\Users\Killian\Desktop\Projects\Goal-Tracker with Login\goal-tracker\GoalTrackerAPI\UserDataAccess\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Killian\Desktop\Projects\Goal-Tracker with Login\goal-tracker\GoalTrackerAPI\UserDataAccess\bin\Debug\Newtonsoft.Json.xml

@@ -18,8 +18,8 @@ namespace UserDataAccess
         public user()
         {
             this.completedDailies = new HashSet<completedDaily>();
-            this.dailies = new HashSet<daily>();
             this.otherCategories = new HashSet<otherCategory>();
+            this.dailyGoals = new HashSet<dailyGoal>();
         }
     
         public string Email { get; set; }
@@ -29,8 +29,8 @@ namespace UserDataAccess
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<completedDaily> completedDailies { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<daily> dailies { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<otherCategory> otherCategories { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<dailyGoal> dailyGoals { get; set; }
     }
 }

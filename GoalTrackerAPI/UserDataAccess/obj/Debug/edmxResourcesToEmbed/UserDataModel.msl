@@ -43,22 +43,7 @@
           <ScalarProperty Name="snippit" ColumnName="snippit" />
           <ScalarProperty Name="title" ColumnName="title" />
           <ScalarProperty Name="userEmail" ColumnName="userEmail" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="dailies">
-      <EntityTypeMapping TypeName="UsersInfoModel.daily">
-        <MappingFragment StoreEntitySet="daily">
-          <ScalarProperty Name="trueFalseArr" ColumnName="trueFalseArr" />
-          <ScalarProperty Name="lastDayUpdated" ColumnName="lastDayUpdated" />
-          <ScalarProperty Name="daysChecked" ColumnName="daysChecked" />
-          <ScalarProperty Name="endDate" ColumnName="endDate" />
-          <ScalarProperty Name="startDate" ColumnName="startDate" />
-          <ScalarProperty Name="snippit" ColumnName="snippit" />
-          <ScalarProperty Name="title" ColumnName="title" />
-          <ScalarProperty Name="userEmail" ColumnName="userEmail" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -71,7 +56,7 @@
           <ScalarProperty Name="startDate" ColumnName="startDate" />
           <ScalarProperty Name="snippit" ColumnName="snippit" />
           <ScalarProperty Name="title" ColumnName="title" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -81,6 +66,21 @@
           <ScalarProperty Name="category" ColumnName="category" />
           <ScalarProperty Name="userEmail" ColumnName="userEmail" />
           <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="dailyGoals">
+      <EntityTypeMapping TypeName="UsersInfoModel.dailyGoal">
+        <MappingFragment StoreEntitySet="dailyGoals">
+          <ScalarProperty Name="trueFalseArr" ColumnName="trueFalseArr" />
+          <ScalarProperty Name="lastDayUpdated" ColumnName="lastDayUpdated" />
+          <ScalarProperty Name="daysChecked" ColumnName="daysChecked" />
+          <ScalarProperty Name="endDate" ColumnName="endDate" />
+          <ScalarProperty Name="startDate" ColumnName="startDate" />
+          <ScalarProperty Name="snippit" ColumnName="snippit" />
+          <ScalarProperty Name="title" ColumnName="title" />
+          <ScalarProperty Name="userEmail" ColumnName="userEmail" />
+          <ScalarProperty Name="id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

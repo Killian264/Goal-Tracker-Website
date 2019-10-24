@@ -13,7 +13,7 @@
     <Property Name="daysChecked" Type="int" Nullable="false" />
     <Property Name="percentComplete" Type="int" Nullable="false" />
   </EntityType>
-  <EntityType Name="daily">
+  <EntityType Name="dailyGoals">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
@@ -90,12 +90,12 @@
   </Association>
   <Association Name="FK_daily_ToTable">
     <End Role="users" Type="Self.users" Multiplicity="1" />
-    <End Role="daily" Type="Self.daily" Multiplicity="*" />
+    <End Role="dailyGoals" Type="Self.dailyGoals" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="users">
         <PropertyRef Name="Email" />
       </Principal>
-      <Dependent Role="daily">
+      <Dependent Role="dailyGoals">
         <PropertyRef Name="userEmail" />
       </Dependent>
     </ReferentialConstraint>
@@ -126,7 +126,7 @@
   </Association>
   <EntityContainer Name="UsersInfoModelStoreContainer">
     <EntitySet Name="completedDaily" EntityType="Self.completedDaily" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="daily" EntityType="Self.daily" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="dailyGoals" EntityType="Self.dailyGoals" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="otherCategory" EntityType="Self.otherCategory" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="otherGoals" EntityType="Self.otherGoals" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sessions" EntityType="Self.sessions" Schema="dbo" store:Type="Tables" />
@@ -138,7 +138,7 @@
     </AssociationSet>
     <AssociationSet Name="FK_daily_ToTable" Association="Self.FK_daily_ToTable">
       <End Role="users" EntitySet="users" />
-      <End Role="daily" EntitySet="daily" />
+      <End Role="dailyGoals" EntitySet="dailyGoals" />
     </AssociationSet>
     <AssociationSet Name="FK_otherCategory_ToTable" Association="Self.FK_otherCategory_ToTable">
       <End Role="users" EntitySet="users" />

@@ -5,14 +5,9 @@
     <EntitySet Name="users" EntityType="UsersInfoModel.user" />
     <EntitySet Name="trueFalseArrs" EntityType="UsersInfoModel.trueFalseArr" />
     <EntitySet Name="completedDailies" EntityType="UsersInfoModel.completedDaily" />
-    <EntitySet Name="dailies" EntityType="UsersInfoModel.daily" />
     <AssociationSet Name="FK_CompletedDaily_ToTable" Association="UsersInfoModel.FK_CompletedDaily_ToTable">
       <End Role="user" EntitySet="users" />
       <End Role="completedDaily" EntitySet="completedDailies" />
-    </AssociationSet>
-    <AssociationSet Name="FK_daily_ToTable" Association="UsersInfoModel.FK_daily_ToTable">
-      <End Role="user" EntitySet="users" />
-      <End Role="daily" EntitySet="dailies" />
     </AssociationSet>
     <EntitySet Name="otherGoals" EntityType="UsersInfoModel.otherGoal" />
     <EntitySet Name="otherCategories" EntityType="UsersInfoModel.otherCategory" />
@@ -23,6 +18,11 @@
     <AssociationSet Name="FK_OtherGoals_ToTable" Association="UsersInfoModel.FK_OtherGoals_ToTable">
       <End Role="otherCategory" EntitySet="otherCategories" />
       <End Role="otherGoal" EntitySet="otherGoals" />
+    </AssociationSet>
+    <EntitySet Name="dailyGoals" EntityType="UsersInfoModel.dailyGoal" />
+    <AssociationSet Name="FK_daily_ToTable" Association="UsersInfoModel.FK_daily_ToTable">
+      <End Role="user" EntitySet="users" />
+      <End Role="dailyGoal" EntitySet="dailyGoals" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="session">
@@ -41,8 +41,8 @@
     <Property Name="Username" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="Password" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="completedDailies" Relationship="UsersInfoModel.FK_CompletedDaily_ToTable" FromRole="user" ToRole="completedDaily" />
-    <NavigationProperty Name="dailies" Relationship="UsersInfoModel.FK_daily_ToTable" FromRole="user" ToRole="daily" />
     <NavigationProperty Name="otherCategories" Relationship="UsersInfoModel.FK_otherCategory_ToTable" FromRole="user" ToRole="otherCategory" />
+    <NavigationProperty Name="dailyGoals" Relationship="UsersInfoModel.FK_daily_ToTable" FromRole="user" ToRole="dailyGoal" />
   </EntityType>
   <EntityType Name="trueFalseArr">
     <Key>
@@ -59,9 +59,9 @@
   </EntityType>
   <EntityType Name="completedDaily">
     <Key>
-      <PropertyRef Name="Id" />
+      <PropertyRef Name="id" />
     </Key>
-    <Property Name="Id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="userEmail" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="title" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
     <Property Name="snippit" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
@@ -70,21 +70,6 @@
     <Property Name="daysChecked" Type="Int32" Nullable="false" />
     <Property Name="percentComplete" Type="Int32" Nullable="false" />
     <NavigationProperty Name="user" Relationship="UsersInfoModel.FK_CompletedDaily_ToTable" FromRole="completedDaily" ToRole="user" />
-  </EntityType>
-  <EntityType Name="daily">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="userEmail" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="title" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-    <Property Name="snippit" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-    <Property Name="startDate" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="endDate" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="daysChecked" Type="Int32" Nullable="false" />
-    <Property Name="lastDayUpdated" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="trueFalseArr" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="user" Relationship="UsersInfoModel.FK_daily_ToTable" FromRole="daily" ToRole="user" />
   </EntityType>
   <Association Name="FK_CompletedDaily_ToTable">
     <End Type="UsersInfoModel.user" Role="user" Multiplicity="1" />
@@ -98,23 +83,11 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_daily_ToTable">
-    <End Type="UsersInfoModel.user" Role="user" Multiplicity="1" />
-    <End Type="UsersInfoModel.daily" Role="daily" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="user">
-        <PropertyRef Name="Email" />
-      </Principal>
-      <Dependent Role="daily">
-        <PropertyRef Name="userEmail" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <EntityType Name="otherGoal">
     <Key>
-      <PropertyRef Name="Id" />
+      <PropertyRef Name="id" />
     </Key>
-    <Property Name="Id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="title" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
     <Property Name="snippit" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
     <Property Name="startDate" Type="DateTime" Nullable="false" Precision="3" />
@@ -154,6 +127,33 @@
       </Principal>
       <Dependent Role="otherGoal">
         <PropertyRef Name="categoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="dailyGoal">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="userEmail" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="title" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="snippit" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="startDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="endDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="daysChecked" Type="Int32" Nullable="false" />
+    <Property Name="lastDayUpdated" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="trueFalseArr" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="user" Relationship="UsersInfoModel.FK_daily_ToTable" FromRole="dailyGoal" ToRole="user" />
+  </EntityType>
+  <Association Name="FK_daily_ToTable">
+    <End Type="UsersInfoModel.user" Role="user" Multiplicity="1" />
+    <End Type="UsersInfoModel.dailyGoal" Role="dailyGoal" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user">
+        <PropertyRef Name="Email" />
+      </Principal>
+      <Dependent Role="dailyGoal">
+        <PropertyRef Name="userEmail" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

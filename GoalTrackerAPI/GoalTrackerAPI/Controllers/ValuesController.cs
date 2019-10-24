@@ -15,45 +15,47 @@ using System.Runtime.InteropServices;
 using Newtonsoft.Json;
 using System.Web;
 using GoalTrackerAPI.HelperFunctions;
-
 namespace GoalTrackerAPI.Controllers
 {
     [EnableCors(origins: "http://localhost:3000", headers: "*", methods: "*")]
     public class ValuesController : ApiController
     {
-        AllGoals goals = new AllGoals();
-        public AllGoals GoalController()
-        {
-            string json = File.ReadAllText(@"C:\Users\Killian\Desktop\Projects\Goal-Tracker with Login\goal-tracker\GoalTrackerAPI\GoalTrackerAPI\Goals.json");
-            var goals = JsonConvert.DeserializeObject<AllGoals>(json);
-            return goals;
-        }
+        //AllGoals goals = new AllGoals();
+        //public AllGoals GoalController()
+        //{
+        //    string json = File.ReadAllText(@"C:\Users\Killian\Desktop\Projects\Goal-Tracker with Login\goal-tracker\GoalTrackerAPI\GoalTrackerAPI\Goals.json");
+        //    var goals = JsonConvert.DeserializeObject<AllGoals>(json);
+        //    return goals;
+        //}
         [TokenAuthenticationAttribute]
         [EnableCors(origins: "http://localhost:3000", headers: "*", methods: "*")]
         public string Get()
         {
             try
             {
-                string authToken = Encoding.UTF8.GetString(Convert.FromBase64String(Request.Headers.Authorization.Parameter));
                 using (UsersEntities entities = new UsersEntities())
                 {
-                    var userSession = entities.sessions.FirstOrDefault(session => (session.sessionID.Equals(authToken)));
-                    var email = entities.users.First(user => (user.Email.Equals(userSession.userEmail)));
-                    var theUser = entities.users.First(user => (user.Email.Equals(userSession.userEmail)));
-                    AllGoals goals = new AllGoals();
-                    //ReturnGoals goals = new ReturnGoals();
-                    goals.goals.daily = theUser.dailies.ToArray();
-                    //goals.daily = theUser.dailies.ToArray();
-                    goals.goals.otherGoalsCategory = theUser.otherCategories.ToArray();
-                    goals.goals.completed.completedDaily = theUser.completedDailies.ToArray();
-                    // NullToEmptyStringResolver from HelperFunctions ObjectConversionSettings
-                    var settings = new JsonSerializerSettings() { ContractResolver = new NullToEmptyStringResolver() };
-                    string output = JsonConvert.SerializeObject(goals, settings);
-                    //var dailies = theUser.dailies.Where(daily => (daily.isCompleted));
-                    //var dailiesCompleted = theUser.dailies.Where(daily => !(daily.isCompleted));
-                    //var otherGoalsUnsorted = theUser.other;
+                    var theUser = entities.users.First(user => (user.Email.Equals(entities.sessions.FirstOrDefault
+                            (session => (session.sessionID.Equals(Encoding.UTF8.GetString(Convert.FromBase64String(Request.Headers.Authorization.Parameter))))))));
+                    AllGoals goals = new AllGoals
+                    {
+                        goals = new ReturnGoals
+                        {
+                            dailyGoals = theUser.dailyGoals.ToArray(),
+                            otherGoalsCategories = theUser.otherCategories.ToArray(),
+                            completed = new Completed
+                            {
+                                completedDaily = theUser.completedDailies.ToArray()
+                            }
+                        }
+                    };
+                    foreach (var dailyGoal in theUser.dailyGoals.ToArray())
+                    {
+                        dailyGoal.weeklyChecked = TrueFalseArr.intToArr[dailyGoal.trueFalseArr];
+                    }
+                    //var settings = new JsonSerializerSettings() { ContractResolver = new NullToEmptyStringResolver(), ReferenceLoopHandling = ReferenceLoopHandling.Ignore };
+                    string output = JsonConvert.SerializeObject(goals.goals);
                     return output;
-                    //return File.ReadAllText(@"C:\Users\Killian\Desktop\Projects\Goal-Tracker with Login\goal-tracker\GoalTrackerAPI\GoalTrackerAPI\Goals.json");
                 }
             }
             catch(Exception ex)
@@ -66,19 +68,24 @@ namespace GoalTrackerAPI.Controllers
         [EnableCors(origins: "http://localhost:3000", headers: "*", methods: "*")]
         [TokenAuthenticationAttribute]
         [Route("api/values/daily")]
-        public void Post(daily newDaily)
+        public void Post(dailyGoal newDaily)
         {
-            string authToken = Encoding.UTF8.GetString(Convert.FromBase64String(Request.Headers.Authorization.Parameter));
-            using (UsersEntities entities = new UsersEntities())
+            try
             {
-                var userSession = entities.sessions.FirstOrDefault(session => (session.sessionID.Equals(authToken)));
-                var email = entities.users.First(user => (user.Email.Equals(userSession.userEmail)));
-                newDaily.trueFalseArr = 8;
-                newDaily.userEmail = email.Email;
-                newDaily.user = email;
-                var user2 = entities.users.First(user => (user.Email.Equals(userSession.userEmail)));
-                user2.dailies.Add(newDaily);
-                entities.SaveChanges();
+                using (UsersEntities entities = new UsersEntities())
+                {
+                    var theUser = entities.users.First(user => (user.Email.Equals(entities.sessions.FirstOrDefault
+                            (session => (session.sessionID.Equals(Encoding.UTF8.GetString(Convert.FromBase64String(Request.Headers.Authorization.Parameter))))).userEmail)));
+                    newDaily.trueFalseArr = 8;
+                    newDaily.userEmail = theUser.Email;
+                    newDaily.user = theUser;
+                    theUser.dailyGoals.Add(newDaily);
+                    entities.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                // probably gotta add something here
             }
         }
         [EnableCors(origins: "http://localhost:3000", headers: "*", methods: "*")]
@@ -86,67 +93,50 @@ namespace GoalTrackerAPI.Controllers
         [Route("api/values/otherCategory")]
         public void Post(otherCategory newOtherCategory)
         {
-            string authToken = Encoding.UTF8.GetString(Convert.FromBase64String(Request.Headers.Authorization.Parameter));
-            using (UsersEntities entities = new UsersEntities())
+            try
             {
-                var userSession = entities.sessions.FirstOrDefault(session => (session.sessionID.Equals(authToken)));
-                var email = entities.users.First(user => (user.Email.Equals(userSession.userEmail)));
-                newOtherCategory.userEmail = email.Email;
-                newOtherCategory.user = email;
-                var test = newOtherCategory.otherGoals;
-                var testing = newOtherCategory.otherGoals.ToArray();
-                newOtherCategory.otherGoals.Remove(testing[0]);
-                testing[0].categoryID = newOtherCategory.id;
-                newOtherCategory.otherGoals.Add(testing[0]);
-                var user2 = entities.users.First(user => (user.Email.Equals(userSession.userEmail)));
-                user2.otherCategories.Add(newOtherCategory);
-                entities.SaveChanges();
+                using (UsersEntities entities = new UsersEntities())
+                {
+                    var theUser = entities.users.First(user => (user.Email.Equals(entities.sessions.FirstOrDefault
+                        (session => (session.sessionID.Equals(Encoding.UTF8.GetString(Convert.FromBase64String(Request.Headers.Authorization.Parameter))))).userEmail)));
+                    newOtherCategory.userEmail = theUser.Email;
+                    newOtherCategory.user = theUser;
+                    newOtherCategory.otherGoals.First().categoryID = newOtherCategory.id;
+                    theUser.otherCategories.Add(newOtherCategory);
+                    entities.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                // probably gotta add something here
             }
         }
-        //[EnableCors(origins: "http://localhost:3000", headers: "*", methods: "*")]
-        //[TokenAuthenticationAttribute]
-        //[Route("api/values/otherCategory")]
-        //public void Get()
-        //{
-
-        //}
-            // PUT api/values
-            //public void Put(DailyGoal test)
-            //{
-            //    goals.goals.dailyGoals.Add(test);
-            //}
-            //public void Put(OtherGoalsCategory test)
-            //{
-            //    goals.goals.otherGoalsCategories.Add(test);
-            //}
-            //[Route("api/values/putdailygoal")]
-            //[HttpPut]
-            //public void updateDailyGoal(object test)
-            //{
-            //    //if (!IsAnyNullOrEmpty(test))
-            //    //{
-            //    //    string json = File.ReadAllText(@"C:\Users\Killian\Desktop\Projects\GoalTrackerAPI\GoalTrackerAPI\Goals.json");
-            //    //    var goals = JsonConvert.DeserializeObject<AllGoals>(json);
-            //    //    goals.goals.dailyGoals.Add(test);
-            //    //}
-            //    //else
-            //    //{
-            //    //    throw new HttpResponseException(HttpStatusCode.BadRequest);
-            //    //}
-            //}
-            // PUT api/values
-            //public void Put(int id)
-            //{
-            //    Console.Write("asjfasdf");
-            //}
-            //// PUT api/values
-            //public void Put(string id)
-            //{
-            //    Console.Write("asjfasdf");
-            //}
-
-            // DELETE api/values/5
-            public void Delete(int id)
+        [EnableCors(origins: "http://localhost:3000", headers: "*", methods: "*")]
+        [TokenAuthenticationAttribute]
+        [Route("api/values/otherGoal")]
+        public void Post(otherGoal newOtherGoal)
+        {
+            try
+            {
+                using (UsersEntities entities = new UsersEntities())
+                {
+                    var theUser = entities.users.First(user => (user.Email.Equals(entities.sessions.FirstOrDefault
+                        (session => (session.sessionID.Equals(Encoding.UTF8.GetString(Convert.FromBase64String(Request.Headers.Authorization.Parameter))))).userEmail)));
+                    var theCategory = theUser.otherCategories.First(category => (category.id.Equals(newOtherGoal.categoryID)));
+                    //newOtherGoal.otherCategory = theCategory;
+                    theCategory.otherGoals.Add(newOtherGoal);
+                    entities.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                // probably gotta add something here
+            }
+        }
+        [EnableCors(origins: "http://localhost:3000", headers: "*", methods: "*")]
+        [TokenAuthenticationAttribute]
+        [Route("api/values/otherCategory")]
+        public void Delete(int id)
         {
         }
     }

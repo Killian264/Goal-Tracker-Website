@@ -3,11 +3,11 @@
 export const userService = {
   login,
   logout,
-  getAll,
   register,
-  getData
+  getGoalsData
 };
-const apiUrl = "http://localhost:61487/api/User";
+const apiUrl = "http://localhost:61487/api";
+
 function login(username, password) {
   const requestOptions = {
     method: "POST",
@@ -17,7 +17,7 @@ function login(username, password) {
     },
     body: JSON.stringify({ username, password })
   };
-  return fetch(`${apiUrl}/login`, requestOptions)
+  return fetch(`${apiUrl}/User/login`, requestOptions)
     .then(handleResponse)
     .then(user => {
       if (user) {
@@ -30,20 +30,21 @@ function login(username, password) {
       return user;
     });
 }
+
 function register(email, password) {
   const requestOptions = {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password })
   };
-  return fetch(`${apiUrl}/register`, requestOptions)
+  return fetch(`${apiUrl}/User/register`, requestOptions)
     .then(handleResponse)
     .then(user => {
       return user;
     });
 }
 
-function getData() {
+function getGoalsData() {
   const requestOptions = {
     method: "GET",
     headers: {
@@ -51,10 +52,9 @@ function getData() {
       Authorization: "Basic " + window.btoa(localStorage.getItem("user"))
     }
   };
-  return fetch(`http://localhost:61487/api/values`, requestOptions)
+  return fetch(`${apiUrl}/values`, requestOptions)
     .then(handleResponse)
     .then(user => {
-      console.log(user);
       return user;
     });
 }
@@ -62,14 +62,6 @@ function getData() {
 function logout() {
   // remove user from local storage to log user out
   localStorage.removeItem("user");
-}
-
-function getAll() {
-  // const requestOptions = {
-  //     method: 'GET',
-  //     headers: authHeader()
-  // };
-  // return fetch(`${apiUrl}`, requestOptions).then(handleResponse);
 }
 
 function handleResponse(response) {

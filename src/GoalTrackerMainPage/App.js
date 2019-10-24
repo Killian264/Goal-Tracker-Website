@@ -46,74 +46,76 @@ class App extends Component {
     };
   }
   updateStateForMount(state) {
-    let updatedCompletedDailyGoals = state.goals.completed.dailyGoals;
-    let updatedCompletedOtherCategories =
-      state.goals.completed.otherGoalsCategories;
-    let today = new Date();
-    today = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-    const filteredDailyGoals = state.goals.dailyGoals.filter(goal => {
-      if (Date.parse(goal.endDate) <= Date.parse(getYeseterday())) {
-        updatedCompletedDailyGoals = [
-          ...updatedCompletedDailyGoals,
-          makeCompletedDailyGoal(goal)
-        ];
-        return false;
+    if (state.goals === undefined) {
+      return state;
+    }
+    if (state.goals.dailyGoals !== undefined) {
+      let updatedCompletedDailyGoals = state.goals.completed.dailyGoals;
+      let today = new Date();
+      today = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+      const filteredDailyGoals = state.goals.dailyGoals.filter(goal => {
+        if (Date.parse(goal.endDate) <= Date.parse(getYeseterday())) {
+          updatedCompletedDailyGoals = [
+            ...updatedCompletedDailyGoals,
+            makeCompletedDailyGoal(goal)
+          ];
+          return false;
+        }
+        return true;
+      });
+      const updatedDailyGoals = filteredDailyGoals.map(goal => {
+        if (Date.parse(goal.lastDayUpdated) < Date.parse(getToday())) {
+          const numDays =
+            ((Date.parse(goal.lastDayUpdated) - Date.parse(getToday())) /
+              8.64e7) *
+            -1;
+          return this.updateLastUpdated(goal, numDays);
+        }
+        return goal;
+      });
+      state.goals.dailyGoals = updatedDailyGoals;
+      if (updatedCompletedDailyGoals === undefined) {
+        state.goals.completed.dailyGoals = [];
+      } else {
+        state.goals.completed.dailyGoals = updatedCompletedDailyGoals;
       }
-      return true;
-    });
-    const updatedDailyGoals = filteredDailyGoals.map(goal => {
-      if (Date.parse(goal.lastDayUpdated) < Date.parse(getToday())) {
-        const numDays =
-          ((Date.parse(goal.lastDayUpdated) - Date.parse(getToday())) /
-            8.64e7) *
-          -1;
-        return this.updateLastUpdated(goal, numDays);
-      }
-      return goal;
-    });
-    let count = 0;
-    let updatedOtherGoalsCategories = state.goals.otherGoalsCategories.map(
-      categories => {
-        count = 0;
-        const updatedOtherGoals = categories.otherGoals.map(goal => {
-          if (Date.parse(goal.endDate) <= Date.parse(getYeseterday())) {
-            // updatedCompletedOtherCategories = this.updatedOtherCompleted(goal, categories.category, updatedCompletedOtherCategories);
-            goal = update(goal, { isCompleted: { $set: true } });
-          } else {
-            count++;
-          }
-          return goal;
-        });
+    }
+    if (state.goals.otherGoalsCategories !== undefined) {
+      let count = 0;
+      let updatedOtherGoalsCategories = state.goals.otherGoalsCategories.map(
+        categories => {
+          count = 0;
+          const updatedOtherGoals = categories.otherGoals.map(goal => {
+            if (Date.parse(goal.endDate) <= Date.parse(getYeseterday())) {
+              goal = update(goal, { isCompleted: { $set: true } });
+            } else {
+              count++;
+            }
+            return goal;
+          });
 
-        // if (updatedOtherGoals.length <= 0) {
-        // 	return null;
-        // }
-        return Object.assign({}, categories, {
-          otherGoals: updatedOtherGoals,
-          unCompleted: count
-        });
-      }
-    );
-    updatedOtherGoalsCategories = updatedOtherGoalsCategories.filter(
-      categories => categories !== null
-    );
-    return {
-      goals: Object.assign({}, state.goals, {
-        dailyGoals: updatedDailyGoals,
-        otherGoalsCategories: updatedOtherGoalsCategories,
-        completed: Object.assign({}, state.goals.completed, {
-          dailyGoals: updatedCompletedDailyGoals,
-          otherGoalsCategories: updatedCompletedOtherCategories
-        })
-      })
-    };
+          return Object.assign({}, categories, {
+            otherGoals: updatedOtherGoals,
+            unCompleted: count
+          });
+        }
+      );
+      updatedOtherGoalsCategories = updatedOtherGoalsCategories.filter(
+        categories => categories !== null
+      );
+      state.goals.otherGoalsCategories = updatedOtherGoalsCategories;
+    }
+    return state;
   }
 
   componentDidMount() {
-    userService.getData().then(
+    userService.getGoalsData().then(
       user => {
-        console.log("user", user);
-        this.setState(this.updateStateForMount(JSON.parse(user)));
+        let state = {
+          goals: JSON.parse(user)
+        };
+
+        this.setState(this.updateStateForMount(state));
       },
       error => {
         const history = createBrowserHistory();
@@ -317,7 +319,7 @@ class App extends Component {
     this.setState(state);
   };
 
-  getData(goal, valueType) {
+  postGoal(goal, valueType) {
     console.log(goal);
     const requestOptions = {
       method: "POST",
@@ -325,8 +327,9 @@ class App extends Component {
         "Content-Type": "application/json",
         Authorization: "Basic " + window.btoa(localStorage.getItem("user"))
       },
-      body: JSON.stringify(goal) + goal.weeklyChecked
+      body: JSON.stringify(goal)
     };
+    console.log("request options", requestOptions);
     return fetch(
       `http://localhost:61487/api/values/` + valueType,
       requestOptions
@@ -343,7 +346,7 @@ class App extends Component {
     let goal;
     if (newGoal.type === "daily") {
       goal = makeDailyGoal(newGoal);
-      this.getData(goal, "daily");
+      this.postGoal(goal, "daily");
       goals = Object.assign({}, goals, {
         dailyGoals: [...goals.dailyGoals, goal]
       });
@@ -354,13 +357,19 @@ class App extends Component {
       if (newCategory === true) {
         console.log("goal", goal);
         goal = makeOtherGoalCategory(goal, category);
-        this.getData(goal, "otherCategory");
+        this.postGoal(goal, "otherCategory");
         goals = Object.assign({}, goals, {
           otherGoalsCategories: [...goals.otherGoalsCategories, goal]
         });
       } else {
         goals.otherGoalsCategories = goals.otherGoalsCategories.map(goal2 => {
           if (goal2.category === category) {
+            this.postGoal(
+              Object.assign({}, goal, {
+                categoryID: goal2.id
+              }),
+              "otherGoal"
+            );
             return Object.assign({}, goal2, {
               otherGoals: [...goal2.otherGoals, goal]
             });
