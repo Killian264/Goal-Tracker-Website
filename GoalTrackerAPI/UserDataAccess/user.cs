@@ -14,9 +14,23 @@ namespace UserDataAccess
     
     public partial class user
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public user()
+        {
+            this.completedDailies = new HashSet<completedDaily>();
+            this.dailies = new HashSet<daily>();
+            this.otherCategories = new HashSet<otherCategory>();
+        }
+    
         public string Email { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
-        public string goals { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<completedDaily> completedDailies { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<daily> dailies { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<otherCategory> otherCategories { get; set; }
     }
 }

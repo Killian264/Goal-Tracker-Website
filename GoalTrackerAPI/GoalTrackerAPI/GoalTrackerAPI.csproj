@@ -171,15 +171,16 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="HelperFunctions\ObjectConversionSettings.cs" />
     <Compile Include="Models\Completed.cs" />
     <Compile Include="Models\DailyGoal.cs" />
     <Compile Include="Models\DailyGoalCompleted.cs" />
     <Compile Include="Models\Goals.cs" />
     <Compile Include="Models\OtherGoal.cs" />
     <Compile Include="Models\OtherGoalCategory.cs" />
-    <Compile Include="Models\OtherGoalCategoryCompleted.cs" />
-    <Compile Include="Models\OtherGoalCompleted.cs" />
     <Compile Include="Models\AllGoals.cs" />
+    <Compile Include="Models\ReturnGoals.cs" />
+    <Compile Include="Models\TrueFalseArr.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TokenAuthenticationAttribute.cs" />

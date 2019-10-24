@@ -28,7 +28,6 @@ namespace GoalTrackerAPI.Controllers
                 string email = emailPassword[0];
                 if (entities.sessions.Any(session => (session.userEmail.Equals(email, StringComparison.OrdinalIgnoreCase))))
                 {
-                    var test = entities.sessions.Find(email);
                     entities.sessions.Remove(entities.sessions.FirstOrDefault(session => (session.userEmail.Equals(email, StringComparison.OrdinalIgnoreCase))));
                 }
                 var newSession = new session();
@@ -48,7 +47,6 @@ namespace GoalTrackerAPI.Controllers
             {
                 string json = File.ReadAllText(@"C:\Users\Killian\Desktop\Projects\Goal-Tracker with Login\goal-tracker\GoalTrackerAPI\GoalTrackerAPI\base.json");
                 user.Username = "Test Account";
-                user.goals = json;
                 using (UsersEntities entities = new UsersEntities())
                 {
                     //users.users.Add(user);

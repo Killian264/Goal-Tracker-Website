@@ -7,6 +7,6 @@ namespace GoalTrackerAPI.Models
 {
     public class AllGoals
     {
-        public Goals goals { get; set; }
+        public ReturnGoals goals { get; set; }
     }
 }

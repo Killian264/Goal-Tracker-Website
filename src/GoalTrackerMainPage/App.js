@@ -19,6 +19,7 @@ import {
   makeOtherGoalCategory
 } from "./MakeGoals";
 import { userService } from "../services/user.service";
+import { createBrowserHistory } from "history";
 // import {
 //   makeCompletedDailyGoal, makeCompletedOtherGoal, makeDailyGoal, makeCompletedOtherGoalCategory, makeOtherGoal, makeOtherGoalCategory,
 // } from './MakeGoals';
@@ -44,7 +45,6 @@ class App extends Component {
       }
     };
   }
-
   updateStateForMount(state) {
     let updatedCompletedDailyGoals = state.goals.completed.dailyGoals;
     let updatedCompletedOtherCategories =
@@ -110,32 +110,17 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const requestOptions = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Basic " + window.btoa(localStorage.getItem("user"))
+    userService.getData().then(
+      user => {
+        console.log("user", user);
+        this.setState(this.updateStateForMount(JSON.parse(user)));
+      },
+      error => {
+        const history = createBrowserHistory();
+        history.push("/login");
+        document.location.reload();
       }
-    };
-    return fetch(`http://localhost:61487/api/values`, requestOptions)
-      .then(response => {
-        if (response.status === 401 || response.status === 400) {
-          localStorage.removeItem("user");
-        }
-      })
-      .then(user => {
-        console.log(user);
-        this.setState(this.updateStateForMount(user));
-        // return user;
-      });
-    // let data = userService.getData();
-    // if (data === null) {
-    //   console.log("null");
-    // }
-    // this.updateStateForMount(data);
-    // fetch("http://localhost:61487/api/values")
-    //   .then(response => response.json())
-    //   .then(data => this.setState(this.updateStateForMount(data)));
+    );
   }
 
   updateCategoryRender = key => {
@@ -332,22 +317,46 @@ class App extends Component {
     this.setState(state);
   };
 
+  getData(goal, valueType) {
+    console.log(goal);
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Basic " + window.btoa(localStorage.getItem("user"))
+      },
+      body: JSON.stringify(goal) + goal.weeklyChecked
+    };
+    return fetch(
+      `http://localhost:61487/api/values/` + valueType,
+      requestOptions
+    )
+      .then()
+      .then(user => {
+        console.log(user);
+      });
+  }
+
   stateAdd = newGoal => {
     const { state } = this;
     let { goals } = this.state;
     let goal;
     if (newGoal.type === "daily") {
       goal = makeDailyGoal(newGoal);
+      this.getData(goal, "daily");
       goals = Object.assign({}, goals, {
         dailyGoals: [...goals.dailyGoals, goal]
       });
     } else {
       const { category, newCategory } = newGoal;
       goal = makeOtherGoal(newGoal);
+      // this.getData(goal);
       if (newCategory === true) {
+        console.log("goal", goal);
         goal = makeOtherGoalCategory(goal, category);
+        this.getData(goal, "otherCategory");
         goals = Object.assign({}, goals, {
-          otherGoalsCategories: [...goals.otherGoalsCategories, newGoal]
+          otherGoalsCategories: [...goals.otherGoalsCategories, goal]
         });
       } else {
         goals.otherGoalsCategories = goals.otherGoalsCategories.map(goal2 => {
@@ -360,6 +369,7 @@ class App extends Component {
         });
       }
     }
+    console.log(goals);
     this.setState({
       goals,
       otherStuffs: Object.assign({}, state.otherStuffs, {

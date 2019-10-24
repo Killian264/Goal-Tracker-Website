@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using UserDataAccess;
 
 namespace GoalTrackerAPI.Models
 {
     public class Completed
     {
-        public List<DailyGoalCompleted> dailyGoals { get; set; }
-        public List<OtherGoalCategoryCompleted> otherGoalsCategories { get; set; }
+        public completedDaily[] completedDaily { get; set; }
     }
 }

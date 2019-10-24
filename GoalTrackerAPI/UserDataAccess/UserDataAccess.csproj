@@ -66,8 +66,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="completedDaily.cs">
+      <DependentUpon>UserDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="daily.cs">
+      <DependentUpon>UserDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="otherCategory.cs">
+      <DependentUpon>UserDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="otherGoal.cs">
+      <DependentUpon>UserDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="session.cs">
+      <DependentUpon>UserDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="trueFalseArr.cs">
       <DependentUpon>UserDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="user.cs">
@@ -100,13 +115,6 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>UserDataModel.edmx</DependentUpon>
       <LastGenOutput>UserDataModel.cs</LastGenOutput>
-    </Content>
-    <Content Include="Users.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Users_log.ldf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DependentUpon>Users.mdf</DependentUpon>
     </Content>
   </ItemGroup>
   <ItemGroup>

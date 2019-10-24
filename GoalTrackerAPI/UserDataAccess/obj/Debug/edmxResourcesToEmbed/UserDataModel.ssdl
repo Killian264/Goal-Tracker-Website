@@ -1,5 +1,52 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="UsersInfoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="completedDaily">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="userEmail" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="title" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="snippit" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="startDate" Type="datetime" Nullable="false" />
+    <Property Name="endDate" Type="datetime" Nullable="false" />
+    <Property Name="daysChecked" Type="int" Nullable="false" />
+    <Property Name="percentComplete" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="daily">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="userEmail" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="title" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="snippit" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="startDate" Type="datetime" Nullable="false" />
+    <Property Name="endDate" Type="datetime" Nullable="false" />
+    <Property Name="daysChecked" Type="int" Nullable="false" />
+    <Property Name="lastDayUpdated" Type="datetime" Nullable="false" />
+    <Property Name="trueFalseArr" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="otherCategory">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="userEmail" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="category" Type="varchar" MaxLength="200" Nullable="false" />
+  </EntityType>
+  <EntityType Name="otherGoals">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="title" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="snippit" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="startDate" Type="datetime" Nullable="false" />
+    <Property Name="endDate" Type="datetime" Nullable="false" />
+    <Property Name="isCompleted" Type="bit" Nullable="false" />
+    <Property Name="categoryID" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
   <EntityType Name="sessions">
     <Key>
       <PropertyRef Name="sessionID" />
@@ -8,6 +55,19 @@
     <Property Name="userEmail" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="issued" Type="datetime" Nullable="false" />
   </EntityType>
+  <EntityType Name="trueFalseArr">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="0" Type="bit" Nullable="false" />
+    <Property Name="1" Type="bit" Nullable="false" />
+    <Property Name="2" Type="bit" Nullable="false" />
+    <Property Name="3" Type="bit" Nullable="false" />
+    <Property Name="4" Type="bit" Nullable="false" />
+    <Property Name="5" Type="bit" Nullable="false" />
+    <Property Name="6" Type="bit" Nullable="false" />
+  </EntityType>
   <EntityType Name="users">
     <Key>
       <PropertyRef Name="Email" />
@@ -15,10 +75,78 @@
     <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="Username" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="Password" Type="varchar" MaxLength="100" Nullable="false" />
-    <Property Name="goals" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
+  <Association Name="FK_CompletedDaily_ToTable">
+    <End Role="users" Type="Self.users" Multiplicity="1" />
+    <End Role="completedDaily" Type="Self.completedDaily" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="Email" />
+      </Principal>
+      <Dependent Role="completedDaily">
+        <PropertyRef Name="userEmail" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_daily_ToTable">
+    <End Role="users" Type="Self.users" Multiplicity="1" />
+    <End Role="daily" Type="Self.daily" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="Email" />
+      </Principal>
+      <Dependent Role="daily">
+        <PropertyRef Name="userEmail" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_otherCategory_ToTable">
+    <End Role="users" Type="Self.users" Multiplicity="1" />
+    <End Role="otherCategory" Type="Self.otherCategory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="Email" />
+      </Principal>
+      <Dependent Role="otherCategory">
+        <PropertyRef Name="userEmail" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OtherGoals_ToTable">
+    <End Role="otherCategory" Type="Self.otherCategory" Multiplicity="1" />
+    <End Role="otherGoals" Type="Self.otherGoals" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="otherCategory">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="otherGoals">
+        <PropertyRef Name="categoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="UsersInfoModelStoreContainer">
+    <EntitySet Name="completedDaily" EntityType="Self.completedDaily" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="daily" EntityType="Self.daily" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="otherCategory" EntityType="Self.otherCategory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="otherGoals" EntityType="Self.otherGoals" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sessions" EntityType="Self.sessions" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="trueFalseArr" EntityType="Self.trueFalseArr" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_CompletedDaily_ToTable" Association="Self.FK_CompletedDaily_ToTable">
+      <End Role="users" EntitySet="users" />
+      <End Role="completedDaily" EntitySet="completedDaily" />
+    </AssociationSet>
+    <AssociationSet Name="FK_daily_ToTable" Association="Self.FK_daily_ToTable">
+      <End Role="users" EntitySet="users" />
+      <End Role="daily" EntitySet="daily" />
+    </AssociationSet>
+    <AssociationSet Name="FK_otherCategory_ToTable" Association="Self.FK_otherCategory_ToTable">
+      <End Role="users" EntitySet="users" />
+      <End Role="otherCategory" EntitySet="otherCategory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OtherGoals_ToTable" Association="Self.FK_OtherGoals_ToTable">
+      <End Role="otherCategory" EntitySet="otherCategory" />
+      <End Role="otherGoals" EntitySet="otherGoals" />
+    </AssociationSet>
   </EntityContainer>
 </Schema>

@@ -27,5 +27,10 @@ namespace UserDataAccess
     
         public virtual DbSet<session> sessions { get; set; }
         public virtual DbSet<user> users { get; set; }
+        public virtual DbSet<trueFalseArr> trueFalseArrs { get; set; }
+        public virtual DbSet<completedDaily> completedDailies { get; set; }
+        public virtual DbSet<daily> dailies { get; set; }
+        public virtual DbSet<otherGoal> otherGoals { get; set; }
+        public virtual DbSet<otherCategory> otherCategories { get; set; }
     }
 }

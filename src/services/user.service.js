@@ -52,11 +52,7 @@ function getData() {
     }
   };
   return fetch(`http://localhost:61487/api/values`, requestOptions)
-    .then(response => {
-      if (response.status === 401 || response.status === 400) {
-        localStorage.removeItem("user");
-      }
-    })
+    .then(handleResponse)
     .then(user => {
       console.log(user);
       return user;
@@ -93,6 +89,7 @@ function handleResponse(response) {
         // window.location.reload(true);
         error = "Email is already in use please login";
       }
+      localStorage.removeItem("user");
 
       return Promise.reject(error);
     }

@@ -9,7 +9,6 @@ namespace GoalTrackerAPI.Models
     {
         public string category { get; set; }
         public string id { get; set; }
-        public bool render { get; set; }
         public List<OtherGoal> otherGoals { get; set; }
     }
 }

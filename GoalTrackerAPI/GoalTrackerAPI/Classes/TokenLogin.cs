@@ -10,7 +10,7 @@ namespace GoalTrackerAPI.Classes
     {
         private static bool dateTimeComparison(DateTime issued)
         {
-            return issued >= DateTime.Now.Subtract(TimeSpan.FromHours(24)) && issued < DateTime.Now.Add(TimeSpan.FromHours(24));
+            return issued < DateTime.Now.Subtract(TimeSpan.FromHours(24)) && issued > DateTime.Now.Add(TimeSpan.FromHours(24));
         }
         public static bool Login(string token)
         {

@@ -11,12 +11,76 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="users">
-      <EntityTypeMapping TypeName="UsersInfoModel.user">
+      <EntityTypeMapping TypeName="IsTypeOf(UsersInfoModel.user)">
         <MappingFragment StoreEntitySet="users">
-          <ScalarProperty Name="goals" ColumnName="goals" />
-          <ScalarProperty Name="Password" ColumnName="Password" />
-          <ScalarProperty Name="Username" ColumnName="Username" />
           <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="trueFalseArrs">
+      <EntityTypeMapping TypeName="UsersInfoModel.trueFalseArr">
+        <MappingFragment StoreEntitySet="trueFalseArr">
+          <ScalarProperty Name="C6" ColumnName="6" />
+          <ScalarProperty Name="C5" ColumnName="5" />
+          <ScalarProperty Name="C4" ColumnName="4" />
+          <ScalarProperty Name="C3" ColumnName="3" />
+          <ScalarProperty Name="C2" ColumnName="2" />
+          <ScalarProperty Name="C1" ColumnName="1" />
+          <ScalarProperty Name="C0" ColumnName="0" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="completedDailies">
+      <EntityTypeMapping TypeName="UsersInfoModel.completedDaily">
+        <MappingFragment StoreEntitySet="completedDaily">
+          <ScalarProperty Name="percentComplete" ColumnName="percentComplete" />
+          <ScalarProperty Name="daysChecked" ColumnName="daysChecked" />
+          <ScalarProperty Name="endDate" ColumnName="endDate" />
+          <ScalarProperty Name="startDate" ColumnName="startDate" />
+          <ScalarProperty Name="snippit" ColumnName="snippit" />
+          <ScalarProperty Name="title" ColumnName="title" />
+          <ScalarProperty Name="userEmail" ColumnName="userEmail" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="dailies">
+      <EntityTypeMapping TypeName="UsersInfoModel.daily">
+        <MappingFragment StoreEntitySet="daily">
+          <ScalarProperty Name="trueFalseArr" ColumnName="trueFalseArr" />
+          <ScalarProperty Name="lastDayUpdated" ColumnName="lastDayUpdated" />
+          <ScalarProperty Name="daysChecked" ColumnName="daysChecked" />
+          <ScalarProperty Name="endDate" ColumnName="endDate" />
+          <ScalarProperty Name="startDate" ColumnName="startDate" />
+          <ScalarProperty Name="snippit" ColumnName="snippit" />
+          <ScalarProperty Name="title" ColumnName="title" />
+          <ScalarProperty Name="userEmail" ColumnName="userEmail" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="otherGoals">
+      <EntityTypeMapping TypeName="UsersInfoModel.otherGoal">
+        <MappingFragment StoreEntitySet="otherGoals">
+          <ScalarProperty Name="categoryID" ColumnName="categoryID" />
+          <ScalarProperty Name="isCompleted" ColumnName="isCompleted" />
+          <ScalarProperty Name="endDate" ColumnName="endDate" />
+          <ScalarProperty Name="startDate" ColumnName="startDate" />
+          <ScalarProperty Name="snippit" ColumnName="snippit" />
+          <ScalarProperty Name="title" ColumnName="title" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="otherCategories">
+      <EntityTypeMapping TypeName="UsersInfoModel.otherCategory">
+        <MappingFragment StoreEntitySet="otherCategory">
+          <ScalarProperty Name="category" ColumnName="category" />
+          <ScalarProperty Name="userEmail" ColumnName="userEmail" />
+          <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

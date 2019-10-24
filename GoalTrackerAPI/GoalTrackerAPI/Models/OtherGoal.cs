@@ -12,6 +12,7 @@ namespace GoalTrackerAPI.Models
         public string snippit { get; set; }
         public string startDate { get; set; }
         public string endDate { get; set; }
-        public int percentComplete { get; set; }
+
+        public bool isCompleted { get; set; }
     }
 }

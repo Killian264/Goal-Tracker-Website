@@ -5,6 +5,53 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="UsersInfoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="completedDaily">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="userEmail" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="title" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="snippit" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="startDate" Type="datetime" Nullable="false" />
+          <Property Name="endDate" Type="datetime" Nullable="false" />
+          <Property Name="daysChecked" Type="int" Nullable="false" />
+          <Property Name="percentComplete" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="daily">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="userEmail" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="title" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="snippit" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="startDate" Type="datetime" Nullable="false" />
+          <Property Name="endDate" Type="datetime" Nullable="false" />
+          <Property Name="daysChecked" Type="int" Nullable="false" />
+          <Property Name="lastDayUpdated" Type="datetime" Nullable="false" />
+          <Property Name="trueFalseArr" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="otherCategory">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="userEmail" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="category" Type="varchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="otherGoals">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="title" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="snippit" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="startDate" Type="datetime" Nullable="false" />
+          <Property Name="endDate" Type="datetime" Nullable="false" />
+          <Property Name="isCompleted" Type="bit" Nullable="false" />
+          <Property Name="categoryID" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="sessions">
           <Key>
             <PropertyRef Name="sessionID" />
@@ -13,6 +60,19 @@
           <Property Name="userEmail" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="issued" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="trueFalseArr">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="0" Type="bit" Nullable="false" />
+          <Property Name="1" Type="bit" Nullable="false" />
+          <Property Name="2" Type="bit" Nullable="false" />
+          <Property Name="3" Type="bit" Nullable="false" />
+          <Property Name="4" Type="bit" Nullable="false" />
+          <Property Name="5" Type="bit" Nullable="false" />
+          <Property Name="6" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="users">
           <Key>
             <PropertyRef Name="Email" />
@@ -20,11 +80,79 @@
           <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Username" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Password" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="goals" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
+        <Association Name="FK_CompletedDaily_ToTable">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="completedDaily" Type="Self.completedDaily" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="completedDaily">
+              <PropertyRef Name="userEmail" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_daily_ToTable">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="daily" Type="Self.daily" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="daily">
+              <PropertyRef Name="userEmail" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_otherCategory_ToTable">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="otherCategory" Type="Self.otherCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="otherCategory">
+              <PropertyRef Name="userEmail" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OtherGoals_ToTable">
+          <End Role="otherCategory" Type="Self.otherCategory" Multiplicity="1" />
+          <End Role="otherGoals" Type="Self.otherGoals" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="otherCategory">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="otherGoals">
+              <PropertyRef Name="categoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="UsersInfoModelStoreContainer">
+          <EntitySet Name="completedDaily" EntityType="Self.completedDaily" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="daily" EntityType="Self.daily" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="otherCategory" EntityType="Self.otherCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="otherGoals" EntityType="Self.otherGoals" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sessions" EntityType="Self.sessions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="trueFalseArr" EntityType="Self.trueFalseArr" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_CompletedDaily_ToTable" Association="Self.FK_CompletedDaily_ToTable">
+            <End Role="users" EntitySet="users" />
+            <End Role="completedDaily" EntitySet="completedDaily" />
+          </AssociationSet>
+          <AssociationSet Name="FK_daily_ToTable" Association="Self.FK_daily_ToTable">
+            <End Role="users" EntitySet="users" />
+            <End Role="daily" EntitySet="daily" />
+          </AssociationSet>
+          <AssociationSet Name="FK_otherCategory_ToTable" Association="Self.FK_otherCategory_ToTable">
+            <End Role="users" EntitySet="users" />
+            <End Role="otherCategory" EntitySet="otherCategory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OtherGoals_ToTable" Association="Self.FK_OtherGoals_ToTable">
+            <End Role="otherCategory" EntitySet="otherCategory" />
+            <End Role="otherGoals" EntitySet="otherGoals" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -33,7 +161,28 @@
         <EntityContainer Name="UsersEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="sessions" EntityType="UsersInfoModel.session" />
           <EntitySet Name="users" EntityType="UsersInfoModel.user" />
-        </EntityContainer>
+          <EntitySet Name="trueFalseArrs" EntityType="UsersInfoModel.trueFalseArr" />
+          <EntitySet Name="completedDailies" EntityType="UsersInfoModel.completedDaily" />
+          <EntitySet Name="dailies" EntityType="UsersInfoModel.daily" />
+          <AssociationSet Name="FK_CompletedDaily_ToTable" Association="UsersInfoModel.FK_CompletedDaily_ToTable">
+            <End Role="user" EntitySet="users" />
+            <End Role="completedDaily" EntitySet="completedDailies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_daily_ToTable" Association="UsersInfoModel.FK_daily_ToTable">
+            <End Role="user" EntitySet="users" />
+            <End Role="daily" EntitySet="dailies" />
+          </AssociationSet>
+          <EntitySet Name="otherGoals" EntityType="UsersInfoModel.otherGoal" />
+          <EntitySet Name="otherCategories" EntityType="UsersInfoModel.otherCategory" />
+          <AssociationSet Name="FK_otherCategory_ToTable" Association="UsersInfoModel.FK_otherCategory_ToTable">
+            <End Role="user" EntitySet="users" />
+            <End Role="otherCategory" EntitySet="otherCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OtherGoals_ToTable" Association="UsersInfoModel.FK_OtherGoals_ToTable">
+            <End Role="otherCategory" EntitySet="otherCategories" />
+            <End Role="otherGoal" EntitySet="otherGoals" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="session">
           <Key>
             <PropertyRef Name="sessionID" />
@@ -49,9 +198,124 @@
           <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Username" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Password" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="goals" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="completedDailies" Relationship="UsersInfoModel.FK_CompletedDaily_ToTable" FromRole="user" ToRole="completedDaily" />
+          <NavigationProperty Name="dailies" Relationship="UsersInfoModel.FK_daily_ToTable" FromRole="user" ToRole="daily" />
+          <NavigationProperty Name="otherCategories" Relationship="UsersInfoModel.FK_otherCategory_ToTable" FromRole="user" ToRole="otherCategory" />
         </EntityType>
-      </Schema>
+        <EntityType Name="trueFalseArr">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="C0" Type="Boolean" Nullable="false" />
+          <Property Name="C1" Type="Boolean" Nullable="false" />
+          <Property Name="C2" Type="Boolean" Nullable="false" />
+          <Property Name="C3" Type="Boolean" Nullable="false" />
+          <Property Name="C4" Type="Boolean" Nullable="false" />
+          <Property Name="C5" Type="Boolean" Nullable="false" />
+          <Property Name="C6" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="completedDaily">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="userEmail" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="snippit" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="startDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="endDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="daysChecked" Type="Int32" Nullable="false" />
+          <Property Name="percentComplete" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="user" Relationship="UsersInfoModel.FK_CompletedDaily_ToTable" FromRole="completedDaily" ToRole="user" />
+        </EntityType>
+        <EntityType Name="daily">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="userEmail" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="snippit" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="startDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="endDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="daysChecked" Type="Int32" Nullable="false" />
+          <Property Name="lastDayUpdated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="trueFalseArr" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="user" Relationship="UsersInfoModel.FK_daily_ToTable" FromRole="daily" ToRole="user" />
+        </EntityType>
+        <Association Name="FK_CompletedDaily_ToTable">
+          <End Type="UsersInfoModel.user" Role="user" Multiplicity="1" />
+          <End Type="UsersInfoModel.completedDaily" Role="completedDaily" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="completedDaily">
+              <PropertyRef Name="userEmail" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_daily_ToTable">
+          <End Type="UsersInfoModel.user" Role="user" Multiplicity="1" />
+          <End Type="UsersInfoModel.daily" Role="daily" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="daily">
+              <PropertyRef Name="userEmail" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="otherGoal">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="snippit" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="startDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="endDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="isCompleted" Type="Boolean" Nullable="false" />
+          <Property Name="categoryID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="otherCategory" Relationship="UsersInfoModel.FK_OtherGoals_ToTable" FromRole="otherGoal" ToRole="otherCategory" />
+        </EntityType>
+        <EntityType Name="otherCategory">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="userEmail" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="category" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="user" Relationship="UsersInfoModel.FK_otherCategory_ToTable" FromRole="otherCategory" ToRole="user" />
+          <NavigationProperty Name="otherGoals" Relationship="UsersInfoModel.FK_OtherGoals_ToTable" FromRole="otherCategory" ToRole="otherGoal" />
+        </EntityType>
+        <Association Name="FK_otherCategory_ToTable">
+          <End Type="UsersInfoModel.user" Role="user" Multiplicity="1" />
+          <End Type="UsersInfoModel.otherCategory" Role="otherCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="otherCategory">
+              <PropertyRef Name="userEmail" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OtherGoals_ToTable">
+          <End Type="UsersInfoModel.otherCategory" Role="otherCategory" Multiplicity="1" />
+          <End Type="UsersInfoModel.otherGoal" Role="otherGoal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="otherCategory">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="otherGoal">
+              <PropertyRef Name="categoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -66,13 +330,77 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-          <EntitySetMapping Name="users">
-            <EntityTypeMapping TypeName="UsersInfoModel.user">
-              <MappingFragment StoreEntitySet="users">
-                <ScalarProperty Name="goals" ColumnName="goals" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="Username" ColumnName="Username" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
+    <EntitySetMapping Name="users">
+      <EntityTypeMapping TypeName="IsTypeOf(UsersInfoModel.user)">
+        <MappingFragment StoreEntitySet="users">
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+          <EntitySetMapping Name="trueFalseArrs">
+            <EntityTypeMapping TypeName="UsersInfoModel.trueFalseArr">
+              <MappingFragment StoreEntitySet="trueFalseArr">
+                <ScalarProperty Name="C6" ColumnName="6" />
+                <ScalarProperty Name="C5" ColumnName="5" />
+                <ScalarProperty Name="C4" ColumnName="4" />
+                <ScalarProperty Name="C3" ColumnName="3" />
+                <ScalarProperty Name="C2" ColumnName="2" />
+                <ScalarProperty Name="C1" ColumnName="1" />
+                <ScalarProperty Name="C0" ColumnName="0" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="completedDailies">
+            <EntityTypeMapping TypeName="UsersInfoModel.completedDaily">
+              <MappingFragment StoreEntitySet="completedDaily">
+                <ScalarProperty Name="percentComplete" ColumnName="percentComplete" />
+                <ScalarProperty Name="daysChecked" ColumnName="daysChecked" />
+                <ScalarProperty Name="endDate" ColumnName="endDate" />
+                <ScalarProperty Name="startDate" ColumnName="startDate" />
+                <ScalarProperty Name="snippit" ColumnName="snippit" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="userEmail" ColumnName="userEmail" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="dailies">
+            <EntityTypeMapping TypeName="UsersInfoModel.daily">
+              <MappingFragment StoreEntitySet="daily">
+                <ScalarProperty Name="trueFalseArr" ColumnName="trueFalseArr" />
+                <ScalarProperty Name="lastDayUpdated" ColumnName="lastDayUpdated" />
+                <ScalarProperty Name="daysChecked" ColumnName="daysChecked" />
+                <ScalarProperty Name="endDate" ColumnName="endDate" />
+                <ScalarProperty Name="startDate" ColumnName="startDate" />
+                <ScalarProperty Name="snippit" ColumnName="snippit" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="userEmail" ColumnName="userEmail" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="otherGoals">
+            <EntityTypeMapping TypeName="UsersInfoModel.otherGoal">
+              <MappingFragment StoreEntitySet="otherGoals">
+                <ScalarProperty Name="categoryID" ColumnName="categoryID" />
+                <ScalarProperty Name="isCompleted" ColumnName="isCompleted" />
+                <ScalarProperty Name="endDate" ColumnName="endDate" />
+                <ScalarProperty Name="startDate" ColumnName="startDate" />
+                <ScalarProperty Name="snippit" ColumnName="snippit" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="otherCategories">
+            <EntityTypeMapping TypeName="UsersInfoModel.otherCategory">
+              <MappingFragment StoreEntitySet="otherCategory">
+                <ScalarProperty Name="category" ColumnName="category" />
+                <ScalarProperty Name="userEmail" ColumnName="userEmail" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -56,7 +56,6 @@ export function makeOtherGoal(newGoal) {
     snippit: newGoal.snippit,
     startDate: getToday(),
     endDate: newGoal.endDate,
-    percentComplete: 0,
     isCompleted: false
   };
 }
@@ -66,6 +65,7 @@ export function makeOtherGoalCategory(newGoal, category) {
     category,
     id: uuid.v4(),
     render: true,
+    unCompleted: 1,
     otherGoals: [newGoal]
   };
 }

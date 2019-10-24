@@ -87,8 +87,6 @@ C:\Users\Killian\Desktop\Projects\GoalTrackerAPI\GoalTrackerAPI\bin\Users_log.ld
 C:\Users\Killian\Desktop\Projects\GoalTrackerAPI\GoalTrackerAPI\bin\UserDataAccess.dll
 C:\Users\Killian\Desktop\Projects\GoalTrackerAPI\GoalTrackerAPI\bin\UserDataAccess.pdb
 C:\Users\Killian\Desktop\Projects\GoalTrackerAPI\GoalTrackerAPI\bin\UserDataAccess.dll.config
-C:\Users\Killian\Desktop\Projects\Goal-Tracker with Login\goal-tracker\GoalTrackerAPI\GoalTrackerAPI\bin\Users.mdf
-C:\Users\Killian\Desktop\Projects\Goal-Tracker with Login\goal-tracker\GoalTrackerAPI\GoalTrackerAPI\bin\Users_log.ldf
 C:\Users\Killian\Desktop\Projects\Goal-Tracker with Login\goal-tracker\GoalTrackerAPI\GoalTrackerAPI\bin\GoalTrackerAPI.dll.config
 C:\Users\Killian\Desktop\Projects\Goal-Tracker with Login\goal-tracker\GoalTrackerAPI\GoalTrackerAPI\bin\GoalTrackerAPI.dll
 C:\Users\Killian\Desktop\Projects\Goal-Tracker with Login\goal-tracker\GoalTrackerAPI\GoalTrackerAPI\bin\GoalTrackerAPI.pdb
