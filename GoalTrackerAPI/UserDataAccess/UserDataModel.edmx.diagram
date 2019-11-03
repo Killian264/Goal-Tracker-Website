@@ -6,16 +6,16 @@
     <edmx:Diagrams>
       <Diagram DiagramId="0d83324810a741288085f51d11ce1fe1" Name="Diagram1">
         <EntityTypeShape EntityType="UsersInfoModel.session" Width="1.5" PointX="0.5" PointY="0.5" />
-        <EntityTypeShape EntityType="UsersInfoModel.user" Width="1.5" PointX="2.75" PointY="0.5" />
         <EntityTypeShape EntityType="UsersInfoModel.trueFalseArr" Width="1.5" PointX="9.5" PointY="2.125" />
         <EntityTypeShape EntityType="UsersInfoModel.completedDaily" Width="1.5" PointX="7.25" PointY="1.625" />
-        <AssociationConnector Association="UsersInfoModel.FK_CompletedDaily_ToTable" />
         <EntityTypeShape EntityType="UsersInfoModel.otherGoal" Width="1.5" PointX="1.625" PointY="5.125" />
         <EntityTypeShape EntityType="UsersInfoModel.otherCategory" Width="1.5" PointX="0.5" PointY="2.5" />
-        <AssociationConnector Association="UsersInfoModel.FK_otherCategory_ToTable" />
         <AssociationConnector Association="UsersInfoModel.FK_OtherGoals_ToTable" />
-        <EntityTypeShape EntityType="UsersInfoModel.dailyGoal" Width="1.5" PointX="4.625" PointY="2.75" />
-        <AssociationConnector Association="UsersInfoModel.FK_daily_ToTable" />
+        <EntityTypeShape EntityType="UsersInfoModel.dailyGoal" Width="1.5" PointX="5" PointY="3.125" />
+        <EntityTypeShape EntityType="UsersInfoModel.user" Width="1.5" PointX="3" PointY="0.5" />
+        <AssociationConnector Association="UsersInfoModel.dailyCompletedGoals_ToTable" />
+        <AssociationConnector Association="UsersInfoModel.dailyGoals_ToTable" />
+        <AssociationConnector Association="UsersInfoModel.otherGoals_ToTable" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

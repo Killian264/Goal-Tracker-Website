@@ -10,15 +10,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="users">
-      <EntityTypeMapping TypeName="IsTypeOf(UsersInfoModel.user)">
-        <MappingFragment StoreEntitySet="users">
-          <ScalarProperty Name="Email" ColumnName="Email" />
-          <ScalarProperty Name="Username" ColumnName="Username" />
-          <ScalarProperty Name="Password" ColumnName="Password" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="trueFalseArrs">
       <EntityTypeMapping TypeName="UsersInfoModel.trueFalseArr">
         <MappingFragment StoreEntitySet="trueFalseArr">
@@ -81,6 +72,17 @@
           <ScalarProperty Name="title" ColumnName="title" />
           <ScalarProperty Name="userEmail" ColumnName="userEmail" />
           <ScalarProperty Name="id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="users">
+      <EntityTypeMapping TypeName="UsersInfoModel.user">
+        <MappingFragment StoreEntitySet="users">
+          <ScalarProperty Name="Image" ColumnName="Image" />
+          <ScalarProperty Name="Salt" ColumnName="Salt" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

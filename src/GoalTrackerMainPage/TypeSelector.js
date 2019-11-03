@@ -23,13 +23,13 @@ class TypeSelector extends Component {
   render() {
     const { goals, updateCategoryRender, updateRenderIfs } = this.props;
 
-    const renderSelector = goals.otherGoalsCategories.map(categories => (
+    const renderSelector = goals.otherGoalsCategories.map((categories, index) => (
       <label key={categories.id} className="radiobtn" id="renderDaily">
         {categories.category}
           :
         {' '}
         {categories.unCompleted}
-        <input type="checkbox" onClick={() => updateCategoryRender(categories.id)} name="category" defaultChecked />
+        <input type="checkbox" onClick={() => updateCategoryRender(index)} name="category" defaultChecked />
         <span id="renderDaily" className="radiocheckmark" />
       </label>
     ));

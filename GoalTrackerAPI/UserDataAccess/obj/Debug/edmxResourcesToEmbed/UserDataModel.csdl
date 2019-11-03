@@ -2,27 +2,27 @@
 <Schema Namespace="UsersInfoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
   <EntityContainer Name="UsersEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="sessions" EntityType="UsersInfoModel.session" />
-    <EntitySet Name="users" EntityType="UsersInfoModel.user" />
     <EntitySet Name="trueFalseArrs" EntityType="UsersInfoModel.trueFalseArr" />
     <EntitySet Name="completedDailies" EntityType="UsersInfoModel.completedDaily" />
-    <AssociationSet Name="FK_CompletedDaily_ToTable" Association="UsersInfoModel.FK_CompletedDaily_ToTable">
-      <End Role="user" EntitySet="users" />
-      <End Role="completedDaily" EntitySet="completedDailies" />
-    </AssociationSet>
     <EntitySet Name="otherGoals" EntityType="UsersInfoModel.otherGoal" />
     <EntitySet Name="otherCategories" EntityType="UsersInfoModel.otherCategory" />
-    <AssociationSet Name="FK_otherCategory_ToTable" Association="UsersInfoModel.FK_otherCategory_ToTable">
-      <End Role="user" EntitySet="users" />
-      <End Role="otherCategory" EntitySet="otherCategories" />
-    </AssociationSet>
     <AssociationSet Name="FK_OtherGoals_ToTable" Association="UsersInfoModel.FK_OtherGoals_ToTable">
       <End Role="otherCategory" EntitySet="otherCategories" />
       <End Role="otherGoal" EntitySet="otherGoals" />
     </AssociationSet>
     <EntitySet Name="dailyGoals" EntityType="UsersInfoModel.dailyGoal" />
-    <AssociationSet Name="FK_daily_ToTable" Association="UsersInfoModel.FK_daily_ToTable">
+    <EntitySet Name="users" EntityType="UsersInfoModel.user" />
+    <AssociationSet Name="dailyCompletedGoals_ToTable" Association="UsersInfoModel.dailyCompletedGoals_ToTable">
+      <End Role="user" EntitySet="users" />
+      <End Role="completedDaily" EntitySet="completedDailies" />
+    </AssociationSet>
+    <AssociationSet Name="dailyGoals_ToTable" Association="UsersInfoModel.dailyGoals_ToTable">
       <End Role="user" EntitySet="users" />
       <End Role="dailyGoal" EntitySet="dailyGoals" />
+    </AssociationSet>
+    <AssociationSet Name="otherGoals_ToTable" Association="UsersInfoModel.otherGoals_ToTable">
+      <End Role="user" EntitySet="users" />
+      <End Role="otherCategory" EntitySet="otherCategories" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="session">
@@ -32,17 +32,6 @@
     <Property Name="sessionID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="userEmail" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="issued" Type="DateTime" Nullable="false" Precision="3" />
-  </EntityType>
-  <EntityType Name="user">
-    <Key>
-      <PropertyRef Name="Email" />
-    </Key>
-    <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="Username" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="Password" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="completedDailies" Relationship="UsersInfoModel.FK_CompletedDaily_ToTable" FromRole="user" ToRole="completedDaily" />
-    <NavigationProperty Name="otherCategories" Relationship="UsersInfoModel.FK_otherCategory_ToTable" FromRole="user" ToRole="otherCategory" />
-    <NavigationProperty Name="dailyGoals" Relationship="UsersInfoModel.FK_daily_ToTable" FromRole="user" ToRole="dailyGoal" />
   </EntityType>
   <EntityType Name="trueFalseArr">
     <Key>
@@ -69,20 +58,8 @@
     <Property Name="endDate" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="daysChecked" Type="Int32" Nullable="false" />
     <Property Name="percentComplete" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="user" Relationship="UsersInfoModel.FK_CompletedDaily_ToTable" FromRole="completedDaily" ToRole="user" />
+    <NavigationProperty Name="user" Relationship="UsersInfoModel.dailyCompletedGoals_ToTable" FromRole="completedDaily" ToRole="user" />
   </EntityType>
-  <Association Name="FK_CompletedDaily_ToTable">
-    <End Type="UsersInfoModel.user" Role="user" Multiplicity="1" />
-    <End Type="UsersInfoModel.completedDaily" Role="completedDaily" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="user">
-        <PropertyRef Name="Email" />
-      </Principal>
-      <Dependent Role="completedDaily">
-        <PropertyRef Name="userEmail" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <EntityType Name="otherGoal">
     <Key>
       <PropertyRef Name="id" />
@@ -103,21 +80,9 @@
     <Property Name="id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="userEmail" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="category" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="user" Relationship="UsersInfoModel.FK_otherCategory_ToTable" FromRole="otherCategory" ToRole="user" />
     <NavigationProperty Name="otherGoals" Relationship="UsersInfoModel.FK_OtherGoals_ToTable" FromRole="otherCategory" ToRole="otherGoal" />
+    <NavigationProperty Name="user" Relationship="UsersInfoModel.otherGoals_ToTable" FromRole="otherCategory" ToRole="user" />
   </EntityType>
-  <Association Name="FK_otherCategory_ToTable">
-    <End Type="UsersInfoModel.user" Role="user" Multiplicity="1" />
-    <End Type="UsersInfoModel.otherCategory" Role="otherCategory" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="user">
-        <PropertyRef Name="Email" />
-      </Principal>
-      <Dependent Role="otherCategory">
-        <PropertyRef Name="userEmail" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_OtherGoals_ToTable">
     <End Type="UsersInfoModel.otherCategory" Role="otherCategory" Multiplicity="1" />
     <End Type="UsersInfoModel.otherGoal" Role="otherGoal" Multiplicity="*" />
@@ -143,9 +108,34 @@
     <Property Name="daysChecked" Type="Int32" Nullable="false" />
     <Property Name="lastDayUpdated" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="trueFalseArr" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="user" Relationship="UsersInfoModel.FK_daily_ToTable" FromRole="dailyGoal" ToRole="user" />
+    <NavigationProperty Name="user" Relationship="UsersInfoModel.dailyGoals_ToTable" FromRole="dailyGoal" ToRole="user" />
   </EntityType>
-  <Association Name="FK_daily_ToTable">
+  <EntityType Name="user">
+    <Key>
+      <PropertyRef Name="Email" />
+    </Key>
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Username" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Salt" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <NavigationProperty Name="completedDailies" Relationship="UsersInfoModel.dailyCompletedGoals_ToTable" FromRole="user" ToRole="completedDaily" />
+    <NavigationProperty Name="dailyGoals" Relationship="UsersInfoModel.dailyGoals_ToTable" FromRole="user" ToRole="dailyGoal" />
+    <NavigationProperty Name="otherCategories" Relationship="UsersInfoModel.otherGoals_ToTable" FromRole="user" ToRole="otherCategory" />
+  </EntityType>
+  <Association Name="dailyCompletedGoals_ToTable">
+    <End Type="UsersInfoModel.user" Role="user" Multiplicity="1" />
+    <End Type="UsersInfoModel.completedDaily" Role="completedDaily" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user">
+        <PropertyRef Name="Email" />
+      </Principal>
+      <Dependent Role="completedDaily">
+        <PropertyRef Name="userEmail" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="dailyGoals_ToTable">
     <End Type="UsersInfoModel.user" Role="user" Multiplicity="1" />
     <End Type="UsersInfoModel.dailyGoal" Role="dailyGoal" Multiplicity="*" />
     <ReferentialConstraint>
@@ -153,6 +143,18 @@
         <PropertyRef Name="Email" />
       </Principal>
       <Dependent Role="dailyGoal">
+        <PropertyRef Name="userEmail" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="otherGoals_ToTable">
+    <End Type="UsersInfoModel.user" Role="user" Multiplicity="1" />
+    <End Type="UsersInfoModel.otherCategory" Role="otherCategory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user">
+        <PropertyRef Name="Email" />
+      </Principal>
+      <Dependent Role="otherCategory">
         <PropertyRef Name="userEmail" />
       </Dependent>
     </ReferentialConstraint>

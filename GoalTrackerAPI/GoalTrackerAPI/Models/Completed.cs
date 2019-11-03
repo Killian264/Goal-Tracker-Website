@@ -8,6 +8,6 @@ namespace GoalTrackerAPI.Models
 {
     public class Completed
     {
-        public completedDaily[] completedDaily { get; set; }
+        public completedDaily[] dailyGoals { get; set; }
     }
 }

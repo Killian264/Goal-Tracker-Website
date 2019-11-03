@@ -68,13 +68,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="completedDaily.cs">
       <DependentUpon>UserDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="dailyGoal.cs">
       <DependentUpon>UserDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="otherCategory.cs">
       <DependentUpon>UserDataModel.tt</DependentUpon>
     </Compile>

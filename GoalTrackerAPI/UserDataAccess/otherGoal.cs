@@ -12,7 +12,7 @@ namespace UserDataAccess
 {
     using System;
     using System.Collections.Generic;
-    
+
     public partial class otherGoal
     {
         public string id { get; set; }
@@ -23,6 +23,12 @@ namespace UserDataAccess
         public bool isCompleted { get; set; }
         [JsonIgnore]
         public string categoryID { get; set; }
+        [JsonProperty("categoryID")]
+        private string CategoryID
+        {
+            // get is intentionally omitted here
+            set { categoryID = value; }
+        }
         [JsonIgnore]
         public virtual otherCategory otherCategory { get; set; }
     }

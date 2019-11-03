@@ -1,5 +1,4 @@
-export function authHeader() {
-  // return authorization header with basic auth credentials
+export function tokenHeader() {
   let user = JSON.parse(localStorage.getItem("user"));
 
   if (user && user.authdata) {

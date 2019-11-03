@@ -75,8 +75,10 @@
     <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="Username" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="Password" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Salt" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Image" Type="varbinary(max)" />
   </EntityType>
-  <Association Name="FK_CompletedDaily_ToTable">
+  <Association Name="dailyCompletedGoals_ToTable">
     <End Role="users" Type="Self.users" Multiplicity="1" />
     <End Role="completedDaily" Type="Self.completedDaily" Multiplicity="*" />
     <ReferentialConstraint>
@@ -88,7 +90,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_daily_ToTable">
+  <Association Name="dailyGoals_ToTable">
     <End Role="users" Type="Self.users" Multiplicity="1" />
     <End Role="dailyGoals" Type="Self.dailyGoals" Multiplicity="*" />
     <ReferentialConstraint>
@@ -96,18 +98,6 @@
         <PropertyRef Name="Email" />
       </Principal>
       <Dependent Role="dailyGoals">
-        <PropertyRef Name="userEmail" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_otherCategory_ToTable">
-    <End Role="users" Type="Self.users" Multiplicity="1" />
-    <End Role="otherCategory" Type="Self.otherCategory" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="users">
-        <PropertyRef Name="Email" />
-      </Principal>
-      <Dependent Role="otherCategory">
         <PropertyRef Name="userEmail" />
       </Dependent>
     </ReferentialConstraint>
@@ -124,6 +114,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="otherGoals_ToTable">
+    <End Role="users" Type="Self.users" Multiplicity="1" />
+    <End Role="otherCategory" Type="Self.otherCategory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="Email" />
+      </Principal>
+      <Dependent Role="otherCategory">
+        <PropertyRef Name="userEmail" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="UsersInfoModelStoreContainer">
     <EntitySet Name="completedDaily" EntityType="Self.completedDaily" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="dailyGoals" EntityType="Self.dailyGoals" Schema="dbo" store:Type="Tables" />
@@ -132,21 +134,21 @@
     <EntitySet Name="sessions" EntityType="Self.sessions" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="trueFalseArr" EntityType="Self.trueFalseArr" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
-    <AssociationSet Name="FK_CompletedDaily_ToTable" Association="Self.FK_CompletedDaily_ToTable">
+    <AssociationSet Name="dailyCompletedGoals_ToTable" Association="Self.dailyCompletedGoals_ToTable">
       <End Role="users" EntitySet="users" />
       <End Role="completedDaily" EntitySet="completedDaily" />
     </AssociationSet>
-    <AssociationSet Name="FK_daily_ToTable" Association="Self.FK_daily_ToTable">
+    <AssociationSet Name="dailyGoals_ToTable" Association="Self.dailyGoals_ToTable">
       <End Role="users" EntitySet="users" />
       <End Role="dailyGoals" EntitySet="dailyGoals" />
-    </AssociationSet>
-    <AssociationSet Name="FK_otherCategory_ToTable" Association="Self.FK_otherCategory_ToTable">
-      <End Role="users" EntitySet="users" />
-      <End Role="otherCategory" EntitySet="otherCategory" />
     </AssociationSet>
     <AssociationSet Name="FK_OtherGoals_ToTable" Association="Self.FK_OtherGoals_ToTable">
       <End Role="otherCategory" EntitySet="otherCategory" />
       <End Role="otherGoals" EntitySet="otherGoals" />
+    </AssociationSet>
+    <AssociationSet Name="otherGoals_ToTable" Association="Self.otherGoals_ToTable">
+      <End Role="users" EntitySet="users" />
+      <End Role="otherCategory" EntitySet="otherCategory" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

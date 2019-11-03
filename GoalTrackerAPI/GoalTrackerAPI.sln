@@ -7,12 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoalTrackerAPI", "GoalTrack
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserDataAccess", "UserDataAccess\UserDataAccess.csproj", "{24472D03-96BC-4934-891B-0B9CE82EC80C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{A2CA092C-CF39-46D0-BDC2-F13962E26433}"
-	ProjectSection(SolutionItems) = preProject
-		UserDataAccess\Users.mdf = UserDataAccess\Users.mdf
-		UserDataAccess\Users_log.ldf = UserDataAccess\Users_log.ldf
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

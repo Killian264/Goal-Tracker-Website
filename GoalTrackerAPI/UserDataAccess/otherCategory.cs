@@ -12,7 +12,7 @@ namespace UserDataAccess
 {
     using System;
     using System.Collections.Generic;
-    
+
     public partial class otherCategory
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -20,7 +20,7 @@ namespace UserDataAccess
         {
             this.otherGoals = new HashSet<otherGoal>();
         }
-    
+
         public string id { get; set; }
         [JsonIgnore]
         public string userEmail { get; set; }

@@ -4,55 +4,48 @@ export const userService = {
   login,
   logout,
   register,
-  getGoalsData
+  createTestAccount,
+  // getGoalsData
 };
 const apiUrl = "http://localhost:61487/api";
 
 function login(username, password) {
   const requestOptions = {
-    method: "POST",
+    method: "GET",
     headers: {
       "Content-Type": "application/json",
       Authorization: "Basic " + window.btoa(username + ":" + password)
-    },
-    body: JSON.stringify({ username, password })
+    }
   };
   return fetch(`${apiUrl}/User/login`, requestOptions)
     .then(handleResponse)
     .then(user => {
-      if (user) {
-        // store user details and basic auth credentials in local storage
-        // to keep user logged in between page refreshes
-        // user.authdata = window.btoa(username + ':' + password);
-        console.log(user, JSON.stringify(user));
-        localStorage.setItem("user", user);
-      }
+      localStorage.setItem("user", user);
+      return user;
+    });
+}
+function createTestAccount() {
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    }
+  };
+  return fetch(`${apiUrl}/User/testingAccount`, requestOptions)
+    .then(handleResponse)
+    .then(user => {
+      localStorage.setItem("user", user);
       return user;
     });
 }
 
-function register(email, password) {
+function register(email, password, username) {
   const requestOptions = {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, password })
+    body: JSON.stringify({ email, password, username })
   };
   return fetch(`${apiUrl}/User/register`, requestOptions)
-    .then(handleResponse)
-    .then(user => {
-      return user;
-    });
-}
-
-function getGoalsData() {
-  const requestOptions = {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Basic " + window.btoa(localStorage.getItem("user"))
-    }
-  };
-  return fetch(`${apiUrl}/values`, requestOptions)
     .then(handleResponse)
     .then(user => {
       return user;

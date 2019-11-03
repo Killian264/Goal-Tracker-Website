@@ -12,10 +12,11 @@ namespace UserDataAccess
 {
     using System;
     using System.Collections.Generic;
-    
+
     public partial class dailyGoal
     {
         public string id { get; set; }
+        [JsonIgnore]
         public string userEmail { get; set; }
         public string title { get; set; }
         public string snippit { get; set; }
