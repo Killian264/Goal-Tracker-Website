@@ -14,12 +14,12 @@ function App() {
           <Route
             exact
             path="/login"
-            render={props => <LoginPage {...props} registering={false} />}
+            render={props => <LoginPage {...props}/>}
           />
           <Route
             exact
             path="/register"
-            render={props => <LoginPage {...props} registering={true} />}
+            render={props => <LoginPage {...props}/>}
           />
         </div>
       </Router>

@@ -1,10 +1,17 @@
-export function authHeader() {
-  // return authorization header with basic auth credentials
-  let user = JSON.parse(localStorage.getItem("user"));
+export default function authHeader(method, body) {
+    let requestOptions = {
+        method: method,
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: "Basic " + window.btoa(localStorage.getItem("user"))
+        }
+    };
+    if (body !== null) {
+        requestOptions = {
+            ...requestOptions,
+            body: JSON.stringify(body)
+        };
+    }
 
-  if (user && user.authdata) {
-    return { Authorization: "Basic " + user.authdata };
-  } else {
-    return {}``;
-  }
+    return requestOptions;
 }

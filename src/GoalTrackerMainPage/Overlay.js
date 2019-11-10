@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { getYeseterday } from "./commonCommands";
+import { getYeseterday } from "../helpers/commonCommands";
 
 class Overlay extends Component {
   static propTypes = {
@@ -25,7 +25,6 @@ class Overlay extends Component {
   };
 
   categoryOnChange = e => {
-    // let tF;
     const tF = e.target.value === "newCategory";
     this.setState({
       [e.target.id]: e.target.value,
@@ -57,8 +56,8 @@ class Overlay extends Component {
   render() {
     const { otherGoalCategories, closeGoalOverlay } = this.props;
     const { state } = this;
-    const categories = otherGoalCategories.map(category => (
-      <option key={category.key} value={category.category}>
+    const categories = otherGoalCategories.map((category, index) => (
+      <option key={index} value={category.category}>
         {" "}
         {category.category}
       </option>

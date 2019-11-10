@@ -1,11 +1,15 @@
-import { createBrowserHistory } from "history";
-const apiUrl = "http://localhost:61487/api/values";
-// export const userService = {
-//     APIDeleteGoal,
-//     getGoalsData,
-//     updateGoal,
-//     postGoal
-//   };
+import { helpers} from '../helpers/helpers';
+// const apiUrl = "http://localhost:61487/api/values";
+// const apiUrl2 = "http://localhost:61487/api/User/getUsername";
+const apiUrl = "https://goaltrackerapi20191108014823.azurewebsites.net/api/values";
+const apiUrl2 = "https://goaltrackerapi20191108014823.azurewebsites.net/api/User/getUsername";
+export const goalService = {
+    APIDeleteGoal,
+    getGoalsData,
+    updateGoal,
+    postGoal,
+    getUserName,
+  };
 
 function authHeader(method, body) {
     let requestOptions = {
@@ -25,7 +29,7 @@ function authHeader(method, body) {
     return requestOptions;
 }
 
-export function APIDeleteGoal(id, categoryID) {
+function APIDeleteGoal(id, categoryID) {
     let goal = {
         id: id,
         categoryID
@@ -36,6 +40,21 @@ export function APIDeleteGoal(id, categoryID) {
         .then(user => {
         });
 }
+function getUserName(){
+    // const requestOptions = authHeader("GET", "asdfasdfadsf");
+    let requestOptions = {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: "Basic " + window.btoa(localStorage.getItem("user"))
+        }
+    };
+    return fetch(apiUrl2, requestOptions)
+        .then(handleResponse)
+        .then(user => {
+            return user;
+        });
+}
 
 function handleResponse(response) {
     return response.text().then(text => {
@@ -44,7 +63,7 @@ function handleResponse(response) {
             let error = (data && data.message) || response.statusText;
             if (response.status === 401) {
                 localStorage.removeItem("user");
-                pushToLogin();
+                helpers.pushToLogin();
             }
             if (response.status === 400) {
                 // add error here if bad request
@@ -58,13 +77,7 @@ function handleResponse(response) {
     });
 }
 
-function pushToLogin() {
-    const history = createBrowserHistory();
-    history.push("/login");
-    document.location.reload();
-}
-
-export function getGoalsData() {
+function getGoalsData() {
     const requestOptions = authHeader("GET", null);
     return fetch(apiUrl, requestOptions)
         .then(handleResponse)
@@ -73,14 +86,14 @@ export function getGoalsData() {
         });
 }
 
-export function updateGoal(id, categoryID, weeklyChecked) {
+function updateGoal(id, categoryID, weeklyChecked) {
     // goal id categoryid if == "daily" then its a daily weeklychecked is only used if updating daily stuff
     let goal = {
         id: id,
         categoryID,
         weeklyChecked: weeklyChecked
     };
-    console.log(weeklyChecked, typeof(weeklyChecked))
+    // console.log(weeklyChecked, typeof(weeklyChecked))
     const requestOptions = authHeader("PATCH", goal);
     return fetch(`${apiUrl}/update`, requestOptions)
         .then(handleResponse)
@@ -88,7 +101,7 @@ export function updateGoal(id, categoryID, weeklyChecked) {
         });
 }
 
-export function postGoal(goal, valueType) {
+function postGoal(goal, valueType) {
     const requestOptions = authHeader("POST", goal);
     return fetch(apiUrl + "/" + valueType, requestOptions)
         .then(handleResponse)

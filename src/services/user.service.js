@@ -1,14 +1,14 @@
-// import { authHeader } from '../helpers/auth-header';
+// const apiUrl = "http://localhost:61487/api";
+import authHeader from '../helpers/auth-header'
+const apiUrl = "https://goaltrackerapi20191108014823.azurewebsites.net/api";
 
 export const userService = {
   login,
-  logout,
   register,
   createTestAccount,
-  // getGoalsData
 };
-const apiUrl = "http://localhost:61487/api";
 
+// login
 function login(username, password) {
   const requestOptions = {
     method: "GET",
@@ -24,6 +24,7 @@ function login(username, password) {
       return user;
     });
 }
+// test account
 function createTestAccount() {
   const requestOptions = {
     method: "POST",
@@ -38,7 +39,7 @@ function createTestAccount() {
       return user;
     });
 }
-
+// register
 function register(email, password, username) {
   const requestOptions = {
     method: "POST",
@@ -51,28 +52,20 @@ function register(email, password, username) {
       return user;
     });
 }
-
-function logout() {
-  // remove user from local storage to log user out
-  localStorage.removeItem("user");
-}
-
+// handle response
 function handleResponse(response) {
   return response.text().then(text => {
     const data = text && JSON.parse(text);
     if (!response.ok) {
       let error = (data && data.message) || response.statusText;
       if (response.status === 401) {
-        // auto logout if 401 response returned from api
-        // logout();
-        // window.location.reload(true);
         error = "Email or password is incorrect.";
       }
-      if (response.status === 400) {
-        // auto logout if 401 response returned from api
-        // logout();
-        // window.location.reload(true);
+      else if (response.status === 400) {
         error = "Email is already in use please login";
+      }
+      else{
+        error = "Bad Request";
       }
       localStorage.removeItem("user");
 

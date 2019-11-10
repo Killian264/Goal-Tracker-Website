@@ -1,30 +1,45 @@
-import React from "react";
+import React, { Component } from 'react'
+import {goalService} from '../services/goal.service';
+import { helpers} from '../helpers/helpers';
 
-function DayElement() {
-  return (
-    <div className="sidenav">
+class SideNav extends Component {
+  state = {
+    username: "",
+  }
+
+  onClick = (e) =>{
+    e.preventDefault();
+    helpers.pushToLogin();
+  }
+  componentDidMount(){
+    goalService.getUserName().then(
+      user => {
+        this.setState({username: user});
+      },
+      error => {
+        this.setState({username: "Error"});
+      }
+    );;
+  }
+  render() {
+    return (
+      <div className="sidenav">
       <div className="user">
         <img src="./Images/profile.png" alt="" />
-        <a href="http://localhost:3000">Guest</a>
+        <a href="">{this.state.username}</a>
       </div>
       <div className="navlinks">
-        {/* <a href="https://goal-tracker.killiandebacker.com/">Dashboard</a> */}
-        {/* <a href="http://localhost:3000">Goals</a>
-        <a href="http://localhost:3000">Tasks</a> */}
-        {/* <a href="https://goal-tracker.killiandebacker.com">Sign In</a> */}
-        <a href="http://localhost:3000/login">Log Out</a>
-        Planned
+        <a href="https://killiandebacker.com/">My Portfolio</a>
+        <a href="https://github.com/Killian264/Goal-Tracker-Website" target="_blank">Github</a>
+        <a href="https://goal-tracker.killiandebacker.com/login" onClick={this.onClick}>Log Out</a>
       </div>
       <div className="navlinksfootnote">
-        -Note this is a guest account and changes are NOT saved.
-        <br />
-        -Accounts and additional features coming soon.
-        <br />
-        <br />
         Killian Debacker ©2019
       </div>
     </div>
-  );
+    )
+  }
 }
 
-export default DayElement;
+export default SideNav
+

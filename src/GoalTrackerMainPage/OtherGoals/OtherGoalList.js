@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { getToday } from "../commonCommands";
+import { getToday } from "../../helpers/commonCommands";
 import DeleteElement from "../DailyGoals/DeleteElement";
 import Checkmark from "./Checkmark";
 // import OtherGoalsCompleted from '../CompletedGoals/OtherGoals/OtherGoalsCompleted'
@@ -11,14 +11,6 @@ class OtherGoalsList extends Component {
     deleteGoal: PropTypes.func.isRequired,
     completeGoal: PropTypes.func.isRequired
   };
-
-  // shouldComponentUpdate(nextProps) {
-  // 	const { othergoals } = this.props;
-  // 	if (othergoals === nextProps.othergoals) {
-  // 		return false;
-  // 	}
-  // 	return true;
-  // }
 
   TimeFrame = goal => {
     const endDate = new Date(goal.endDate);

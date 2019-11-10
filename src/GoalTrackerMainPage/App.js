@@ -1,30 +1,17 @@
-/* eslint-disable max-len */
 import React, { Component } from "react";
 import "./App.css";
 import DailyGoalHeading from "./DailyGoals/DailyGoalHeading";
 import OtherGoals from "./OtherGoals/OtherGoals";
 import TypeSelector from "./TypeSelector";
 import Overlay from "./Overlay";
-import { getToday, getYeseterday } from "./commonCommands";
-import CompletedDailyGoals from "./CompletedGoals/DailyGoals/DailyGoalsCompleted";
-// import CompletedOtherGoals from './CompletedGoals/OtherGoals/OtherGoalsCompleted';
+import { getToday, getYeseterday } from "../helpers/commonCommands";
+import CompletedDailyGoals from "./CompletedGoals/DailyGoalsCompleted";
 import SideNav from "./SideNav";
 import TopNav from "./TopNav";
 import update from "immutability-helper";
-import {APIDeleteGoal, postGoal, getGoalsData, updateGoal} from './GoalServices/goalservice';
-// import {makeCompletedOtherGoalCategory} from './MakeGoals';
-import {
-    makeCompletedDailyGoal,
-    makeDailyGoal,
-    makeOtherGoal,
-    makeOtherGoalCategory
-} from "./MakeGoals";
-import { userService } from "../services/user.service";
-import { createBrowserHistory } from "history";
-// import {
-//   makeCompletedDailyGoal, makeCompletedOtherGoal, makeDailyGoal, makeCompletedOtherGoalCategory, makeOtherGoal, makeOtherGoalCategory,
-// } from './MakeGoals';
-// this could and probably should be simplified more later by moving the completed daily goals into their own section inside goals or even having a category for them inside otherGoalsCategories
+import {goalService} from '../services/goal.service';
+import {makeGoal} from "../helpers/MakeGoals";
+import { helpers} from '../helpers/helpers';
 class App extends Component {
     constructor(props) {
         super(props);
@@ -50,21 +37,15 @@ class App extends Component {
         if (state.goals === undefined) {
             return state;
         }
-        if (state.goals.dailyGoals.length === 0) {
+        if (state.goals.dailyGoals.length !== 0) {
             let updatedCompletedDailyGoals = state.goals.completed.dailyGoals;
-            let today = new Date();
-            today = new Date(
-                today.getFullYear(),
-                today.getMonth(),
-                today.getDate()
-            );
             const filteredDailyGoals = state.goals.dailyGoals.filter(goal => {
                 if (Date.parse(goal.endDate) <= Date.parse(getYeseterday())) {
                     updatedCompletedDailyGoals = [
                         ...updatedCompletedDailyGoals,
-                        makeCompletedDailyGoal(goal)
+                        makeGoal.makeCompletedDailyGoal(goal)
                     ];
-                    postGoal(goal, "daily");
+                    goalService.postGoal(goal, "daily");
                     return false;
                 }
                 return true;
@@ -130,23 +111,17 @@ class App extends Component {
     }
 
     componentDidMount() {
-        getGoalsData().then(
+        goalService.getGoalsData().then(
             user => {
                 let state = {
                     goals: JSON.parse(user)
                 };
-				console.log("initial state", state);
                 this.setState(this.updateStateForMount(state));
             },
             error => {
-                this.pushToLogin();
+                helpers.pushToLogin();
             }
         );
-	}
-	pushToLogin = () =>{
-		const history = createBrowserHistory();
-        history.push("/login");
-        document.location.reload();
 	}
 
     updateCategoryRender = key => {
@@ -188,14 +163,14 @@ class App extends Component {
                 lastDayUpdated: getToday()
             });
 		}
-        updateGoal(goal.id, "daily", newGoal.weeklyChecked);
+        goalService.updateGoal(goal.id, "daily", newGoal.weeklyChecked);
         return newGoal;
 	};
 	
     deleteGoal = (isDaily, categoryLoc, goalLoc) => {
         if (isDaily) {
             if (categoryLoc === -1) {
-                APIDeleteGoal(
+                goalService.APIDeleteGoal(
                     this.state.goals.completed.dailyGoals[goalLoc].id,
                     "completedDaily"
                 );
@@ -210,7 +185,7 @@ class App extends Component {
                     })
                 );
             } else {
-                APIDeleteGoal(
+                goalService.APIDeleteGoal(
                     this.state.goals.dailyGoals[goalLoc].id,
                     "daily"
                 );
@@ -222,7 +197,7 @@ class App extends Component {
             }
             return;
         } else {
-            APIDeleteGoal(
+            goalService.APIDeleteGoal(
                 this.state.goals.otherGoalsCategories[categoryLoc].otherGoals[goalLoc].id,
                 this.state.goals.otherGoalsCategories[categoryLoc].id
             );
@@ -257,7 +232,7 @@ class App extends Component {
         }
     };
     completeGoal = (categoryLoc, goalLoc) => {
-        updateGoal(this.state.goals.otherGoalsCategories[categoryLoc].otherGoals[goalLoc].id,
+        goalService.updateGoal(this.state.goals.otherGoalsCategories[categoryLoc].otherGoals[goalLoc].id,
             this.state.goals.otherGoalsCategories[categoryLoc].id,
             null
         );
@@ -360,8 +335,7 @@ class App extends Component {
                         : goal.daysChecked - 1,
                     weeklyChecked: weeklyChecked
                 });
-				console.log("hello from here", typeof(weeklyChecked));
-				updateGoal(goal.id, "daily", weeklyChecked);
+				goalService.updateGoal(goal.id, "daily", weeklyChecked);
 				return newGoal;
             }
             return goal;
@@ -374,18 +348,18 @@ class App extends Component {
         let { goals } = this.state;
         let goal;
         if (newGoal.type === "daily") {
-            goal = makeDailyGoal(newGoal);
-            postGoal(goal, "daily");
+            goal = makeGoal.makeDailyGoal(newGoal);
+            goalService.postGoal(goal, "daily");
             goals = Object.assign({}, goals, {
                 dailyGoals: [...goals.dailyGoals, goal]
             });
         } else {
             const { category, newCategory } = newGoal;
-            goal = makeOtherGoal(newGoal);
+            goal = makeGoal.makeOtherGoal(newGoal);
             // this.getData(goal);
             if (newCategory === true) {
-                goal = makeOtherGoalCategory(goal, category);
-                postGoal(goal, "otherCategory");
+                goal = makeGoal.makeOtherGoalCategory(goal, category);
+                goalService.postGoal(goal, "otherCategory");
                 goals = Object.assign({}, goals, {
                     otherGoalsCategories: [...goals.otherGoalsCategories, goal]
                 });
@@ -393,7 +367,7 @@ class App extends Component {
                 goals.otherGoalsCategories = goals.otherGoalsCategories.map(
                     goal2 => {
                         if (goal2.category === category) {
-                            postGoal(
+                            goalService.postGoal(
                                 Object.assign({}, goal, {
                                     categoryID: goal2.id
                                 }),
@@ -425,7 +399,7 @@ class App extends Component {
 		const { state } = this;
         return (
             <React.Fragment>
-                <SideNav />
+                <SideNav/>
                 <TopNav
                     navSlideChange={this.navSlideChange}
                     displayGoalOverlay={this.displayGoalOverlay}

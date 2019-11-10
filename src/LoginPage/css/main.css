@@ -73,6 +73,10 @@ p {
 	color: #666666;
 	margin: 0px;
 }
+.loadingcss{
+  position: absolute; 
+  z-index: 10;
+}
 
 ul, li {
 	margin: 0px;
@@ -390,7 +394,9 @@ iframe {
 /*------------------------------------------------------------------
 [ Responsive ]*/
 
-
+.dimmer{
+  opacity: .6;
+}
 
 @media (max-width: 992px) {
   /* .wrap-login100 {

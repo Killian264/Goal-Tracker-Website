@@ -46,12 +46,6 @@ class OtherGoals extends Component {
             <div className="otherheadingheading">
               <h1>{category.category}</h1>
             </div>
-            {/* <div className="otherheadingheading otherheadingheadingtimeframe">
-              <h1>TimeFrame</h1>
-            </div>
-            <div className="otherheadingheading otherheadingheadingyourprogress">
-              <h1>Your Progress</h1>
-            </div> */}
           </div>
           <OtherGoalList
             othergoals={category}

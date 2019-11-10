@@ -12,18 +12,6 @@ class DailyGoals extends Component {
     positiveLen: PropTypes.number.isRequired,
     renderAmount: PropTypes.number.isRequired
   };
-
-  // shouldComponentUpdate(nextProps) {
-  //   console.log(this.props.dailyGoals, nextProps.dailyGoals);
-  //   if (this.props.dailyGoals !== nextProps.dailyGoals) {
-  //     return true;
-  //   }
-  //   if (this.props.renderAmount !== nextProps.renderAmount) {
-  //     return true;
-  //   }
-  //   return false;
-  // }
-
   listElement = (goal, i) => (
     <li key={uuid.v4()}>
       <label className="checkbox">

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import ReactResizeDetector from "react-resize-detector";
 import DailyGoals from "./DailyGoals";
 // import DayElement from './DayElement';
-import { getWeekDay, getMonthDay } from "../commonCommands";
+import { getWeekDay, getMonthDay } from "../../helpers/commonCommands";
 
 class DailyGoalHeading extends Component {
   static propTypes = {

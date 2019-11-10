@@ -1,7 +1,16 @@
 import uuid from "uuid";
 import { getToday } from "./commonCommands";
 
-export function makeCompletedDailyGoal(newGoal) {
+export const makeGoal = {
+  makeCompletedDailyGoal,
+  makeCompletedOtherGoal,
+  makeCompletedOtherGoalCategory,
+  makeDailyGoal,
+  makeOtherGoal,
+  makeOtherGoalCategory,
+}
+
+function makeCompletedDailyGoal(newGoal) {
   return {
     id: newGoal.id,
     title: newGoal.title,
@@ -20,7 +29,7 @@ export function makeCompletedDailyGoal(newGoal) {
   };
 }
 
-export function makeCompletedOtherGoal(newGoal, category) {
+function makeCompletedOtherGoal(newGoal, category) {
   return {
     category: category.category,
     id: category.id,
@@ -28,7 +37,7 @@ export function makeCompletedOtherGoal(newGoal, category) {
   };
 }
 
-export function makeCompletedOtherGoalCategory(newGoal, category) {
+function makeCompletedOtherGoalCategory(newGoal, category) {
   return {
     category,
     id: uuid.v4(),
@@ -36,7 +45,7 @@ export function makeCompletedOtherGoalCategory(newGoal, category) {
   };
 }
 
-export function makeDailyGoal(newGoal) {
+function makeDailyGoal(newGoal) {
   return {
     id: uuid.v4(),
     title: newGoal.title,
@@ -49,7 +58,7 @@ export function makeDailyGoal(newGoal) {
   };
 }
 
-export function makeOtherGoal(newGoal) {
+function makeOtherGoal(newGoal) {
   return {
     id: uuid.v4(),
     title: newGoal.title,
@@ -60,7 +69,7 @@ export function makeOtherGoal(newGoal) {
   };
 }
 
-export function makeOtherGoalCategory(newGoal, category) {
+function makeOtherGoalCategory(newGoal, category) {
   return {
     category,
     id: uuid.v4(),

@@ -2,7 +2,8 @@
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
-  font-family: 'Oswald', sans-serif;
+  letter-spacing: 0px;
+  font-family: 'Poppins', sans-serif;
 }
 
 .sidenav {
@@ -33,7 +34,7 @@
     color: inherit;
   }
   .navlinksfootnote{
-    padding-top: calc(54.5vh - 45%);
+    padding-top: 52.5vh;
     padding-left: 5%;
   }
 
@@ -48,26 +49,30 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: 8px;
 
   }
   .user{
     padding-top: 4%;
     text-align: center;
-    font-size: 18px;
     color: white;
+    padding-bottom: 20px;
   }
   .user a{
-    padding: 10px;
+    font-size: 20px;
+    padding: 20px 15px 12px 15px;
     color: white;
     text-decoration: none;
     line-height: 35px;
+    border-bottom: 1px;
+    border: #0e1e24;
+    border-bottom-style: solid;
   }
   .topnav{
     width: 88%;
     margin-left: 12%;
     background: rgb(40, 44, 52);
     color: white;
-    padding-left: 3%;
     padding-right: 5%;
     display: flex;
     align-content: center;
@@ -80,9 +85,9 @@
     border-bottom-style: solid;
   }
   .topnav h1{
+    padding-left: 2.5%;
     padding-top: .25%;
     padding-bottom: .75%;
-    letter-spacing: 1.5px;
     font-weight: 500;
   }
   .creategoalbutton{
@@ -160,13 +165,11 @@
   .goals h1{
     padding: .7% 5% .5%;
     white-space: nowrap;
-    letter-spacing: 1px;
     padding-top: 9px;
   }
   .othergoals h1{
     padding: .7% 6% .5%;
     white-space: nowrap;
-    letter-spacing: 1px;
     /* font-size: 30px; */
   }
   .dailygoals{
@@ -236,6 +239,7 @@
   .otherheading{
     display: flex;
     justify-content: space-between;
+    padding-right: 5%;
     border-bottom:  1px;
     border-bottom-style: solid;
     /* padding-bottom: 12px; */
@@ -322,7 +326,8 @@
   .finalProgress h4{
     text-align: center;
     margin: auto;
-    padding-left: 45%;
+    padding-left: 10%;
+    /* padding-left: 35%; */
   }
 
   .close-container{
@@ -616,7 +621,7 @@
   }
   .otherheadingheadingyourprogress{
     min-width: 125px;
-    width: 125px;
+    width: 150px;
   }
 }
 @media screen and (max-width: 1400px){
@@ -701,6 +706,10 @@
     background: -o-linear-gradient(-135deg,      #44464d, #0e1e24);
     background: -moz-linear-gradient(-135deg,    #44464d, #0e1e24);
     background: linear-gradient(-135deg,         #44464d, #0e1e24);
+    /* background: -webkit-linear-gradient(-135deg, #7d848b, #4d4e4e);
+    background: -o-linear-gradient(-135deg,      #7d848b, #4d4e4e);
+    background: -moz-linear-gradient(-135deg,    #7d848b, #4d4e4e);
+    background: linear-gradient(-135deg,         #7d848b, #4d4e4e); */
     /* background: -webkit-linear-gradient(-135deg, #44464d, rgb(27, 27, 27));
     background: -o-linear-gradient(-135deg,      #44464d, rgb(27, 27, 27));
     background: -moz-linear-gradient(-135deg,    #44464d, rgb(27, 27, 27));
