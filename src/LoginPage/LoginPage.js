@@ -1,7 +1,7 @@
 import React from "react";
-import "./css/main.css";
-import "./css/util.css";
-import "./fonts/font-awesome-4.7.0/css/font-awesome.min.css";
+import "../css/loginpage.css";
+import "../css/util.css";
+import "../fonts/font-awesome-4.7.0/css/font-awesome.min.css";
 import { userService } from "../services/user.service.js";
 import { createBrowserHistory } from "history";
 import InputElement from './InputElement';

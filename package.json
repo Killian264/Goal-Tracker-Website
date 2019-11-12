@@ -8,6 +8,7 @@
     "immutability-helper": "^3.0.1",
     "node-sass": "^4.13.0",
     "react": "^16.11.0",
+    "react-datepicker": "^2.10.0",
     "react-dom": "^16.11.0",
     "react-load-script": "0.0.6",
     "react-resize-detector": "^4.2.1",

@@ -1,0 +1,131 @@
+.goaloverlay{
+    background: white;
+    width: 450px;
+    left: calc(50% - 225px);
+    position: absolute;
+    border-radius: 8px;
+}
+
+.goaloverlay form{
+    padding-left: 8%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.input-wrap{
+    width: 95%;
+    padding-top: 5%;
+    border-bottom: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: rgb(175, 172, 172);
+}
+.input-wrap-nopadding{
+    width: 95%;
+    border-bottom: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: rgb(175, 172, 172);
+}
+
+.titleinput{
+    width: 95%;
+    height: 30px;
+    font-size: 22px;
+}
+
+.snippitinput{
+    width: 95%;
+    height: 30px;
+    font-size: 20px;
+}
+
+.button-wrap{
+    padding: 8px 0px 8px 0px;    
+    color: rgb(85, 84, 84);
+}
+.button-not-clicked:hover{
+    background: rgb(241, 241, 241);
+}
+.button-wrap button{
+    padding: 7px;
+    border-radius: 5px;
+    margin-right: 6px;
+}
+.button-clicked{
+    color: rgb(26,115, 233);
+    background: rgb(210, 227, 252);
+}
+.button-clicked:hover{
+    background: rgb(192, 214, 246);
+}
+.span-date{
+    font-size: 14px;
+    padding-right: 8px;
+    color: rgb(95, 94, 94);
+}
+.date-picker-wrapper{
+    border-bottom: 1px;
+    border-bottom-color: rgb(175, 172, 172);
+    border-bottom-style: solid;
+    width: 95%;
+}
+.date-picker{
+    padding: 2px 0 2px 4px
+}
+
+.category{
+    padding-top: 10px;
+}
+.new-category{
+    padding-top: 10px;
+}
+
+.overlay-button {
+  margin-top: 10px;
+  margin-left: 77.5%;
+  background-color: rgb(0, 79, 182);
+  color: white;
+  padding: 6px 20px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 14px;
+}
+.close {
+    margin: 0;
+    padding: 0;
+    top: 12px;
+    right: 15px;
+    margin-left: 85%;
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    opacity: 0.8;
+  }
+  .close:hover {
+    opacity: 1;
+  }
+  .close:before, .close:after {
+    position: absolute;
+    left: 10px;
+    bottom: 0px;
+    content: ' ';
+    height: 18px;
+    width: 2px;
+    background-color: #333;
+  }
+  .close:before {
+    transform: rotate(45deg);
+  }
+  .close:after {
+    transform: rotate(-45deg);
+  }
+
+  @media screen and (max-width: 850px){
+    .goaloverlay{
+        width: 300px;
+        left: calc(50% - 150px);
+    }
+    .overlay-button {
+        margin-left: 68%;
+      }
+  }
+  

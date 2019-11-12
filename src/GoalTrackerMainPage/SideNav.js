@@ -11,6 +11,7 @@ class SideNav extends Component {
     e.preventDefault();
     helpers.pushToLogin();
   }
+  
   componentDidMount(){
     goalService.getUserName().then(
       user => {
@@ -25,7 +26,7 @@ class SideNav extends Component {
     return (
       <div className="sidenav">
       <div className="user">
-        <img src="./Images/profile.png" alt="" />
+        <img src="./images/profile.png" alt="" />
         <a href="">{this.state.username}</a>
       </div>
       <div className="navlinks">

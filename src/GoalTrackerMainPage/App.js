@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./App.css";
+import "../css/app.css";
 import DailyGoalHeading from "./DailyGoals/DailyGoalHeading";
 import OtherGoals from "./OtherGoals/OtherGoals";
 import TypeSelector from "./TypeSelector";
@@ -80,7 +80,7 @@ class App extends Component {
                                     Date.parse(goal.endDate) <=
                                     Date.parse(getYeseterday())
                                 ) {
-                                    this.updateGoal(
+                                    goalService.updateGoal(
                                         goal.id,
                                         categories.id,
                                         null
@@ -317,11 +317,9 @@ class App extends Component {
     };
 
     displayGoalOverlay = () => {
-        this.setState(prevState => ({
-            otherStuffs: Object.assign({}, prevState.otherStuffs, {
-                overlayIsHidden: !prevState.otherStuffs.overlayIsHidden
-            })
-        }));
+        this.setState({
+            otherStuffs: update(this.state.otherStuffs, {overlayIsHidden: {$set: !this.state.otherStuffs.overlayIsHidden}}
+        )});
     };
     updateCheckMark = key => {
 		// this could be simplified using update from immutability helper and passing index instead of key
@@ -373,7 +371,9 @@ class App extends Component {
                                 }),
                                 "otherGoal"
                             );
+                            console.log("ehllo fsdf", goal2);
                             return Object.assign({}, goal2, {
+                                isCompleted: goal2.unCompleted+= 1,
                                 otherGoals: [...goal2.otherGoals, goal]
                             });
                         }
@@ -390,18 +390,12 @@ class App extends Component {
         });
     };
 
-    navSlideChange = () => {
-        const nav = document.querySelector(".sidenav");
-        nav.classList.toggle("nav-active");
-    };
-
     render() {
 		const { state } = this;
         return (
             <React.Fragment>
                 <SideNav/>
                 <TopNav
-                    navSlideChange={this.navSlideChange}
                     displayGoalOverlay={this.displayGoalOverlay}
                 />
                 <div className="main">

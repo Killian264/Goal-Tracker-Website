@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { getYeseterday } from "../helpers/commonCommands";
+import { getYeseterday, getToday } from "../helpers/commonCommands";
+import '../css/overlay.css';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 class Overlay extends Component {
   static propTypes = {
@@ -15,15 +18,17 @@ class Overlay extends Component {
     endDate: null,
     type: "daily",
     category: null,
-    newCategory: true
+    newCategory: true,
   };
-
+//   handleChange(e) {
+//     const { name, value } = e.target;
+//     this.setState({ [name]: value });
+// }
   onChange = e => {
-    this.setState({
-      [e.target.id]: e.target.value
-    });
+    e.preventDefault();
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
   };
-
   categoryOnChange = e => {
     const tF = e.target.value === "newCategory";
     this.setState({
@@ -31,8 +36,22 @@ class Overlay extends Component {
       newCategory: tF
     });
   };
+  dateChange = date =>{
+    try{
+      this.setState({
+        endDate: date.toString()
+      })
+    }
+    catch{
+      this.setState({
+        endDate: null
+      })
+    }
+  }
 
   onSubmit = e => {
+    console.log("hello")
+    e.preventDefault();
     const { state } = this;
     const { stateAdd } = this.props;
     e.preventDefault();
@@ -47,6 +66,7 @@ class Overlay extends Component {
           return;
         }
       }
+      console.log("hello2")
       stateAdd(state);
     } else {
       alert("Plese fillout all fields.");
@@ -55,107 +75,69 @@ class Overlay extends Component {
 
   render() {
     const { otherGoalCategories, closeGoalOverlay } = this.props;
-    const { state } = this;
+    const {type, title, snippit} = this.state;
     const categories = otherGoalCategories.map((category, index) => (
       <option key={index} value={category.category}>
         {" "}
         {category.category}
       </option>
     ));
+
     return (
-      <div className="creategoaloverlay" id="creategoaloverlay">
-        <div className="creategoal">
-          <h1>Create Goal</h1>
-          <div className="goalallinput">
-            <ul>
-              <li>
-                Goal:
-                <br />
-                <input
-                  className="goalinput goal"
-                  id="title"
-                  type="text"
-                  name="goal"
-                  onChange={this.onChange}
-                />
-              </li>
-              <li>
-                Short Description:
-                <br />{" "}
-                <input
-                  className="goalinput sDes"
-                  id="snippit"
-                  type="text"
-                  name="sDes"
-                  onChange={this.onChange}
-                />
-              </li>
-              <li>
-                Ends:
-                <br />{" "}
-                <input
-                  type="date"
-                  className="goalinput dDate"
-                  id="endDate"
-                  name="dDate"
-                  onChange={this.onChange}
-                />
-              </li>
-              <li>
-                Type:
-                <select
-                  name="type"
-                  id="type"
-                  className="type"
-                  onChange={this.onChange}
-                >
-                  <option value="daily"> Daily Goal</option>
-                  <option value="default"> Default Goal</option>
-                </select>
-              </li>
-              Category:
-              <select
-                name="type"
-                className="type"
+      <div className="goaloverlay">
+        <button onClick={closeGoalOverlay} class="close"></button>
+        <form name="form" onSubmit={this.handleSubmit}>
+          <div className="input-wrap">
+            <input className="titleinput" type="text" name="title" value={this.props.title}
+                    onChange={this.onChange} placeholder="Add title"/>
+          </div>
+          <div className="input-wrap input-wrap-snippit">
+            <input className="snippitinput" type="text" name="snippit" value={this.props.title}
+              onChange={this.onChange} placeholder="Add snippit"/>
+          </div>
+          <div className="button-wrap">
+            <button className={type === "daily" ? "button-clicked" : "button-not-clicked"}onClick={this.onChange} name="type" value="daily">
+              Daily Goal
+            </button>
+            
+            <button className={type === "daily" ? "button-not-clicked" : "button-clicked"} onClick={this.onChange} name="type" value="default">
+              Other Goal
+            </button>
+          </div>
+          <span className="span-date">End Date:</span>
+           <div className="date-picker-wrapper">
+            <div className="date-picker">
+              <DatePicker
+                selected={this.state.endDate ? new Date(this.state.endDate) : null}
+                onChange={date => this.dateChange(date)}
+                placeholderText="Click to select a date"
+              />
+            </div>
+          </div>
+          {this.state.type !== "daily" &&
+          <div className="category">
+          <span className="span-date">Category:</span>
+              <select name="category"
                 id="category"
                 onChange={this.categoryOnChange}
-                disabled={state.type === "daily"}
               >
                 <option value="newCategory"> New Category</option>
                 {categories}
               </select>
-              <li>
-                New Category:
-                <br />{" "}
+          </div>}
+          {(this.state.type !== "daily" && this.state.newCategory) && 
+          <div className="new-category">
+          <span className="span-date">New Category:</span>
+          <br/>
                 <input
-                  className="goalinput category"
-                  id="category"
-                  type="text"
+                  className="input-wrap-nopadding"
                   name="category"
+                  placeholder={"Category"}
                   onChange={this.onChange}
-                  disabled={state.type === "daily" || !state.newCategory}
                 />
-              </li>
-            </ul>
-          </div>
-          <div className="submitarea">
-            <input
-              id="cancelbutton"
-              className="button"
-              type="submit"
-              value="Cancel"
-              onClick={closeGoalOverlay}
-            />
-            <div className="submitbutton">
-              <input
-                className="button submit"
-                type="submit"
-                value="Submit"
-                onClick={this.onSubmit}
-              />
-            </div>
-          </div>
-        </div>
+          </div>}
+              <button className="overlay-button" onClick={this.onSubmit}>Save</button>
+        </form>
       </div>
     );
   }
