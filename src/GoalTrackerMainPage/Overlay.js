@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { getYeseterday, getToday } from "../helpers/commonCommands";
+import { getYeseterday, formatDate } from "../helpers/commonCommands";
 import '../css/overlay.css';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -17,67 +17,43 @@ class Overlay extends Component {
     snippit: null,
     endDate: null,
     type: "daily",
-    category: null,
+    category: "daily",
     newCategory: true,
+    error: "",
   };
-//   handleChange(e) {
-//     const { name, value } = e.target;
-//     this.setState({ [name]: value });
-// }
+
   onChange = e => {
     e.preventDefault();
     const { name, value } = e.target;
     this.setState({ [name]: value });
   };
+
   categoryOnChange = e => {
-    const tF = e.target.value === "newCategory";
+    const { value, key } = e.target;
+    const tF = value === "newCategory";
     this.setState({
-      [e.target.id]: e.target.value,
-      newCategory: tF
+      type: value,
+      category: tF ? value : "otherCategory",
+      newCategory: tF,
     });
   };
-  dateChange = date =>{
-    try{
-      this.setState({
-        endDate: date.toString()
-      })
-    }
-    catch{
-      this.setState({
-        endDate: null
-      })
-    }
-  }
 
   onSubmit = e => {
-    console.log("hello")
     e.preventDefault();
-    const { state } = this;
-    const { stateAdd } = this.props;
-    e.preventDefault();
-    if (state.title && state.endDate) {
-      if (new Date(state.endDate) < new Date(getYeseterday())) {
-        alert("Date cannot be before today.");
-        return;
-      }
-      if (!(state.type === "daily")) {
-        if (state.newCategory && state.category === null) {
-          alert("Please add a category.");
-          return;
-        }
-      }
-      console.log("hello2")
-      stateAdd(state);
-    } else {
-      alert("Plese fillout all fields.");
-    }
+    const {endDate, type, title, newCategory, category} = this.state;
+    let error;
+    if(new Date(endDate) < new Date(getYeseterday())) error = "Date cannot be before today.";
+    if(!(type === "daily") && newCategory && category === null) error = "Please add a category.";
+    if(!title || !endDate) error = "Plese fillout all fields.";
+
+    !error ?this.props.stateAdd(this.state) :this.setState({error: error});
   };
 
   render() {
     const { otherGoalCategories, closeGoalOverlay } = this.props;
-    const {type, title, snippit} = this.state;
+    const {type, error, endDate, newCategory} = this.state;
     const categories = otherGoalCategories.map((category, index) => (
-      <option key={index} value={category.category}>
+      <option key={index} value={index}>
         {" "}
         {category.category}
       </option>
@@ -85,7 +61,7 @@ class Overlay extends Component {
 
     return (
       <div className="goaloverlay">
-        <button onClick={closeGoalOverlay} class="close"></button>
+        <button onClick={closeGoalOverlay} className="close"></button>
         <form name="form" onSubmit={this.handleSubmit}>
           <div className="input-wrap">
             <input className="titleinput" type="text" name="title" value={this.props.title}
@@ -96,11 +72,11 @@ class Overlay extends Component {
               onChange={this.onChange} placeholder="Add snippit"/>
           </div>
           <div className="button-wrap">
-            <button className={type === "daily" ? "button-clicked" : "button-not-clicked"}onClick={this.onChange} name="type" value="daily">
+            <button className={type === "daily" ? "button-clicked" : "button-not-clicked"}onClick={this.onChange} tabindex="0" name="type" value="daily">
               Daily Goal
             </button>
             
-            <button className={type === "daily" ? "button-not-clicked" : "button-clicked"} onClick={this.onChange} name="type" value="default">
+            <button className={type === "daily" ? "button-not-clicked" : "button-clicked"} onClick={this.onChange} tabindex="0" name="type" value="default">
               Other Goal
             </button>
           </div>
@@ -108,13 +84,13 @@ class Overlay extends Component {
            <div className="date-picker-wrapper">
             <div className="date-picker">
               <DatePicker
-                selected={this.state.endDate ? new Date(this.state.endDate) : null}
-                onChange={date => this.dateChange(date)}
+                selected={endDate ? new Date(endDate) : null}
+                onChange={date => this.setState({endDate: formatDate(date)})}
                 placeholderText="Click to select a date"
               />
             </div>
           </div>
-          {this.state.type !== "daily" &&
+          {type !== "daily" &&
           <div className="category">
           <span className="span-date">Category:</span>
               <select name="category"
@@ -125,7 +101,7 @@ class Overlay extends Component {
                 {categories}
               </select>
           </div>}
-          {(this.state.type !== "daily" && this.state.newCategory) && 
+          {(type !== "daily" && newCategory) && 
           <div className="new-category">
           <span className="span-date">New Category:</span>
           <br/>
@@ -136,7 +112,8 @@ class Overlay extends Component {
                   onChange={this.onChange}
                 />
           </div>}
-              <button className="overlay-button" onClick={this.onSubmit}>Save</button>
+          {error && <span className="error-msg">{error}</span>}
+              <button tabindex="0" className="overlay-button" onClick={this.onSubmit}>Save</button>
         </form>
       </div>
     );

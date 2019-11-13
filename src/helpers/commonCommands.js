@@ -10,6 +10,16 @@ export function getYeseterday() {
     dateObj.getMonth() + 1
   ).toString()}/${(dateObj.getDate() - 1).toString()}`;
 }
+export function formatDate(dateObj){
+  try{
+    return `${dateObj.getFullYear().toString()}/${(
+      dateObj.getMonth() + 1
+    ).toString()}/${(dateObj.getDate() - 1).toString()}`;
+  }
+  catch{
+    return getToday();
+  }
+}
 
 export function isCompleted(endDate) {
   return getToday() > endDate;

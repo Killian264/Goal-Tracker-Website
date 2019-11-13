@@ -45,6 +45,9 @@
 .button-not-clicked:hover{
     background: rgb(241, 241, 241);
 }
+.button-not-clicked:focus{
+    background: rgb(241, 241, 241);
+}
 .button-wrap button{
     padding: 7px;
     border-radius: 5px;
@@ -55,7 +58,10 @@
     background: rgb(210, 227, 252);
 }
 .button-clicked:hover{
-    background: rgb(192, 214, 246);
+    background: rgb(129, 176, 246);
+}
+.button-clicked:focus{
+    background: rgb(129, 176, 246);
 }
 .span-date{
     font-size: 14px;
@@ -89,6 +95,9 @@
   text-decoration: none;
   font-size: 14px;
 }
+.overlay-button:focus {
+    background-color: rgb(107, 144, 194);
+  }
 .close {
     margin: 0;
     padding: 0;
@@ -117,6 +126,12 @@
   }
   .close:after {
     transform: rotate(-45deg);
+  }
+  .error-msg{
+      color: red;
+      position: absolute;
+      font-size: 12px;
+      padding-top: 15px;
   }
 
   @media screen and (max-width: 850px){

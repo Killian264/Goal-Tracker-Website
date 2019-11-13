@@ -342,49 +342,38 @@ class App extends Component {
     };
 
     stateAdd = newGoal => {
-        const { state } = this;
         let { goals } = this.state;
         let goal;
-        if (newGoal.type === "daily") {
+        let postType;
+        console.log("type", newGoal.type);
+        console.log("category", newGoal.category);
+        if(newGoal.type === "daily"){
             goal = makeGoal.makeDailyGoal(newGoal);
-            goalService.postGoal(goal, "daily");
-            goals = Object.assign({}, goals, {
-                dailyGoals: [...goals.dailyGoals, goal]
-            });
-        } else {
-            const { category, newCategory } = newGoal;
+            goals = update(goals, {dailyGoals: {$push: [goal]}});
+            postType = "daily";
+        }
+        else{
+            const { category, newCategory, type } = newGoal;
             goal = makeGoal.makeOtherGoal(newGoal);
-            // this.getData(goal);
             if (newCategory === true) {
                 goal = makeGoal.makeOtherGoalCategory(goal, category);
-                goalService.postGoal(goal, "otherCategory");
-                goals = Object.assign({}, goals, {
-                    otherGoalsCategories: [...goals.otherGoalsCategories, goal]
-                });
-            } else {
-                goals.otherGoalsCategories = goals.otherGoalsCategories.map(
-                    goal2 => {
-                        if (goal2.category === category) {
-                            goalService.postGoal(
-                                Object.assign({}, goal, {
-                                    categoryID: goal2.id
-                                }),
-                                "otherGoal"
-                            );
-                            console.log("ehllo fsdf", goal2);
-                            return Object.assign({}, goal2, {
-                                isCompleted: goal2.unCompleted+= 1,
-                                otherGoals: [...goal2.otherGoals, goal]
-                            });
-                        }
-                        return goal2;
-                    }
-                );
+                goals = update(goals, {otherGoalsCategories: {$push: [goal]}});
+                postType = "otherCategory";
+            } 
+            else {
+                goals = update(goals, {otherGoalsCategories: {[type]: {otherGoals: {$push: [goal]}}}});
+                goal = {
+                    ...goal,
+                    categoryID: goals.otherGoalsCategories[type].id,
+                }
+                postType = "otherGoal";
             }
         }
+        console.log(postType);
+        goalService.postGoal(goal, postType);
         this.setState({
             goals,
-            otherStuffs: Object.assign({}, state.otherStuffs, {
+            otherStuffs: Object.assign({}, this.state.otherStuffs, {
                 overlayIsHidden: true
             })
         });
