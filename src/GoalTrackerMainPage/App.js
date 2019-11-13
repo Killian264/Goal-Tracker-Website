@@ -345,8 +345,6 @@ class App extends Component {
         let { goals } = this.state;
         let goal;
         let postType;
-        console.log("type", newGoal.type);
-        console.log("category", newGoal.category);
         if(newGoal.type === "daily"){
             goal = makeGoal.makeDailyGoal(newGoal);
             goals = update(goals, {dailyGoals: {$push: [goal]}});
@@ -369,7 +367,6 @@ class App extends Component {
                 postType = "otherGoal";
             }
         }
-        console.log(postType);
         goalService.postGoal(goal, postType);
         this.setState({
             goals,

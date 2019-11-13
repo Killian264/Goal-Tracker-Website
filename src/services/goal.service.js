@@ -1,6 +1,4 @@
 import { helpers} from '../helpers/helpers';
-// const apiUrl = "http://localhost:61487/api/values";
-// const apiUrl2 = "http://localhost:61487/api/User/getUsername";
 const apiUrl = "https://goaltrackerapi20191108014823.azurewebsites.net/api/values";
 const apiUrl2 = "https://goaltrackerapi20191108014823.azurewebsites.net/api/User/getUsername";
 export const goalService = {
@@ -93,7 +91,6 @@ function updateGoal(id, categoryID, weeklyChecked) {
         categoryID,
         weeklyChecked: weeklyChecked
     };
-    // console.log(weeklyChecked, typeof(weeklyChecked))
     const requestOptions = authHeader("PATCH", goal);
     return fetch(`${apiUrl}/update`, requestOptions)
         .then(handleResponse)

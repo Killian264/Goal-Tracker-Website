@@ -314,21 +314,6 @@
     width: 180px;
     justify-content: space-between;
   }
-  /* .otherGoalFoldIn{
-    display: block;
-    justify-content: space-between;
-    width: 60px;
-  }
-  .otherGoalFoldIn{
-    display: flex;
-    justify-content: space-around;
-    width: 120px;
-  }
-  .othergoalfoldintop{
-    display: flex;
-    justify-content: space-around;
-    width: 70px;
-  } */
   .finalProgress h4{
     text-align: center;
     margin: auto;
@@ -514,67 +499,6 @@
   position: absolute;
   border-radius: 7px;
 }
-/* .creategoal{
-  padding: 5px;
-} */
-/* .goalallinput{
-  padding-top: 1%;
-  padding-left: 14px;
-}
-.goalallinput ul{
-  list-style: none;
-  display: block;
-  width: 100%;
-}
-.goalallinput li{
-  padding-top: 15px;
-}
-.goalallinput .type{
-  height: 33px;
-}
-.goalallinput .dDay{
-  width: 0%;
-} */
-/* .goalinput{
-  width: 95%;
-  height: 33px;
-} */
-/* .goal{
-  width: 95%;
-} */
-/* .creategoaloverlay h1{
-  border-bottom:  1px;
-    border-bottom-style: solid;
-    padding: 5px 14px;
-    background-color: rgb(236, 235, 235);
-     border-top-right-radius: 7px;
-     border-top-left-radius: 7px;
-} */
-/* .button {
-  background-color: rgb(79, 140, 219);
-  border: none;
-  color: white;
-  padding: 10px 18px;
-  border-radius: 3px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-} */
-/* .submitarea{
-  margin-top: 35px;
-  border-top:  1px;
-  border-top-style: solid;
-  padding: 5px 14px;
-  background-color: rgb(236, 235, 235);
-  border-bottom-right-radius: 7px;
-  border-bottom-left-radius: 7px;
-  display: flex;
-  justify-content: space-between;
-} */
-/* .button:hover{
-  background-color: rgb(67, 115, 179);
-} */
 
 @media screen and (max-width: 1400px){
   .main{
@@ -657,14 +581,6 @@
     width: 150px;
     justify-content: flex-end;
   }
-  /* .otherGoalFoldIn{
-    display: block;
-    justify-content: space-between;
-    width: 60px;
-  }
-  .othergoalfoldintop{
-    display: flex;
-  } */
 }
 @media screen and (max-width: 669px){
   .topnav h1{
@@ -698,10 +614,6 @@
   .goaltypeselector{
     display: none;
   }
-  /* .creategoaloverlay{
-    min-width: 80%;
-    left: calc(50% - 40%);
-  } */
   .otherdailygoal h1{
     font-size: 40px;
     padding-right: 10px;
