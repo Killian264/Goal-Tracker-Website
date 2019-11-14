@@ -26,7 +26,7 @@ class TypeSelector extends Component {
       if(categories.unCompleted === 0) return;
       return (
         <label key={categories.id} className="radiobtn" id="renderDaily">
-          {categories.category}
+          <span>{categories.category}</span>
             :
           {' '}
           {categories.unCompleted}
@@ -37,7 +37,7 @@ class TypeSelector extends Component {
     });
     const sortLabels = (mainLabel, renderIf, name, length, defaultChecked) => (
       <label className="radiobtn">
-        {mainLabel}
+        <span>{mainLabel}</span>
           :
         {' '}
         {length}

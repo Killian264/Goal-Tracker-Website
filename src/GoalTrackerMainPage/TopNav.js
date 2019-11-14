@@ -5,8 +5,7 @@ function TopNav(props) {
   const {displayGoalOverlay } = props;
 
   let navSlideChange = () => {
-    const nav = document.querySelector(".sidenav");
-    nav.classList.toggle("nav-active");
+    document.querySelector(".sidenav").classList.toggle("nav-active");
   };
 
   return (

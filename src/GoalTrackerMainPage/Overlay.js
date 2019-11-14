@@ -42,7 +42,7 @@ class Overlay extends Component {
     e.preventDefault();
     const {endDate, type, title, newCategory, category} = this.state;
     let error;
-    // if(new Date(endDate) < new Date(getYeseterday())) error = "Date cannot be before today.";
+    if(new Date(endDate) < new Date(getYeseterday())) error = "Date cannot be before today.";
     if(!(type === "daily") && newCategory && category === null) error = "Please add a category.";
     if(!title || !endDate) error = "Plese fillout all fields.";
 
@@ -84,6 +84,7 @@ class Overlay extends Component {
            <div className="date-picker-wrapper">
             <div className="date-picker">
               <DatePicker
+              className={"date-picker-font"}
                 selected={endDate ? new Date(endDate) : null}
                 onChange={date => this.setState({endDate: formatDate(date)})}
                 placeholderText="Click to select a date"
@@ -93,7 +94,7 @@ class Overlay extends Component {
           {type !== "daily" &&
           <div className="category">
           <span className="span-date">Category:</span>
-              <select name="category"
+              <select className="category-picker"name="category"
                 id="category"
                 onChange={this.categoryOnChange}
               >

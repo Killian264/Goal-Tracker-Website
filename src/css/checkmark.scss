@@ -76,6 +76,32 @@ $color: #fff;
         }
     }
 }
+@media screen and (min-width: 2500px){
+    .toggleButton {
+        input {
+            & + div {
+    
+                svg {
+                    width: 44px;
+                    height: 44px;
+                }
+            }
+        }
+    }
+}
+@media screen and (min-width: 3800px){
+    .toggleButton {
+        input {
+            & + div {
+    
+                svg {
+                    width: 58px;
+                    height: 58px;
+                }
+            }
+        }
+    }
+}
 
 @keyframes bounceInBefore {
     0% {
