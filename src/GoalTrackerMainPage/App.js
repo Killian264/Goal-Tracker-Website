@@ -11,7 +11,8 @@ import TopNav from "./TopNav";
 import update from "immutability-helper";
 import {goalService} from '../services/goal.service';
 import {makeGoal} from "../helpers/MakeGoals";
-import { helpers} from '../helpers/helpers';
+import { helpers } from '../helpers/helpers';
+import { PulseLoader} from 'react-spinners';
 class App extends Component {
     constructor(props) {
         super(props);
@@ -29,7 +30,8 @@ class App extends Component {
                 renderCurrent: true,
                 renderCompleted: false,
                 renderDaily: true,
-                renderOther: true
+                renderOther: true,
+                loading: true
             }
         };
     }
@@ -117,7 +119,8 @@ class App extends Component {
                 let state = {
                     goals: JSON.parse(user)
                 };
-                this.setState(this.updateStateForMount(state));
+                let otherStuffs = update(this.state, {goals: {$set: this.updateStateForMount(state).goals}, otherStuffs: {loading: {$set: false}}})
+                this.setState(update(this.state, {goals: {$set: this.updateStateForMount(state).goals}, otherStuffs: {loading: {$set: false}}}));
             },
             error => {
                 helpers.pushToLogin();
@@ -367,6 +370,13 @@ class App extends Component {
                 <TopNav
                     displayGoalOverlay={this.displayGoalOverlay}
                 />
+                <PulseLoader
+                    css={{position: "absolute", "z-index": 10, "margin-left": "50%", "margin-top": "25%", outline: "9999px solid rgba(0,0,0,0.5)", background: "rgba(0,0,0,0.5)"}}
+                    sizeUnit={"px"}
+                    size={15}
+                    color={'black'}
+                    loading={this.state.otherStuffs.loading}
+                    />
                 <div className="main">
                     {/* Side selector for what to render */}
                     <TypeSelector

@@ -1,8 +1,8 @@
 import { helpers} from '../helpers/helpers';
-const apiUrl = "http://localhost:61487/api/values";
-const apiUrl2 = "http://localhost:61487/api/User/getUsername";
-// const apiUrl = "https://goaltrackerapi20191108014823.azurewebsites.net/api/values";
-// const apiUrl2 = "https://goaltrackerapi20191108014823.azurewebsites.net/api/User/getUsername";
+// const apiUrl = "http://localhost:61487/api/values";
+// const apiUrl2 = "http://localhost:61487/api/User/getUsername";
+const apiUrl = "https://goaltrackerapi20191108014823.azurewebsites.net/api/values";
+const apiUrl2 = "https://goaltrackerapi20191108014823.azurewebsites.net/api/User/getUsername";
 export const goalService = {
     APIDeleteGoal,
     getGoalsData,
