@@ -109,7 +109,7 @@ class LoginPage extends React.Component {
                             <span className="login100-form-title">
                                 {this.state.registering ? "User Register": "User Login"}
                             </span>
-                            <span style={{color: "red"}}>{error && error.toString()}</span>
+                            <span className="error-label" style={{color: "red"}}>{error && error.toString()}</span>
                             <InputElement onChange={this.handleChange} name={"email"} value={email} symbol={"fa fa-envelope"} type={"text"} load={true}/>
                             <InputElement onChange={this.handleChange} name={"username"} value={username} symbol={"fa fa-user"} type={"text"} load={registering}/>
                             <InputElement onChange={this.handleChange}name={"password"} value={password} symbol={"fa fa-lock"} type={"password"} load={true}/>
@@ -122,12 +122,12 @@ class LoginPage extends React.Component {
                                 </button>
                             </div>
                             <div className="createGuest text-center noselect">
-                                <span className="create-guest-text" onClick={()=> this.createTestAccount()}>
+                                <span className="create-guest-text" tabIndex="0" onClick={()=> this.createTestAccount()}>
                                     Create Guest Account
                                 </span>
                             </div>
                             <div className="text-center p-t-100">
-                                <div className="txt2 cursorthingy" onClick={()=> this.historyPush()}>
+                                <div className="txt2 cursorthingy" tabIndex="0" onClick={()=> this.historyPush()}>
                                     {this.state.registering
                                     ? "Login"
                                     : "Create Your Account"}
