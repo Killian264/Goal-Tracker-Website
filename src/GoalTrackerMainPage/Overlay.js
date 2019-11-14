@@ -42,7 +42,7 @@ class Overlay extends Component {
     e.preventDefault();
     const {endDate, type, title, newCategory, category} = this.state;
     let error;
-    if(new Date(endDate) < new Date(getYeseterday())) error = "Date cannot be before today.";
+    // if(new Date(endDate) < new Date(getYeseterday())) error = "Date cannot be before today.";
     if(!(type === "daily") && newCategory && category === null) error = "Please add a category.";
     if(!title || !endDate) error = "Plese fillout all fields.";
 
@@ -72,11 +72,11 @@ class Overlay extends Component {
               onChange={this.onChange} placeholder="Add snippit"/>
           </div>
           <div className="button-wrap">
-            <button className={type === "daily" ? "button-clicked" : "button-not-clicked"}onClick={this.onChange} tabindex="0" name="type" value="daily">
+            <button className={type === "daily" ? "button-clicked" : "button-not-clicked"}onClick={this.onChange} tabIndex="0" name="type" value="daily">
               Daily Goal
             </button>
             
-            <button className={type === "daily" ? "button-not-clicked" : "button-clicked"} onClick={this.onChange} tabindex="0" name="type" value="default">
+            <button className={type === "daily" ? "button-not-clicked" : "button-clicked"} onClick={this.onChange} tabIndex="0" name="type" value="default">
               Other Goal
             </button>
           </div>
@@ -113,7 +113,7 @@ class Overlay extends Component {
                 />
           </div>}
           {error && <span className="error-msg">{error}</span>}
-              <button tabindex="0" className="overlay-button" onClick={this.onSubmit}>Save</button>
+              <button tabIndex="0" className="overlay-button" onClick={this.onSubmit}>Save</button>
         </form>
       </div>
     );

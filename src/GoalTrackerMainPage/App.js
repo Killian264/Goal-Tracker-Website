@@ -98,7 +98,8 @@ class App extends Component {
 
                     return Object.assign({}, categories, {
                         otherGoals: updatedOtherGoals,
-                        unCompleted: count
+                        unCompleted: count,
+                        render: true,
                     });
                 }
             );
@@ -124,26 +125,8 @@ class App extends Component {
         );
 	}
 
-    updateCategoryRender = key => {
-        // this could be heavily simplified
-        this.setState(prevState => {
-            const updatedCategoryRender = prevState.goals.otherGoalsCategories.map(
-                category => {
-                    if (category.id === key) {
-                        return Object.assign({}, category, {
-                            render: !category.render
-                        });
-                    }
-                    return category;
-                }
-            );
-            return {
-                goals: Object.assign({}, prevState.goals, {
-                    otherGoalsCategories: updatedCategoryRender
-                })
-            };
-		});
-		// this.setState(update(this.state, {goals: {otherGoalCategories: {[index]: {$set: !this.state.goals.otherGoalsCategories[index].render} } } } ));
+    updateCategoryRender = index => {
+		this.setState(update(this.state, {goals: {otherGoalsCategories: {[index]: {render: {$set: !this.state.goals.otherGoalsCategories[index].render}} } } } ));
     };
 
     updateLastUpdated = (goal, numDays) => {
@@ -359,7 +342,7 @@ class App extends Component {
                 postType = "otherCategory";
             } 
             else {
-                goals = update(goals, {otherGoalsCategories: {[type]: {otherGoals: {$push: [goal]}}}});
+                goals = update(goals, {otherGoalsCategories: {[type]: {otherGoals: {$push: [goal]}, unCompleted: {$set: goals.otherGoalsCategories[type].unCompleted+=1} }}});
                 goal = {
                     ...goal,
                     categoryID: goals.otherGoalsCategories[type].id,

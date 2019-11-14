@@ -15,15 +15,12 @@ function makeCompletedDailyGoal(newGoal) {
     id: newGoal.id,
     title: newGoal.title,
     snippit: newGoal.snippit,
-    startDate: newGoal.startDate,
-    endDate: newGoal.endDate,
+    startDate: newGoal.startDate.split("T")[0],
+    endDate: newGoal.endDate.split("T")[0],
     daysChecked: newGoal.daysChecked,
     percentComplete: (
       (newGoal.daysChecked /
-        (Math.abs(new Date(newGoal.startDate) - new Date(newGoal.endDate)) /
-          8.64e7)) *
-      100
-    )
+        ((Math.abs(new Date(newGoal.startDate) - new Date(newGoal.endDate)) + 1) /8.64e7)) *100)
       .toString()
       .substr(0, 2)
   };

@@ -637,6 +637,6 @@
     background: -moz-linear-gradient(-135deg,    #44464d, rgb(27, 27, 27));
     background: linear-gradient(-135deg,         #44464d, rgb(27, 27, 27)); */
     /* background: rgb(27, 27, 27); */
-    background-size: cover;
+    background-size: auto;
   }
   

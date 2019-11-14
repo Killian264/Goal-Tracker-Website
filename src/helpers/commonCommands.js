@@ -14,7 +14,7 @@ export function formatDate(dateObj){
   try{
     return `${dateObj.getFullYear().toString()}/${(
       dateObj.getMonth() + 1
-    ).toString()}/${(dateObj.getDate() - 1).toString()}`;
+    ).toString()}/${(dateObj.getDate() - 1).toString()}`.split("T")[0];
   }
   catch{
     return getToday();
@@ -23,6 +23,14 @@ export function formatDate(dateObj){
 
 export function isCompleted(endDate) {
   return getToday() > endDate;
+}
+export function getMonthAbbr(date){
+  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return months[ date.getMonth() ];
+}
+export function getDayAbbr(date){
+  var days = ['Sun','Mon','Tues','Wed','Thu','Fri','Sat'];
+  return days[ date.getDay() ];
 }
 
 export function getWeekDay(offset) {

@@ -4,9 +4,7 @@ import PropTypes from 'prop-types';
 
 function DailyGoalsCompleted(props) {
     const displayGoals = props.dailyGoals.map((goal, index) => {
-        const totalDays =
-            Math.abs(new Date(goal.endDate) - new Date(goal.startDate)) /
-            8.64e7;
+        const totalDays = (Math.abs(new Date(goal.endDate) - new Date(goal.startDate)) / 8.64e7) + 1;
         return (
             <div className="othergoalslist" key={goal.id}>
                 <div className="otherdailygoal">
@@ -20,7 +18,7 @@ function DailyGoalsCompleted(props) {
                         <h4>
                             {totalDays} Total Days
                             <br /> Ended{" "}
-                            {goal.endDate.toString().split("00:00:00")[0]}
+                            {goal.endDate.toString()}
                         </h4>
                     </div>
                     <div className="otherdailygoalheading finalProgress">

@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { getToday } from "../../helpers/commonCommands";
+import { getToday, getDayAbbr, getMonthAbbr } from "../../helpers/commonCommands";
 import DeleteElement from "../DailyGoals/DeleteElement";
 import Checkmark from "./Checkmark";
+import { formatRelative } from "date-fns";
 // import OtherGoalsCompleted from '../CompletedGoals/OtherGoals/OtherGoalsCompleted'
 
 class OtherGoalsList extends Component {
@@ -14,30 +15,21 @@ class OtherGoalsList extends Component {
 
   TimeFrame = goal => {
     const endDate = new Date(goal.endDate);
-    const totalDays = Math.abs(new Date(goal.startDate) - endDate) / 8.64e7;
-    const timeLeft = (Math.abs(endDate - new Date(getToday())) / 8.64e7)
-      .toString()
-      .split(".")[0];
+    const totalDays = (Math.abs(new Date(goal.startDate) - endDate) / 8.64e7) + 1;
+    let timeLeft = (Math.abs(endDate - new Date(getToday())) / 8.64e7).toString();
+    // let timeLeft = (Math.abs(endDate - new Date(getToday())) / 8.64e7).toString().split(".")[0];
     return (
       <div className="otherdailygoalheading extendeddailygoaltimeframe">
         <h4>
-          {totalDays.toString().split(".")[0]} Total Days
+          {goal.isCompleted ? totalDays.toString().split(".")[0] + " Total Days" : timeLeft.toString().split(".")[0] += timeLeft == 1 ? " Day Left" : " Days Left"}
           <br />
-          {goal.isCompleted
-            ? "Ended " + goal.endDate.toString().split("00:00:00")[0]
-            : timeLeft + " Days Left"}
+          {goal.isCompleted ? "Ended " + goal.endDate.toString().split("T")[0] : getDayAbbr(endDate) + ", " + getMonthAbbr(endDate) + " " + endDate.getDate()}
         </h4>
       </div>
     );
   };
   render() {
-    const {
-      othergoals,
-      deleteGoal,
-      completeGoal,
-      categoryLoc,
-      displayCompleted
-    } = this.props;
+    const { othergoals, deleteGoal, completeGoal, categoryLoc, displayCompleted } = this.props;
     let strikethrough = {
       textDecoration: "line-through"
     };

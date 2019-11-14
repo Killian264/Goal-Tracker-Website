@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import "./checkmark.scss";
+import "../../css/checkmark.scss";
 function Checkmark(props) {
   const { completeGoal, goalLoc, categoryLoc } = props;
   return (
