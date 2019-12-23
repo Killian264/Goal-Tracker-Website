@@ -22,13 +22,9 @@ class App extends Component {
         };
     }
     static propTypes = {
-        state: PropTypes.objectOf(PropTypes.object).isRequired,
+        goals: PropTypes.objectOf(PropTypes.object).isRequired,
         stateHelper: PropTypes.objectOf(PropTypes.func).isRequired
       };
-
-    updateCategoryRender = index => {
-		this.setState(update(this.state, {goals: {otherGoalsCategories: {[index]: {render: {$set: !this.state.goals.otherGoalsCategories[index].render}} } } } ));
-    };
 
     updateRenderIfs = whichClicked => {
         let { otherStuffs } = this.state;
@@ -97,49 +93,46 @@ class App extends Component {
     };
 
     render() {
-		const { state, stateHelper } = this.props;
+        const { goals, stateHelper, updateCategoryRender } = this.props;
+        const { otherStuffs } = this.state;
         return (
                 <React.Fragment>
                     {/* Side selector for what to render */}
                     <TypeSelector
-                        goals={state.goals}
+                        goals={goals}
                         updateRenderIfs={this.updateRenderIfs}
-                        updateCategoryRender={this.updateCategoryRender}
+                        updateCategoryRender={updateCategoryRender}
                     />
                     <div className="goals">
                         {/* Daily Goals */}
-                        {state.otherStuffs.renderDaily &&
-                            state.goals.dailyGoals.length !== 0 &&
-                            state.otherStuffs.renderCurrent && (
+                        {otherStuffs.renderDaily &&
+                            goals.dailyGoals.length !== 0 &&
+                            otherStuffs.renderCurrent && (
                                 <DailyGoalHeading
                                     updateCheckMark={stateHelper.updateCheckMark}
-                                    dailyGoals={state.goals.dailyGoals}
+                                    dailyGoals={goals.dailyGoals}
                                     deleteGoal={stateHelper.deleteGoal.bind(this)}
-                                    otherStuffs={state.otherStuffs}
+                                    otherStuffs={otherStuffs}
                                 />
                             )}
                         {/* Completed Daily Goals */}
-                        {state.otherStuffs.renderDaily &&
-                            state.goals.completed.dailyGoals.length !== 0 &&
-                            state.otherStuffs.renderCompleted && (
+                        {otherStuffs.renderDaily &&
+                            goals.completed.dailyGoals.length !== 0 &&
+                            otherStuffs.renderCompleted && (
                                 <CompletedDailyGoals
-                                    dailyGoals={
-                                        state.goals.completed.dailyGoals
-                                    }
+                                    dailyGoals={goals.completed.dailyGoals}
                                     deleteGoal={stateHelper.deleteGoal.bind(this)}
                                 />
                             )}
                         {/* Other Goals */}
-                        {state.otherStuffs.renderOther &&
-                            state.goals.otherGoalsCategories.length !== 0 && (
+                        {otherStuffs.renderOther &&
+                            goals.otherGoalsCategories.length !== 0 && (
                                 <OtherGoals
-                                    otherGoalCategories={
-                                        state.goals.otherGoalsCategories
-                                    }
+                                    otherGoalCategories={goals.otherGoalsCategories}
                                     deleteGoal={stateHelper.deleteGoal.bind(this)}
                                     completeGoal={stateHelper.completeGoal.bind(this)}
                                     displayCompleted={
-                                        state.otherStuffs.renderCompleted
+                                        otherStuffs.renderCompleted
                                     }
                                 />
                             )}

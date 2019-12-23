@@ -35,6 +35,10 @@ class App extends Component {
         };
     }
 
+    updateCategoryRender = index => {
+		this.setState(update(this.state, {goals: {otherGoalsCategories: {[index]: {render: {$set: !this.state.goals.otherGoalsCategories[index].render}} } } } ));
+    };
+
     componentDidMount() {
         goalService.getGoalsData().then(
             user => {
@@ -75,7 +79,7 @@ class App extends Component {
                     {/* Side selector for what to render */}
                     <div className="main">
                         {/* Categories Page */}
-                        <CategoriesPage state={state} stateHelper={stateHelper}/>
+                        <CategoriesPage goals={state.goals} stateHelper={stateHelper} updateCategoryRender={this.updateCategoryRender}/>
 
 
 
