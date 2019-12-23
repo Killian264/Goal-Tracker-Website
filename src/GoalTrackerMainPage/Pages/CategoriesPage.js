@@ -93,7 +93,7 @@ class App extends Component {
     };
 
     render() {
-        const { goals, stateHelper, updateCategoryRender } = this.props;
+        const { goals, stateHelper, updateCategoryRender, state} = this.props;
         const { otherStuffs } = this.state;
         return (
                 <React.Fragment>
@@ -109,9 +109,9 @@ class App extends Component {
                             goals.dailyGoals.length !== 0 &&
                             otherStuffs.renderCurrent && (
                                 <DailyGoalHeading
-                                    updateCheckMark={stateHelper.updateCheckMark}
+                                    updateCheckMark={stateHelper.updateCheckMark.bind(state)}
                                     dailyGoals={goals.dailyGoals}
-                                    deleteGoal={stateHelper.deleteGoal.bind(this)}
+                                    deleteGoal={stateHelper.deleteGoal.bind(state)}
                                     otherStuffs={otherStuffs}
                                 />
                             )}
@@ -121,7 +121,7 @@ class App extends Component {
                             otherStuffs.renderCompleted && (
                                 <CompletedDailyGoals
                                     dailyGoals={goals.completed.dailyGoals}
-                                    deleteGoal={stateHelper.deleteGoal.bind(this)}
+                                    deleteGoal={stateHelper.deleteGoal.bind(state)}
                                 />
                             )}
                         {/* Other Goals */}
@@ -129,8 +129,8 @@ class App extends Component {
                             goals.otherGoalsCategories.length !== 0 && (
                                 <OtherGoals
                                     otherGoalCategories={goals.otherGoalsCategories}
-                                    deleteGoal={stateHelper.deleteGoal.bind(this)}
-                                    completeGoal={stateHelper.completeGoal.bind(this)}
+                                    deleteGoal={stateHelper.deleteGoal.bind(state)}
+                                    completeGoal={stateHelper.completeGoal.bind(state)}
                                     displayCompleted={
                                         otherStuffs.renderCompleted
                                     }

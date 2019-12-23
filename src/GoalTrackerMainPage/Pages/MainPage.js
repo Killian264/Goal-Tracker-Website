@@ -79,7 +79,7 @@ class App extends Component {
                     {/* Side selector for what to render */}
                     <div className="main">
                         {/* Categories Page */}
-                        <CategoriesPage goals={state.goals} stateHelper={stateHelper} updateCategoryRender={this.updateCategoryRender}/>
+                        <CategoriesPage goals={state.goals} stateHelper={stateHelper} updateCategoryRender={this.updateCategoryRender} state={this}/>
 
 
 
