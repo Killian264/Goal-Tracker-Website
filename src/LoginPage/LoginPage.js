@@ -75,6 +75,7 @@ class LoginPage extends React.Component {
             );
         }
     }
+    
     historyPush() {
         const history = createBrowserHistory();
         history.push(this.state.registering ? "/login" : "/register");
@@ -116,9 +117,7 @@ class LoginPage extends React.Component {
                             <InputElement onChange={this.handleChange} name={"passwordCheck"} value={passwordCheck} symbol={"fa fa-lock"} type={"password"}load={registering}/>
                             <div className="container-login100-form-btn">
                                 <button className="login100-form-btn" disabled={loading}>
-                                    {this.state.registering
-                                    ? "Register"
-                                    : "Login"}
+                                    {this.state.registering ? "Register" : "Login"}
                                 </button>
                             </div>
                             <div className="createGuest text-center noselect">

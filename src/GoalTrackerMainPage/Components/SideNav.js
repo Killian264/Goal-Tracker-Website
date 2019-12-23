@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import {goalService} from '../services/goal.service';
-import { helpers} from '../helpers/helpers';
+import {goalService} from '../../services/goal.service';
+import { helpers} from '../../helpers/helpers';
 
 class SideNav extends Component {
   state = {

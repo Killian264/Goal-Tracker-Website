@@ -1,9 +1,9 @@
 import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
-import MainPage from "./GoalTrackerMainPage/App";
+import MainPage from "./GoalTrackerMainPage/Pages/MainPage";
 import LoginPage from "./LoginPage/LoginPage";
-import PrivateRoute from "./components/PrivateRoute";
+import PrivateRoute from "./routes/PrivateRoute";
 
 function App() {
   return (

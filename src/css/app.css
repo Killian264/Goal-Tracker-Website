@@ -103,7 +103,8 @@
     white-space: nowrap;
     padding: 5px 10px;
     border: none;
-    background-color: gray;
+    background-color: rgb(189, 188, 188);
+    font-size: 14px;
   }
   #button:hover{
     background-color: rgb(255, 255, 255);

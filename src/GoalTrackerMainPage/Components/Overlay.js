@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { getYeseterday, formatDate } from "../helpers/commonCommands";
-import '../css/overlay.css';
+import { getYeseterday, formatDate } from "../../helpers/commonCommands";
+import '../../css/overlay.css';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -114,7 +114,7 @@ class Overlay extends Component {
                 />
           </div>}
           {error && <span className="error-msg">{error}</span>}
-              <button tabIndex="0" className="overlay-button" onClick={this.onSubmit}>Save</button>
+              <button tabIndex="0" className="overlay-button" onClick={this.onSubmit}>Create</button>
         </form>
       </div>
     );

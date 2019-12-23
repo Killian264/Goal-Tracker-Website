@@ -13,7 +13,7 @@
     "react-load-script": "0.0.6",
     "react-resize-detector": "^4.2.1",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.2.0",
+    "react-scripts": "^3.3.0",
     "react-spinners": "^0.6.1",
     "semantic-ui-react": "^0.88.1"
   },

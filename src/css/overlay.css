@@ -54,19 +54,16 @@
     margin-right: 6px;
 }
 .button-clicked{
-    color: rgb(26,115, 233);
-    background: rgb(210, 227, 252);
+    color: white;
+    background-color: rgb(84, 85, 85);
 }
-.button-clicked:hover{
-    background: rgb(129, 176, 246);
-}
-.button-clicked:focus{
-    background: rgb(129, 176, 246);
+.button-clicked:hover, .button-clicked:hover{
+    background-color: rgb(66, 66, 66);
 }
 .span-date{
     font-size: 14px;
     padding-right: 8px;
-    color: rgb(95, 94, 94);
+    color: rgb(80, 79, 79);
 }
 .date-picker-wrapper{
     border-bottom: 1px;
@@ -87,16 +84,16 @@
 
 .overlay-button {
   margin-top: 10px;
-  margin-left: 77.5%;
-  background-color: rgb(0, 79, 182);
+  margin-left: 73.5%;
+  background-color: rgb(84, 85, 85);
   color: white;
   padding: 6px 20px;
   text-align: center;
   text-decoration: none;
   font-size: 14px;
 }
-.overlay-button:focus {
-    background-color: rgb(107, 144, 194);
+.overlay-button:focus, .overlay-button:hover{
+    background-color: rgb(66, 66, 66);
   }
 .close {
     margin: 0;

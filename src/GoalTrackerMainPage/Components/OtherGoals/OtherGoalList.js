@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { getToday, getDayAbbr, getMonthAbbr } from "../../helpers/commonCommands";
+import { getToday, getDayAbbr, getMonthAbbr } from "../../../helpers/commonCommands";
 import DeleteElement from "../DailyGoals/DeleteElement";
 import Checkmark from "./Checkmark";
 import { formatRelative } from "date-fns";
