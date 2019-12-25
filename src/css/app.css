@@ -21,10 +21,19 @@
     overflow: hidden;
   }
 
-  .navlinks{
-    padding-top: 20px;
+  .pages-title{
+    font-size: 17px;
+    padding-left: 30%;
   }
-  .navlinks a {
+  .pages-title2{
+    font-size: 17px;
+    padding-left: 20%;
+  }
+
+  .navlinks{
+    padding-top: 5px;
+  }
+  .navlinks a, .navlinks button {
     padding-top: 1.5vh;
     padding-right: 3.6%;
     padding-bottom: 2vh;
@@ -33,13 +42,19 @@
     font-size: 20px;
     display: block;
     color: inherit;
+    cursor: pointer;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
   }
   .navlinksfootnote{
     padding-top: 52.5vh;
     padding-left: 5%;
   }
 
-  .navlinks a:hover {
+  .navlinks a:hover ,.navlinks button:hover{
     background: #f1f1f1;
     color: black;
     font-weight: bold;
@@ -98,6 +113,11 @@
   .creategoalbutton{
     margin-top: auto;
     margin-bottom: auto;
+    -moz-user-select: none;
+    -ms-user-select: none;
+ -khtml-user-select: none;
+-webkit-user-select: none;
+-webkit-touch-callout: none;
   }
   #button{
     white-space: nowrap;
@@ -502,6 +522,12 @@
   border-radius: 7px;
 }
 @media screen and (min-width: 2500px){
+  .pages-title{
+    font-size: 23px;
+  }
+  .pages-title2{
+    font-size: 23px;
+  }
   .navlinks a {
     font-size: 25px;
   }
@@ -587,6 +613,12 @@
   }
 }
 @media screen and (min-width: 3800px){
+  .pages-title{
+    font-size: 34px;
+  }
+  .pages-title2{
+    font-size: 34px;
+  }
   .navlinks a {
     font-size: 37px;
   }

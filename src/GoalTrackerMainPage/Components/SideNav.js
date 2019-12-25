@@ -22,17 +22,25 @@ class SideNav extends Component {
       }
     );;
   }
+
   render() {
+    const { updatePageDisplay } = this.props;
     return (
       <div className="sidenav">
       <div className="user">
         <img src="./images/profile.png" alt="" />
         <a href="">{this.state.username}</a>
       </div>
+      <span className="pages-title">--Pages--</span>
       <div className="navlinks">
+        <a onClick={() => {updatePageDisplay("Categories")}}>Categories</a>
+        <a onClick={() => {updatePageDisplay("Planned")}}>Planned</a>
+        <a href="https://goal-tracker.killiandebacker.com/login" onClick={this.onClick}>Log Out</a>
+        <br></br>
+        <br></br>
+        <span className="pages-title2">--Other Links--</span>
         <a href="https://killiandebacker.com/">My Portfolio</a>
         <a href="https://github.com/Killian264/Goal-Tracker-Website" target="_blank">Github</a>
-        <a href="https://goal-tracker.killiandebacker.com/login" onClick={this.onClick}>Log Out</a>
       </div>
       <div className="navlinksfootnote">
         Killian Debacker ©2019

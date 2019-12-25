@@ -3,9 +3,11 @@ import PropTypes from "prop-types";
 import OtherGoalList from "./OtherGoalList";
 // import OtherGoalsCompleted from '../CompletedGoals/OtherGoals/OtherGoalsCompleted'
 
+import {shapes} from "../../../helpers/shapes";
+
 class OtherGoals extends Component {
   static propTypes = {
-    otherGoalCategories: PropTypes.arrayOf(PropTypes.object).isRequired,
+    otherGoalCategories: PropTypes.arrayOf(shapes.otherGoalsCategoryShape).isRequired,
     completeGoal: PropTypes.func.isRequired,
     deleteGoal: PropTypes.func.isRequired,
     displayCompleted: PropTypes.bool.isRequired
@@ -48,7 +50,7 @@ class OtherGoals extends Component {
             </div>
           </div>
           <OtherGoalList
-            othergoals={category}
+            otherGoals={category.otherGoals}
             deleteGoal={deleteGoal}
             completeGoal={completeGoal}
             categoryLoc={index}

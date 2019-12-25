@@ -1,6 +1,7 @@
 import React from "react";
-import DeleteElement from "../DailyGoals/DeleteElement";
+import DeleteElement from "../DeleteElement";
 import PropTypes from 'prop-types';
+import {shapes} from "../../../helpers/shapes";
 
 function DailyGoalsCompleted(props) {
     const displayGoals = props.dailyGoals.map((goal, index) => {
@@ -58,7 +59,7 @@ function DailyGoalsCompleted(props) {
 }
 DailyGoalsCompleted.propTypes = {
     deleteGoal: PropTypes.func.isRequired,
-    dailyGoals: PropTypes.array.isRequired,
+    dailyGoals: PropTypes.arrayOf(shapes.completedDailyGoalShape).isRequired,
 }
 
 export default DailyGoalsCompleted;

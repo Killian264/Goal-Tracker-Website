@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import {shapes} from "../../helpers/shapes";
+
 class TypeSelector extends Component {
   static propTypes = {
-    goals: PropTypes.object.isRequired,
+    goals: shapes.goalShape.isRequired,
     updateCategoryRender: PropTypes.func.isRequired,
     updateRenderIfs: PropTypes.func.isRequired,
   };
@@ -50,7 +52,7 @@ class TypeSelector extends Component {
       const dailyLength = (goals.dailyGoals).length;
 
       let otherLength = 0;
-      goals.otherGoalsCategories.forEach((catagories) => { otherLength += catagories.unCompleted; });
+      goals.otherGoalsCategories.forEach((categories) => { otherLength += categories.unCompleted; });
 
       let completedLength = (goals.completed.dailyGoals).length;
       goals.otherGoalsCategories.forEach((categories) => { completedLength += categories.otherGoals.length -  categories.unCompleted; });
@@ -64,7 +66,7 @@ class TypeSelector extends Component {
           {sortLabels('All Types', 'allTypes', 'goaltype', dailyLength + otherLength, true)}
           {sortLabels('Daily Goals', 'renderDaily', 'goaltype', dailyLength, false)}
           {sortLabels('Other Goals', 'renderOther', 'goaltype', otherLength, false)}
-          <h3>Catagories</h3>
+          <h3>Categories</h3>
           {renderSelector}
         </div>
       );

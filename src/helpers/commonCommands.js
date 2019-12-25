@@ -20,6 +20,10 @@ export function formatDate(dateObj){
     return getToday();
   }
 }
+export function getTodayAsDateTime(){
+  const dateObj = new Date();
+  return new Date(dateObj.getFullYear(), dateObj.getMonth(), dateObj.getDate());
+}
 
 export function isCompleted(endDate) {
   return getToday() > endDate;

@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import uuid from "uuid";
-import DeleteElement from "./DeleteElement";
+import DeleteElement from "../DeleteElement";
+
+import {shapes} from "../../../helpers/shapes";
 
 class DailyGoals extends Component {
   static propTypes = {
-    dailyGoals: PropTypes.arrayOf(PropTypes.object).isRequired,
+    dailyGoals: PropTypes.arrayOf(shapes.dailyGoalShape).isRequired,
     updateCheckMark: PropTypes.func.isRequired,
     deleteGoal: PropTypes.func.isRequired,
     negativeLen: PropTypes.number.isRequired,

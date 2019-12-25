@@ -1,14 +1,16 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { getToday, getDayAbbr, getMonthAbbr } from "../../../helpers/commonCommands";
-import DeleteElement from "../DailyGoals/DeleteElement";
-import Checkmark from "./Checkmark";
+import DeleteElement from "../DeleteElement";
+import Checkmark from "../Checkmark";
 import { formatRelative } from "date-fns";
 // import OtherGoalsCompleted from '../CompletedGoals/OtherGoals/OtherGoalsCompleted'
 
+import {shapes} from "../../../helpers/shapes";
+
 class OtherGoalsList extends Component {
   static propTypes = {
-    othergoals: PropTypes.object.isRequired,
+    otherGoals: PropTypes.arrayOf(shapes.otherGoalShape).isRequired,
     deleteGoal: PropTypes.func.isRequired,
     completeGoal: PropTypes.func.isRequired
   };
@@ -21,7 +23,7 @@ class OtherGoalsList extends Component {
     return (
       <div className="otherdailygoalheading extendeddailygoaltimeframe">
         <h4>
-          {goal.isCompleted ? totalDays.toString().split(".")[0] + " Total Days" : timeLeft.toString().split(".")[0] += timeLeft == 1 ? " Day Left" : " Days Left"}
+          {goal.isCompleted ? totalDays.toString().split(".")[0] + " Total Days" : timeLeft.toString().split(".")[0] += timeLeft === 1 ? " Day Left" : " Days Left"}
           <br />
           {goal.isCompleted ? "Ended " + goal.endDate.toString().split("T")[0] : getDayAbbr(endDate) + ", " + getMonthAbbr(endDate) + " " + endDate.getDate()}
         </h4>
@@ -29,11 +31,11 @@ class OtherGoalsList extends Component {
     );
   };
   render() {
-    const { othergoals, deleteGoal, completeGoal, categoryLoc, displayCompleted } = this.props;
+    const { otherGoals, deleteGoal, completeGoal, categoryLoc, displayCompleted } = this.props;
     let strikethrough = {
       textDecoration: "line-through"
     };
-    const displayOtherGoals = othergoals.otherGoals.map((goal, index) => {
+    const displayOtherGoals = otherGoals.map((goal, index) => {
       // add stuff for daily thingy
       if (
         (goal.isCompleted && !displayCompleted) ||

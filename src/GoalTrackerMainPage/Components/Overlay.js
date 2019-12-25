@@ -5,9 +5,11 @@ import '../../css/overlay.css';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
+import {shapes} from "../../helpers/shapes";
+
 class Overlay extends Component {
   static propTypes = {
-    otherGoalCategories: PropTypes.arrayOf(PropTypes.object).isRequired,
+    otherGoalCategories: shapes.otherGoalsCategoryShape.isRequired,
     stateAdd: PropTypes.func.isRequired,
     closeGoalOverlay: PropTypes.func.isRequired
   };
@@ -29,7 +31,7 @@ class Overlay extends Component {
   };
 
   categoryOnChange = e => {
-    const { value, key } = e.target;
+    const { value } = e.target;
     const tF = value === "newCategory";
     this.setState({
       type: value,

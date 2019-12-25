@@ -7,7 +7,9 @@ import CompletedDailyGoals from "../Components/CompletedGoals/DailyGoalsComplete
 import update from "immutability-helper";
 import PropTypes from "prop-types";
 
-class App extends Component {
+import { shapes } from '../../helpers/shapes';
+
+class CategoriesPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -22,8 +24,11 @@ class App extends Component {
         };
     }
     static propTypes = {
-        goals: PropTypes.objectOf(PropTypes.object).isRequired,
-        stateHelper: PropTypes.objectOf(PropTypes.func).isRequired
+        goals: shapes.goalShape.isRequired,
+        updateCategoryRender: PropTypes.func.isRequired,
+        updateCheckMark: PropTypes.func.isRequired,
+        completeGoal: PropTypes.func.isRequired,
+        deleteGoal: PropTypes.func.isRequired,
       };
 
     updateRenderIfs = whichClicked => {
@@ -86,14 +91,8 @@ class App extends Component {
         });
     };
 
-    displayGoalOverlay = () => {
-        this.setState({
-            otherStuffs: update(this.state.otherStuffs, {overlayIsHidden: {$set: !this.state.otherStuffs.overlayIsHidden}}
-        )});
-    };
-
     render() {
-        const { goals, stateHelper, updateCategoryRender, state} = this.props;
+        const { goals, updateCategoryRender, updateCheckMark, deleteGoal, completeGoal} = this.props;
         const { otherStuffs } = this.state;
         return (
                 <React.Fragment>
@@ -109,9 +108,9 @@ class App extends Component {
                             goals.dailyGoals.length !== 0 &&
                             otherStuffs.renderCurrent && (
                                 <DailyGoalHeading
-                                    updateCheckMark={stateHelper.updateCheckMark.bind(state)}
+                                    updateCheckMark={updateCheckMark}
                                     dailyGoals={goals.dailyGoals}
-                                    deleteGoal={stateHelper.deleteGoal.bind(state)}
+                                    deleteGoal={deleteGoal}
                                     otherStuffs={otherStuffs}
                                 />
                             )}
@@ -121,7 +120,7 @@ class App extends Component {
                             otherStuffs.renderCompleted && (
                                 <CompletedDailyGoals
                                     dailyGoals={goals.completed.dailyGoals}
-                                    deleteGoal={stateHelper.deleteGoal.bind(state)}
+                                    deleteGoal={deleteGoal}
                                 />
                             )}
                         {/* Other Goals */}
@@ -129,8 +128,8 @@ class App extends Component {
                             goals.otherGoalsCategories.length !== 0 && (
                                 <OtherGoals
                                     otherGoalCategories={goals.otherGoalsCategories}
-                                    deleteGoal={stateHelper.deleteGoal.bind(state)}
-                                    completeGoal={stateHelper.completeGoal.bind(state)}
+                                    deleteGoal={deleteGoal}
+                                    completeGoal={completeGoal}
                                     displayCompleted={
                                         otherStuffs.renderCompleted
                                     }
@@ -142,4 +141,4 @@ class App extends Component {
     }
 }
 
-export default App;
+export default CategoriesPage;

@@ -5,13 +5,15 @@ import Overlay from "../Components/Overlay";
 import SideNav from "../Components/SideNav";
 import TopNav from "../Components/TopNav";
 import CategoriesPage from './CategoriesPage';
+import PlannedPage from '../PlannedPage/PlannedPage';
 // Funcs
 import update from "immutability-helper";
-import {goalService} from '../../services/goal.service';
+import { goalService } from '../../services/goal.service';
 import { helpers } from '../../helpers/helpers';
-import { PulseLoader} from 'react-spinners';
-import {updateStateForMount} from '../Helpers/FetchParsings';
-import {stateHelper} from '../Helpers/StateGoalHelpers';
+import { PulseLoader } from 'react-spinners';
+import { updateStateForMount } from '../Helpers/FetchParsings';
+import { stateHelper } from '../Helpers/StateGoalHelpers';
+import { shapes } from '../../helpers/shapes';
 
 class App extends Component {
     constructor(props) {
@@ -30,7 +32,8 @@ class App extends Component {
                 renderCompleted: false,
                 renderDaily: true,
                 renderOther: true,
-                loading: true
+                loading: true,
+                pageDisplay: "Categories",
             }
         };
     }
@@ -60,11 +63,18 @@ class App extends Component {
         )});
     };
 
+    updatePageDisplay = (pageName) => {
+        console.log(pageName);
+        this.setState({
+            otherStuffs: update(this.state.otherStuffs, {pageDisplay: {$set: pageName}}
+        )})
+    }
+
     render() {
 		const { state } = this;
         return (
             <React.Fragment>
-                <SideNav/>
+                <SideNav updatePageDisplay={this.updatePageDisplay}/>
                 <TopNav
                     displayGoalOverlay={this.displayGoalOverlay}
                 />
@@ -79,7 +89,23 @@ class App extends Component {
                     {/* Side selector for what to render */}
                     <div className="main">
                         {/* Categories Page */}
-                        <CategoriesPage goals={state.goals} stateHelper={stateHelper} updateCategoryRender={this.updateCategoryRender} state={this}/>
+
+                        {state.otherStuffs.pageDisplay === "Categories" && 
+                            <CategoriesPage 
+                            goals={state.goals} 
+                            updateCheckMark={stateHelper.updateCheckMark.bind(this)}
+                            deleteGoal={stateHelper.deleteGoal.bind(this)}
+                            completeGoal={stateHelper.completeGoal.bind(this)}
+                            updateCategoryRender={this.updateCategoryRender} 
+                            />}
+
+                        {state.otherStuffs.pageDisplay === "Planned" && 
+                            <PlannedPage 
+                            otherGoalsCategories={state.goals.otherGoalsCategories} 
+                            updateCategoryRender={this.updateCategoryRender} 
+                            deleteGoal={stateHelper.deleteGoal.bind(this)}
+                            completeGoal={stateHelper.completeGoal.bind(this)}
+                            />}
 
 
 

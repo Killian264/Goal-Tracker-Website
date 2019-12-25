@@ -5,9 +5,11 @@ import DailyGoals from "./DailyGoals";
 // import DayElement from './DayElement';
 import { getWeekDay, getMonthDay } from "../../../helpers/commonCommands";
 
+import {shapes} from "../../../helpers/shapes";
+
 class DailyGoalHeading extends Component {
   static propTypes = {
-    dailyGoals: PropTypes.arrayOf(PropTypes.object).isRequired,
+    dailyGoals: PropTypes.arrayOf(shapes.dailyGoalShape).isRequired,
     updateCheckMark: PropTypes.func.isRequired,
     deleteGoal: PropTypes.func.isRequired
   };
