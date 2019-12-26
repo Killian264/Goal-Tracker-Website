@@ -13,7 +13,6 @@ import { helpers } from '../../helpers/helpers';
 import { PulseLoader } from 'react-spinners';
 import { updateStateForMount } from '../Helpers/FetchParsings';
 import { stateHelper } from '../Helpers/StateGoalHelpers';
-import { shapes } from '../../helpers/shapes';
 
 class App extends Component {
     constructor(props) {
@@ -28,10 +27,6 @@ class App extends Component {
             },
             otherStuffs: {
                 overlayIsHidden: true,
-                renderCurrent: true,
-                renderCompleted: false,
-                renderDaily: true,
-                renderOther: true,
                 loading: true,
                 pageDisplay: "Categories",
             }

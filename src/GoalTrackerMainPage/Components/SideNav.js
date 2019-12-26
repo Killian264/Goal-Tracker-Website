@@ -29,12 +29,12 @@ class SideNav extends Component {
       <div className="sidenav">
       <div className="user">
         <img src="./images/profile.png" alt="" />
-        <a href="">{this.state.username}</a>
+        <a href="#">{this.state.username}</a>
       </div>
       <span className="pages-title">--Pages--</span>
       <div className="navlinks">
-        <a onClick={() => {updatePageDisplay("Categories")}}>Categories</a>
-        <a onClick={() => {updatePageDisplay("Planned")}}>Planned</a>
+        <a href="https://goal-tracker.killiandebacker.com/login" onClick={() => {updatePageDisplay("Categories")}}>Categories</a>
+        <a href="https://goal-tracker.killiandebacker.com/login" onClick={() => {updatePageDisplay("Planned")}}>Planned</a>
         <a href="https://goal-tracker.killiandebacker.com/login" onClick={this.onClick}>Log Out</a>
         <br></br>
         <br></br>
