@@ -33,8 +33,10 @@ class SideNav extends Component {
       </div>
       <span className="pages-title">--Pages--</span>
       <div className="navlinks">
-        <a href="https://goal-tracker.killiandebacker.com/login" onClick={() => {updatePageDisplay("Categories")}}>Categories</a>
-        <a href="https://goal-tracker.killiandebacker.com/login" onClick={() => {updatePageDisplay("Planned")}}>Planned</a>
+        <a href="https://goal-tracker.killiandebacker.com/login" onClick={(e) => {e.preventDefault()
+         updatePageDisplay("Categories")}}>Categories</a>
+        <a href="https://goal-tracker.killiandebacker.com/login" onClick={(e) => {e.preventDefault()
+         updatePageDisplay("Planned")}}>Planned</a>
         <a href="https://goal-tracker.killiandebacker.com/login" onClick={this.onClick}>Log Out</a>
         <br></br>
         <br></br>
