@@ -5,7 +5,7 @@ import PlannedTypeSelector from './Components/PlannedTypeSelector';
 import GoalDisplay from './Components/GoalDisplay';
 import PropTypes from "prop-types";
 
-import {getTodayAsDateTime, getToday} from '../../helpers/commonCommands';
+import {getToday} from '../../helpers/commonCommands';
 
 import { shapes } from '../../helpers/shapes';
 
@@ -24,7 +24,7 @@ class PlannedPage extends Component {
         };
     }
     static propTypes = {
-        otherGoalsCategories: shapes.otherGoalsCategoryShape.isRequired,
+        otherGoalsCategories: PropTypes.arrayOf(shapes.otherGoalsCategoryShape).isRequired,
         updateCategoryRender: PropTypes.func.isRequired,
         completeGoal: PropTypes.func.isRequired,
         deleteGoal: PropTypes.func.isRequired,
@@ -39,14 +39,18 @@ class PlannedPage extends Component {
         otherGoalsCategories.map((category, categoryIndex) =>{
             category.otherGoals.map((goal, goalIndex) =>{
                 if(category.render && !goal.isCompleted){
-                    otherGoals.push(Object.assign({}, goal, {
-                        goalIndex: goalIndex,
-                        categoryIndex: categoryIndex,
-                        category: category.category,
-                        numDaysFromToday: Math.abs(today - new Date(goal.endDate)) / 8.64e7,
-                    }))
+                    return(
+                        otherGoals.push(Object.assign({}, goal, {
+                            goalIndex: goalIndex,
+                            categoryIndex: categoryIndex,
+                            category: category.category,
+                            numDaysFromToday: Math.abs(today - new Date(goal.endDate)) / 8.64e7,
+                        }))
+                    )
                 }
+                return null
             })
+            return null
         })
 
         otherGoals = otherGoals.sort(function(a, b){
@@ -55,8 +59,6 @@ class PlannedPage extends Component {
             return 0;
 
         })
-        // console.log(Math.abs(new Date(getToday()) - new Date(otherGoals[0].endDate)) / 8.64e7);
-        // console.log(new Date(getToday()) === new Date(otherGoals[0].endDate));
         return otherGoals;
 
     }
@@ -92,10 +94,10 @@ class PlannedPage extends Component {
             if(goal.numDaysFromToday > 8){
                 timespanLists[3].push(goal);
             }
+            return null;
         })
 
         let output = timespanLists.map((list, index)=>{
-            console.log(index, list);
             if(list.length !== 0){
                 return(
                     <div className="othergoals" key={index}>
@@ -112,6 +114,7 @@ class PlannedPage extends Component {
                     </div>
                 )
             }
+            return null;
         })
 
         return (

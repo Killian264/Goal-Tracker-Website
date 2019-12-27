@@ -28,8 +28,8 @@ let completedDailyGoalShape = PropTypes.shape({
     snippit: PropTypes.string,
     startDate: PropTypes.string,
     endDate: PropTypes.string,
-    daysChecked: PropTypes.string,
-    percentComplete: PropTypes.number,
+    daysChecked: PropTypes.number,
+    percentComplete: PropTypes.string,
 })
 
 let completedShape = PropTypes.shape({

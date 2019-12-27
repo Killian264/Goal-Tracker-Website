@@ -8,7 +8,7 @@ import {shapes} from "../../../helpers/shapes";
 
 class GoalDisplay extends Component {
   static propTypes = {
-    otherGoals: shapes.otherGoalShape.isRequired,
+    otherGoals: PropTypes.arrayOf(shapes.otherGoalShape).isRequired,
     deleteGoal: PropTypes.func.isRequired,
     completeGoal: PropTypes.func.isRequired
   };

@@ -1,7 +1,7 @@
 import {goalService} from '../../services/goal.service';
 import update from "immutability-helper";
 import {makeGoal} from "../../helpers/MakeGoals";
-import { getToday, getYeseterday } from "../../helpers/commonCommands";
+import { getToday } from "../../helpers/commonCommands";
 
 export const stateHelper = {
     updateCheckMark,

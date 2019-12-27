@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import "../../css/app.css";
 import DailyGoalHeading from "../Components/DailyGoals/DailyGoalHeading";
-import OtherGoals from "../Components/OtherGoals/OtherGoals";
+import OtherGoals from "../Components/OtherGoals/OtherGoalCategories";
 import TypeSelector from "../Components/TypeSelector";
 import CompletedDailyGoals from "../Components/CompletedGoals/DailyGoalsCompleted";
-import update from "immutability-helper";
 import PropTypes from "prop-types";
 
 import { shapes } from '../../helpers/shapes';

@@ -5,7 +5,7 @@ import {shapes} from "../../../helpers/shapes";
 
 class PlannedTypeSelector extends Component {
   static propTypes = {
-    otherGoalsCategories: shapes.otherGoalsCategoryShape.isRequired,
+    otherGoalsCategories: PropTypes.arrayOf(shapes.otherGoalsCategoryShape).isRequired,
     updateCategoryRender: PropTypes.func.isRequired,
   };
 
@@ -21,7 +21,7 @@ class PlannedTypeSelector extends Component {
     const { otherGoalsCategories, updateCategoryRender } = this.props;
 
     const renderSelector = otherGoalsCategories.map((categories, index) => {
-      if(categories.unCompleted === 0) return;
+      if(categories.unCompleted === 0) return null;
       return (
         <label key={categories.id} className="radiobtn" id="renderDaily">
           <span>{categories.category}</span>
@@ -36,7 +36,7 @@ class PlannedTypeSelector extends Component {
 
     return (
         <div className="goaltypeselector">
-          <h3>Catagories</h3>
+          <h3>Categories</h3>
           {renderSelector}
         </div>
     );

@@ -1,5 +1,4 @@
 // const apiUrl = "http://localhost:61487/api";
-import authHeader from '../helpers/auth-header'
 const apiUrl = "https://goaltrackerapi20191108014823.azurewebsites.net/api";
 
 export const userService = {

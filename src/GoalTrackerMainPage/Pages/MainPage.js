@@ -51,7 +51,6 @@ class App extends Component {
         );
 	}
 
-
     displayGoalOverlay = () => {
         this.setState({
             otherStuffs: update(this.state.otherStuffs, {overlayIsHidden: {$set: !this.state.otherStuffs.overlayIsHidden}}
@@ -59,7 +58,6 @@ class App extends Component {
     };
 
     updatePageDisplay = (pageName) => {
-        console.log(pageName);
         this.setState({
             otherStuffs: update(this.state.otherStuffs, {pageDisplay: {$set: pageName}}
         )})
@@ -69,7 +67,9 @@ class App extends Component {
 		const { state } = this;
         return (
             <React.Fragment>
-                <SideNav updatePageDisplay={this.updatePageDisplay}/>
+                <SideNav 
+                    updatePageDisplay={this.updatePageDisplay}
+                />
                 <TopNav
                     displayGoalOverlay={this.displayGoalOverlay}
                 />
@@ -80,41 +80,39 @@ class App extends Component {
                     size={15}
                     color={'black'}
                     loading={this.state.otherStuffs.loading}
-                    />
-                    {/* Side selector for what to render */}
-                    <div className="main">
-                        {/* Categories Page */}
-
-                        {state.otherStuffs.pageDisplay === "Categories" && 
-                            <CategoriesPage 
+                />
+                {/* Side selector for what to render */}
+                <div className="main">
+                    {/* Categories Page */}
+                    {state.otherStuffs.pageDisplay === "Categories" && 
+                        <CategoriesPage 
                             goals={state.goals} 
                             updateCheckMark={stateHelper.updateCheckMark.bind(this)}
                             deleteGoal={stateHelper.deleteGoal.bind(this)}
                             completeGoal={stateHelper.completeGoal.bind(this)}
                             updateCategoryRender={this.updateCategoryRender} 
-                            />}
-
-                        {state.otherStuffs.pageDisplay === "Planned" && 
-                            <PlannedPage 
+                        />
+                    }
+                    {/* Planned Page */}
+                    {state.otherStuffs.pageDisplay === "Planned" && 
+                        <PlannedPage 
                             otherGoalsCategories={state.goals.otherGoalsCategories} 
                             updateCategoryRender={this.updateCategoryRender} 
                             deleteGoal={stateHelper.deleteGoal.bind(this)}
                             completeGoal={stateHelper.completeGoal.bind(this)}
-                            />}
-
-
-
-                        {/* Overlay */}
-                        {!state.otherStuffs.overlayIsHidden && (
-                            <Overlay
-                                otherGoalCategories={
-                                    state.goals.otherGoalsCategories
-                                }
-                                closeGoalOverlay={this.displayGoalOverlay}
-                                stateAdd={stateHelper.stateAdd.bind(this)}
-                            />
-                        )}
-                    </div>
+                        />
+                    }
+                    {/* Overlay */}
+                    {!state.otherStuffs.overlayIsHidden && (
+                        <Overlay
+                            otherGoalCategories={
+                                state.goals.otherGoalsCategories
+                            }
+                            closeGoalOverlay={this.displayGoalOverlay}
+                            stateAdd={stateHelper.stateAdd.bind(this)}
+                        />
+                    )}
+                </div>
             </React.Fragment>
         );
     }
