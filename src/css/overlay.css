@@ -50,7 +50,7 @@
 }
 .button-wrap button{
     padding: 7px;
-    border-radius: 5px;
+    border-radius: 0px;
     margin-right: 6px;
 }
 .button-clicked{

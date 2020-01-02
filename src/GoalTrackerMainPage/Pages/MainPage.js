@@ -69,6 +69,7 @@ class App extends Component {
             <React.Fragment>
                 <SideNav 
                     updatePageDisplay={this.updatePageDisplay}
+                    pageDisplay={this.state.otherStuffs.pageDisplay}
                 />
                 <TopNav
                     displayGoalOverlay={this.displayGoalOverlay}

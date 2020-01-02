@@ -50,12 +50,17 @@
     -webkit-touch-callout: none;
   }
   .navlinksfootnote{
-    padding-top: 52.5vh;
+    padding-top: 36vh;
     padding-left: 5%;
   }
 
   .navlinks a:hover ,.navlinks button:hover{
     background: #f1f1f1;
+    color: black;
+    font-weight: bold;
+  }
+  .navlinks .page-on-page{
+    background: #d3d3d3;
     color: black;
     font-weight: bold;
   }

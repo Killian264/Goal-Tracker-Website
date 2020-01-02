@@ -14,7 +14,7 @@ export function formatDate(dateObj) {
 	try {
 		return `${dateObj.getFullYear().toString()}/${(
 			dateObj.getMonth() + 1
-		).toString()}/${(dateObj.getDate() - 1).toString()}`.split("T")[0];
+		).toString()}/${(dateObj.getDate()).toString()}`.split("T")[0];
 	}
 	catch{
 		return getToday();

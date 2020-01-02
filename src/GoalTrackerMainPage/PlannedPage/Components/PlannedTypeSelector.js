@@ -28,7 +28,7 @@ class PlannedTypeSelector extends Component {
             :
           {' '}
           {categories.unCompleted}
-          <input type="checkbox" onClick={() => updateCategoryRender(index)} name="category" defaultChecked />
+          <input type="checkbox" onClick={() => updateCategoryRender(index)} name="category" defaultChecked={categories.render} />
           <span id="renderDaily" className="radiocheckmark" />
         </label>
       )
