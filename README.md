@@ -1,6 +1,8 @@
 # Goal-Tracker-Website #
 Live Preview: https://goal-tracker.killiandebacker.com/
 
+This website allows you to track your goals and plans over time. There are categories to track goals and daily goals that are worked towards every day. There are different pages for different views. If you want to check it out you can make a test account without needing to give an email or password.
+
 This website was made to learn React and improve my C# skills.
 
 The API is live on Azure servers and encryption has been added, but for security reasons it will no longer receive updates on Github.
