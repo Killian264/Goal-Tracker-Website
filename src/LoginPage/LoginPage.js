@@ -97,7 +97,7 @@ class LoginPage extends React.Component {
         let dimmer = loading ? "dimmer wrap-login100" : "wrap-login100";
         return (
             <div className="limiter">
-                <div className="container-login100">                     
+                <div className="container-login100">                   
                     <PulseLoader
                         css={{position: "absolute", "z-index": 10}}
                         sizeUnit={"px"}
@@ -107,6 +107,13 @@ class LoginPage extends React.Component {
                         />
                     <div className={dimmer}>
                         <form className="login100-form validate-form" name="form" onSubmit={this.handleSubmit}>
+                            <div style={{color: "red", paddingBottom: "5%"}}>
+                                The Goal Tracker API will be down
+                                <br></br>
+                                until some time next week the 27th.
+                                <br></br>
+                                I apologize for any inconvenience. 
+                            </div>
                             <span className="login100-form-title">
                                 {this.state.registering ? "User Register": "User Login"}
                             </span>
