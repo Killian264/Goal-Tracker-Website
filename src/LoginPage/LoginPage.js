@@ -108,9 +108,9 @@ class LoginPage extends React.Component {
                     <div className={dimmer}>
                         <form className="login100-form validate-form" name="form" onSubmit={this.handleSubmit}>
                             <div style={{color: "red", paddingBottom: "5%"}}>
-                                The Goal Tracker API will be down
-                                <br></br>
-                                until some time next week the 27th.
+                                The Goal Tracker API is currently offline.
+		 		<br></br>
+				It should be back up in the next couple of days.
                                 <br></br>
                                 I apologize for any inconvenience. 
                             </div>
