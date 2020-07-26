@@ -92,6 +92,15 @@ class LoginPage extends React.Component {
         });
     }
 
+    createStaticUser(){
+        this.setState({ loading: true });
+        const { from } = this.props.location.state || {
+            from: { pathname: "/" }
+        };
+        this.props.history.push(from);
+        localStorage.setItem("user", "Static");
+    }
+
     render() {
         const {username, password, loading, error, passwordCheck, email, registering} = this.state;
         let dimmer = loading ? "dimmer wrap-login100" : "wrap-login100";
@@ -109,8 +118,8 @@ class LoginPage extends React.Component {
                         <form className="login100-form validate-form" name="form" onSubmit={this.handleSubmit}>
                             <div style={{color: "red", paddingBottom: "5%"}}>
                                 The Goal Tracker API is currently offline.
-		 		<br></br>
-				It should be back up in the next couple of days.
+                                <br></br>
+                                It should be back up in the next couple of days.
                                 <br></br>
                                 I apologize for any inconvenience. 
                             </div>
@@ -118,10 +127,10 @@ class LoginPage extends React.Component {
                                 {this.state.registering ? "User Register": "User Login"}
                             </span>
                             <span className="error-label" style={{color: "red"}}>{error && error.toString()}</span>
-                            <InputElement onChange={this.handleChange} name={"email"} value={email} symbol={"fa fa-envelope"} type={"text"} load={true}/>
-                            <InputElement onChange={this.handleChange} name={"username"} value={username} symbol={"fa fa-user"} type={"text"} load={registering}/>
-                            <InputElement onChange={this.handleChange}name={"password"} value={password} symbol={"fa fa-lock"} type={"password"} load={true}/>
-                            <InputElement onChange={this.handleChange} name={"passwordCheck"} value={passwordCheck} symbol={"fa fa-lock"} type={"password"}load={registering}/>
+                            <InputElement onChange={this.handleChange} name={"email"} value={email} symbol={"fa fa-envelope"} type={"text"} show={true}/>
+                            <InputElement onChange={this.handleChange} name={"username"} value={username} symbol={"fa fa-user"} type={"text"} show={registering}/>
+                            <InputElement onChange={this.handleChange} name={"password"} value={password} symbol={"fa fa-lock"} type={"password"} show={true}/>
+                            <InputElement onChange={this.handleChange} name={"passwordCheck"} value={passwordCheck} symbol={"fa fa-lock"} type={"password"} show={registering}/>
                             <div className="container-login100-form-btn">
                                 <button className="login100-form-btn" disabled={loading}>
                                     {this.state.registering ? "Register" : "Login"}
@@ -132,11 +141,14 @@ class LoginPage extends React.Component {
                                     Create Guest Account
                                 </span>
                             </div>
+                            <div className="createGuest text-center noselect">
+                                <span className="create-guest-text" tabIndex="0" onClick={()=> this.createStaticUser()}>
+                                    Create Static Account
+                                </span>
+                            </div>
                             <div className="text-center p-t-100">
                                 <div className="txt2 cursorthingy" tabIndex="0" onClick={()=> this.historyPush()}>
-                                    {this.state.registering
-                                    ? "Login"
-                                    : "Create Your Account"}
+                                    {this.state.registering ? "Login" : "Create Your Account"}
                                     <i className="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
                                 </div>
                             </div>

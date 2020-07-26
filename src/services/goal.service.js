@@ -1,6 +1,8 @@
 import { helpers} from '../helpers/helpers';
-const apiUrl = "https://goaltrackerapi20191108014823.azurewebsites.net/api/values";
-const apiUrl2 = "https://goaltrackerapi20191108014823.azurewebsites.net/api/User/getUsername";
+//const apiUrl = "https://goaltrackerapi20191108014823.azurewebsites.net/api/values";
+//const apiUrl2 = "https://goaltrackerapi20191108014823.azurewebsites.net/api/User/getUsername";
+const apiUrl = "http://localhost:61487/api/values";
+const apiUrl2 = "http://localhost:61487/api/User/getUsername";
 
 export const goalService = {
     APIDeleteGoal,
@@ -11,11 +13,13 @@ export const goalService = {
   };
 
 function authHeader(method, body) {
+    let user = window.btoa(localStorage.getItem("user"));
+    // if(atob(user) === "Static") return null;
     let requestOptions = {
         method: method,
         headers: {
             "Content-Type": "application/json",
-            Authorization: "Basic " + window.btoa(localStorage.getItem("user"))
+            Authorization: "Basic " + user
         }
     };
     if (body !== null) {
@@ -37,22 +41,15 @@ function APIDeleteGoal(id, categoryID) {
     return fetch(`${apiUrl}/delete`, requestOptions)
         .then(handleResponse)
         .then(user => {
-        });
+    });
 }
 function getUserName(){
-    // const requestOptions = authHeader("GET", "asdfasdfadsf");
-    let requestOptions = {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: "Basic " + window.btoa(localStorage.getItem("user"))
-        }
-    };
+    const requestOptions = authHeader("GET", null);
     return fetch(apiUrl2, requestOptions)
         .then(handleResponse)
         .then(user => {
             return user;
-        });
+    });
 }
 
 function handleResponse(response) {
@@ -61,8 +58,11 @@ function handleResponse(response) {
         if (!response.ok) {
             let error = (data && data.message) || response.statusText;
             if (response.status === 401) {
-                localStorage.removeItem("user");
-                helpers.pushToLogin();
+                let user = window.btoa(localStorage.getItem("user"));
+                if(user !== "Static"){
+                    localStorage.removeItem("user");
+                    helpers.pushToLogin();
+                }
             }
             if (response.status === 400) {
                 // add error here if bad request
@@ -78,11 +78,14 @@ function handleResponse(response) {
 
 function getGoalsData() {
     const requestOptions = authHeader("GET", null);
+    if (requestOptions === null){
+        return null;
+    }
     return fetch(apiUrl, requestOptions)
         .then(handleResponse)
         .then(user => {
             return user;
-        });
+    });
 }
 
 function updateGoal(id, categoryID, weeklyChecked) {
@@ -96,7 +99,7 @@ function updateGoal(id, categoryID, weeklyChecked) {
     return fetch(`${apiUrl}/update`, requestOptions)
         .then(handleResponse)
         .then(user => {
-        });
+    });
 }
 
 function postGoal(goal, valueType) {
@@ -104,5 +107,5 @@ function postGoal(goal, valueType) {
     return fetch(apiUrl + "/" + valueType, requestOptions)
         .then(handleResponse)
         .then(user => {
-        });
+    });
 }

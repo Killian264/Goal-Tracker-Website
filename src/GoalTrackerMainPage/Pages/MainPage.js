@@ -13,6 +13,7 @@ import { helpers } from '../../helpers/helpers';
 import { PulseLoader } from 'react-spinners';
 import { updateStateForMount } from '../Helpers/FetchParsings';
 import { stateHelper } from '../Helpers/StateGoalHelpers';
+import { makeGoal } from '../../helpers/MakeGoals';
 
 class App extends Component {
     constructor(props) {
@@ -46,7 +47,13 @@ class App extends Component {
                 this.setState(update(this.state, {goals: {$set: updateStateForMount(state).goals}, otherStuffs: {loading: {$set: false}}}));
             },
             error => {
-                helpers.pushToLogin();
+                // atob decodes base64 cookie
+                let user = atob(window.btoa(localStorage.getItem("user")));
+                if(user !== "Static"){
+                    helpers.pushToLogin();
+                }
+                let state = makeGoal.makeStaticGoals();
+                this.setState(update(this.state, {goals: {$set: updateStateForMount(state).goals}, otherStuffs: {loading: {$set: false}}}));
             }
         );
 	}

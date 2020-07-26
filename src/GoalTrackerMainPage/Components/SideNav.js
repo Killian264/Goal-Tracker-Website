@@ -18,7 +18,8 @@ class SideNav extends Component {
 				this.setState({ username: user });
 			},
 			error => {
-				this.setState({ username: "Error" });
+				// A more robust system should be used here 
+				this.setState({ username: "Static User" });
 			}
 		);;
 	}
@@ -49,7 +50,7 @@ class SideNav extends Component {
 				</div>
 				<div className="navlinksfootnote">
 					Killian Debacker ©2019
-      </div>
+     			</div>
 			</div>
 		)
 	}
