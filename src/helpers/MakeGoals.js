@@ -8,6 +8,21 @@ export const makeGoal = {
   makeDailyGoal,
   makeOtherGoal,
   makeOtherGoalCategory,
+  makeStaticGoals,
+}
+
+function makeStaticGoals(){
+	let state = {
+		goals: {
+			dailyGoals: [],
+			otherGoalsCategories: [],
+			completed: {
+				dailyGoals: [],
+				otherGoalsCategories: [],
+			},
+		},
+	};
+	return state;
 }
 
 function makeCompletedDailyGoal(newGoal) {
