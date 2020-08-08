@@ -46,7 +46,7 @@ class DailyGoals extends Component {
 				</label>
 			</li>
 		);
-		for (let i = 5; i < 5 + positiveLen; i += 1) {
+		for (let i = 5; i <= 4 + positiveLen; i += 1) {
 			list.push(this.listElement(goal, i));
 		}
 		return [list];

@@ -97,7 +97,7 @@ class App extends Component {
                 <TopNav
                     displayGoalOverlay={this.displayGoalOverlay}
                 />
-                {(this.state.otherStuffs.innerWidth > 500) && 
+                {(this.state.otherStuffs.innerWidth > 720) && 
                 <MiniNav 
                     updatePageDisplay={this.updatePageDisplay}
                     pageDisplay={this.state.otherStuffs.pageDisplay}
@@ -107,7 +107,7 @@ class App extends Component {
                     pageDisplay={this.state.otherStuffs.pageDisplay}
                 />
                 {/* Side selector for what to render */}
-                <div className={"container-fluid pt-3 " + ((this.state.otherStuffs.innerWidth > 500) ? "size-minus-mininav" : "") }  >
+                <div className={"container-fluid pt-3 " + ((this.state.otherStuffs.innerWidth > 720) ? "size-minus-mininav" : "") }  >
                     <div className="row">
                         {/* Categories Page */}
                         {state.otherStuffs.pageDisplay === "Categories" && 

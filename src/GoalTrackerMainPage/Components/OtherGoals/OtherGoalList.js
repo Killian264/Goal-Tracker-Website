@@ -44,7 +44,7 @@ class OtherGoalsList extends Component {
 						<div className="w-140 text-center my-auto" style={goal.isCompleted ? { textDecoration: "line-through" } : {}}>
 							{this.TimeFrame(goal)}
 						</div>
-						<div className="other-goal-width d-flex justify-content-end my-auto no-select">
+						<div className="other-goal-width-end d-flex justify-content-end my-auto no-select">
 							{!goal.isCompleted &&
 								<Checkmark
 									completeGoal={completeGoal}

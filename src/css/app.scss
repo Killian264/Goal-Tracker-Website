@@ -344,7 +344,7 @@ h4{
     font-weight: 500;
   }
   .daily-heading-width{
-    min-width: 200px;
+    // min-width: 200px;
   }
 
   .onedailygoal{
@@ -406,6 +406,10 @@ h4{
     overflow: hidden;
   }
   .other-goal-width{
+    width: calc(50% - 70px);
+    min-width: 140px;
+  }
+  .other-goal-width-end{
     width: calc(50% - 70px);
     min-width: 140px;
   }
@@ -924,6 +928,12 @@ h4{
   .otherdailygoal h1{
     font-size: 40px;
     padding-right: 10px;
+  }
+}
+
+@media screen and(max-width: 450px){
+  .other-goal-width-end{
+    min-width: 40px;
   }
 }
   .nav-active{
