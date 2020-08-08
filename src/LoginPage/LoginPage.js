@@ -132,14 +132,14 @@ class LoginPage extends React.Component {
                                     {this.state.registering ? "Register" : "Login"}
                                 </button>
                             </div>
-                            <div className="createGuest text-center noselect">
+                            {/* <div className="createGuest text-center noselect">
                                 <span className="create-guest-text" tabIndex="0" onClick={()=> this.createTestAccount()}>
                                     Create Guest Account
                                 </span>
-                            </div>
-                            <div className="text-center noselect" style={{paddingTop: "10%"}}>
+                            </div> */}
+                            <div className="createGuest text-center noselect" style={{paddingTop: "10%"}}>
                                 <span className="create-guest-text" tabIndex="0" onClick={()=> this.createStaticUser()}>
-                                    Static Login
+                                    Create Static Account
                                 </span>
                             </div>
                             <div className="text-center p-t-100">
