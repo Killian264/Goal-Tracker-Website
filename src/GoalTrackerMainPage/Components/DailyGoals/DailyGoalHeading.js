@@ -88,22 +88,24 @@ class DailyGoalHeading extends Component {
 		const { state } = this;
 		const { updateCheckMark, dailyGoals, deleteGoal } = this.props;
 		return (
-			<div className="dailygoals">
+			<div className="card mb-3">
 				<ReactResizeDetector handleWidth onResize={this.updateWidths} />
-				<div className="dailyheading" ref={this.heading}>
-					<h1>Daily Goals</h1>
-					<ul>{this.dateRenders()}</ul>
+				<div className="card-header d-flex justify-content-between p-0 " ref={this.heading}>
+					<h3 className="pl-3 my-auto" style={{width: "200px"}}>Recurring</h3>
+					<ul className="d-flex daily-goal-dates">{this.dateRenders()}</ul>
 				</div>
-				{
-					<DailyGoals
-						updateCheckMark={updateCheckMark}
-						dailyGoals={dailyGoals}
-						deleteGoal={deleteGoal}
-						negativeLen={state.negativeLen}
-						positiveLen={state.positiveLen}
-						renderAmount={state.renderAmount}
-					/>
-				}
+				<ul className="list-group list-group-flush">
+					{
+						<DailyGoals
+							updateCheckMark={updateCheckMark}
+							dailyGoals={dailyGoals}
+							deleteGoal={deleteGoal}
+							negativeLen={state.negativeLen}
+							positiveLen={state.positiveLen}
+							renderAmount={state.renderAmount}
+						/>
+					}
+				</ul>
 			</div>
 		);
 	}

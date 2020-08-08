@@ -46,7 +46,7 @@ class DailyGoals extends Component {
 				</label>
 			</li>
 		);
-		for (let i = 4 - positiveLen; i <= 3; i += 1) {
+		for (let i = 4; i < 4 + positiveLen; i += 1) {
 			list.push(this.listElement(goal, i));
 		}
 		return [list];
@@ -55,21 +55,25 @@ class DailyGoals extends Component {
 	render() {
 		const { dailyGoals, deleteGoal } = this.props;
 		const displayDailyGoals = dailyGoals.map((goal, index) => (
-			<div className="onedailygoal" key={goal.id} ref={this.heading}>
-				<div className="onedailygoalheading">
-					<h4>{goal.title}</h4>
-					{goal.snippit}
+			<li className="list-group-item p-0" key={goal.id} ref={this.heading}>
+				<div className="my-2 d-flex justify-content-between">
+					<div className="daily-heading-width ml-3">
+						{goal.title}
+						<p>- {' '}{goal.snippit}</p>
+					</div>
+					<ul className="d-flex pr-0">
+						{this.dateRenders(goal)}
+						<li className="pb-0">
+							<DeleteElement
+								deleteGoal={deleteGoal}
+								isDaily={true}
+								goalLoc={index}
+								categoryLoc={0}
+							/>
+						</li>
+					</ul>
 				</div>
-				<ul>
-					{this.dateRenders(goal)}
-					<DeleteElement
-						deleteGoal={deleteGoal}
-						isDaily={true}
-						goalLoc={index}
-						categoryLoc={0}
-					/>
-				</ul>
-			</div>
+			</li>
 		));
 
 		return <div className="onedailygoalcheckmark">{displayDailyGoals}</div>;

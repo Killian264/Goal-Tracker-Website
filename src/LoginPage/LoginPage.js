@@ -105,8 +105,11 @@ class LoginPage extends React.Component {
         const {username, password, loading, error, passwordCheck, email, registering} = this.state;
         let dimmer = loading ? "dimmer wrap-login100" : "wrap-login100";
         return (
-            <div className="limiter">
-                <div className="container-login100">                   
+            <div className="limiter">   
+                <div className="alert alert-danger" role="alert" id="yee">
+                    The Goal-Tracker API is currently down please use the static site login.
+                </div>  
+                <div className="container-login100">              
                     <PulseLoader
                         css={{position: "absolute", "z-index": 10}}
                         sizeUnit={"px"}
@@ -116,13 +119,6 @@ class LoginPage extends React.Component {
                         />
                     <div className={dimmer}>
                         <form className="login100-form validate-form" name="form" onSubmit={this.handleSubmit}>
-                            <div style={{color: "red", paddingBottom: "5%"}}>
-                                The Goal Tracker API is currently offline.
-                                <br></br>
-                                It should be back up in the next couple of days.
-                                <br></br>
-                                I apologize for any inconvenience. 
-                            </div>
                             <span className="login100-form-title">
                                 {this.state.registering ? "User Register": "User Login"}
                             </span>
@@ -141,9 +137,9 @@ class LoginPage extends React.Component {
                                     Create Guest Account
                                 </span>
                             </div>
-                            <div className="createGuest text-center noselect">
+                            <div className="text-center noselect" style={{paddingTop: "10%"}}>
                                 <span className="create-guest-text" tabIndex="0" onClick={()=> this.createStaticUser()}>
-                                    Create Static Account
+                                    Static Login
                                 </span>
                             </div>
                             <div className="text-center p-t-100">

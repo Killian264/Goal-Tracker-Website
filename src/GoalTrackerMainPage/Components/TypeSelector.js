@@ -12,65 +12,143 @@ class TypeSelector extends Component {
 
 	shouldComponentUpdate(nextProps) {
 		const { goals } = this.props;
-		if (goals.otherGoalsCategories !== nextProps.goals.otherGoalsCategories) {
-			return true;
-		}
-		if (goals.dailyGoals.length !== nextProps.goals.dailyGoals.length) {
-			return true;
-		}
-		return false;
+		return (
+			goals.otherGoalsCategories !== nextProps.goals.otherGoalsCategories || 
+			goals.dailyGoals.length !== nextProps.goals.dailyGoals.length
+		)
 	}
 
-	sortLabels(mainLabel, renderIf, name, length, defaultChecked){
+	sortRadio(data){
 		const {updateRenderIfs} = this.props;
+		const {label, render, name, length, checked, id} = data;
 		return(
-			<label className="radiobtn">
-				<span>{mainLabel}</span>
-				:
-        		{' '}
-				{length}
-				<input type="radio" onClick={() => updateRenderIfs(renderIf)} name={name} defaultChecked={defaultChecked} />
-				<span className="radiocheckmark" />
-			</label>
+			<div className="form-check form-check-inline py-2" style={{fontFamily: "Poppins-Medium", fontSize: "15px"}} >
+				<input style={style.minWidth} className="form-check-input" type="radio" id={id} name={name} defaultChecked={checked} onClick={() => updateRenderIfs(render)}/>
+				<label className="form-check-label" htmlFor={id}>
+					{label}:{' '}{length}
+				</label>
+			</div>
+		)
+	}
+
+	sortCheckbox(data, index){
+		const {id, category, unCompleted, render} = data;
+		const { updateCategoryRender } = this.props;
+
+		if (unCompleted === 0) return null;
+		return (
+			<div className="form-check form-check-inline py-2" style={{fontFamily: "Poppins-Medium", fontSize: "15px"}} key={id}>
+				<input className="form-check-input" style={style.minWidth} type="checkbox" id={id} defaultChecked={render} onClick={() => updateCategoryRender(index)}/>
+				<label className="form-check-label no-select" htmlFor={id}>
+					{category} :{' '}{unCompleted}
+				</label>
+			</div>
 		)
 	}
 
 	render() {
-		const { goals, updateCategoryRender } = this.props;
+		const { goals } = this.props;
 
-		const categoryLabels = goals.otherGoalsCategories.map((categories, index) => {
-			if (categories.unCompleted === 0) return null;
-			return (
-				<label key={categories.id} className="radiobtn" id="renderDaily">
-					<span>{categories.category}</span>
-					:
-          			{' '}
-					{categories.unCompleted}
-					<input type="checkbox" onClick={() => updateCategoryRender(index)} name="category" defaultChecked={categories.render} />
-					<span id="renderDaily" className="radiocheckmark" />
-				</label>
-			)
+		const categoryLabels = goals.otherGoalsCategories.map((category, index) => {
+			return this.sortCheckbox(category, index)
 		});
 
 		// goal numbers
 		const dailyLength = (goals.dailyGoals).length;
+		let dailyCompletedLength = (goals.completed.dailyGoals).length;
 		let otherLength = 0;
-		let completedLength = (goals.completed.dailyGoals).length;
-		goals.otherGoalsCategories.forEach((categories) => { otherLength += categories.unCompleted; completedLength += categories.otherGoals.length - categories.unCompleted;});
-
+		goals.otherGoalsCategories.forEach((category) => { 
+				otherLength += category.unCompleted; 
+				dailyCompletedLength += category.otherGoals.length - category.unCompleted;
+			}
+		);
 		return (
-			<div className="goaltypeselector">
-				<h2>Sort Goals</h2>
-				{this.sortLabels('Current', 'renderCurrent', 'currentOrCompleted', dailyLength + otherLength, true)}
-				{this.sortLabels('Completed', 'renderCompleted', 'currentOrCompleted', completedLength, false)}
-				<h3>Goal Type</h3>
-				{this.sortLabels('All Types', 'allTypes', 'goaltype', dailyLength + otherLength, true)}
-				{this.sortLabels('Daily Goals', 'renderDaily', 'goaltype', dailyLength, false)}
-				{this.sortLabels('Other Goals', 'renderOther', 'goaltype', otherLength, false)}
-				<h3>Categories</h3>
-				{categoryLabels}
+			<div className="type-selector d-flex flex-column px-3 pt-2 pb-3 noselect">
+				<h2 className="p-0" >Sort By</h2>
+				<hr style={style.divider}/>
+				<div className="d-flex flex-column pl-2">
+					{/* {this.sortRadio('Current', 'renderCurrent', 'currentOrCompleted', dailyLength + otherLength, true, 1)}
+					{this.sortRadio('Completed', 'renderCompleted', 'currentOrCompleted', dailyCompletedLength, false, 2)} */}
+					{this.sortRadio(
+						{
+							label: 'Current', 
+							render: 'renderCurrent', 
+							name: 'currentOrCompleted', 
+							length: dailyLength + otherLength, 
+							checked: true, 
+							id: 1
+						}
+					)}
+					{this.sortRadio(
+						{
+							label: 'Completed', 
+							render: 'renderCompleted', 
+							name: 'currentOrCompleted', 
+							length: dailyCompletedLength, 
+							checked: false, 
+							id: 2
+						}
+					)}
+				</div>
+				<h4>Type</h4>
+				<hr style={style.divider}/>
+				<div className="d-flex flex-column pl-2">
+					{this.sortRadio(
+						{
+							label: 'All', 
+							render: 'allTypes', 
+							name: 'goaltype', 
+							length: dailyLength + otherLength, 
+							checked: true, 
+							id: 3
+						}
+					)}
+					{this.sortRadio(
+						{
+							label: 'Recurring', 
+							render: 'renderDaily', 
+							name: 'goaltype', 
+							length: dailyLength, 
+							checked: false, 
+							id: 4
+						}
+					)}
+					{this.sortRadio(
+						{
+							label: 'Static', 
+							render: 'renderOther', 
+							name: 'goaltype', 
+							length: otherLength, 
+							checked: false, 
+							id: 5
+						}
+					)}
+					{/* {this.sortRadio('Daily', 'renderDaily', 'goaltype', dailyLength, false, 4)}
+					{this.sortRadio('Other', 'renderOther', 'goaltype', otherLength, false, 5)} */}
+				</div>
+				<h4>Category</h4>
+				<hr style={style.divider}/>
+				<div className="d-flex flex-column pl-2">
+					{categoryLabels}
+				</div>
 			</div>
 		);
 	}
 }
+
+const style = {
+	divider: {
+		margin: "0",
+		marginBottom: "2px",
+		marginTop: "-4px",
+		border: "0",
+		borderTop: "1px solid rgba(0, 0, 0, 0.1)",
+	},
+	minWidth:{
+		minWidth: "23px",
+		minHeight: "23px",
+	}
+}
+
+
 export default TypeSelector;

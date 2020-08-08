@@ -1,6 +1,5 @@
-// const apiUrl = "http://localhost:61487/api";
-const apiUrl = "https://goaltrackerapi20191108014823.azurewebsites.net/api";
-
+//const apiUrl = "https://goaltrackerapi20191108014823.azurewebsites.net/api";
+const apiUrl = "http://localhost:61487/api";
 export const userService = {
   login,
   register,
@@ -51,6 +50,7 @@ function register(email, password, username) {
       return user;
     });
 }
+
 // handle response
 function handleResponse(response) {
   return response.text().then(text => {

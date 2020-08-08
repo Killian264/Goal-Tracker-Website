@@ -5,22 +5,21 @@ function TopNav(props) {
 	const { displayGoalOverlay } = props;
 
 	let navSlideChange = () => {
-		document.querySelector(".sidenav").classList.toggle("nav-active");
+		document.querySelector("#sidenav").classList.toggle("nav-active");
 	};
 
 	return (
-		<div className="topnav">
-			<div className="navdropdown" onClick={window.onload = navSlideChange}>
-				<div className="line1" />
-				<div className="line2" />
-				<div className="line3" />
+		<div className="navbar navbar-dark bg-dark d-flex justify-content-between sticky-top xi2" >
+			<div className="d-flex justify-content-between">
+				{/* SideNav Button */}
+				<button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation" onClick={() => {navSlideChange()}}>
+					<span className="navbar-toggler-icon"></span>
+				</button>
+				{/* Change this to current page ie. Categories, Planned */}
+				<h1 className="navbar-brand pl-sm-3 pl-1">Current Goals</h1>
 			</div>
-			<h1>Current Goals</h1>
-			<div className="creategoalbutton">
-				<button id="button" onClick={displayGoalOverlay}>
-					Create Goal
-        </button>
-			</div>
+			{/* Create Goal */}
+			<button className="btn btn-outline-info my-2 my-sm-0" onClick={displayGoalOverlay}>Create Goal</button>
 		</div>
 	);
 }

@@ -18,33 +18,33 @@ class OtherGoalsList extends Component {
 		const totalDays = (Math.abs(new Date(goal.startDate) - endDate) / 8.64e7) + 1;
 		let timeLeft = (Math.abs(endDate - new Date(getToday())) / 8.64e7).toString();
 		return (
-			<div className="otherdailygoalheading extendeddailygoaltimeframe">
-				<h4>
+			<React.Fragment>
 					{goal.isCompleted ? totalDays.toString().split(".")[0] + " Total Days" : timeLeft.toString().split(".")[0] += timeLeft === 1 ? " Day Left" : " Days Left"}
 					<br />
 					{goal.isCompleted ? "Ended " + goal.endDate.toString().split("T")[0] : getDayAbbr(endDate) + ", " + getMonthAbbr(endDate) + " " + endDate.getDate()}
-				</h4>
-			</div>
+			</React.Fragment>
 		);
 	};
 	
 	render() {
 		const { otherGoals, deleteGoal, completeGoal, categoryLoc, displayCompleted } = this.props;
 		const displayOtherGoals = otherGoals.map((goal, index) => {
-			// add stuff for daily thingy
+		// add stuff for daily thingy
 			if ((goal.isCompleted && !displayCompleted) || (!goal.isCompleted && displayCompleted))
 				return null;
 			return (
-				<div className="otherdailygoal" key={goal.id}>
-					<div className="otherdailygoalheading otherdailygoalheadingheading">
-						<div style={goal.isCompleted ? { textDecoration: "line-through" } : {}}>
-							<h4>{goal.title}</h4>
-							{goal.snippit}
+				<li className="list-group-item p-0 m-0" key={`${categoryLoc}${index}`}>
+					<div className="d-flex justify-content-between mx-3 my-1">
+						<div className="other-goal-width no-select my-auto">
+							<div style={goal.isCompleted ? { textDecoration: "line-through" } : {}}>
+								{goal.title}
+								<p >- {' '}{goal.snippit}</p>
+							</div>
 						</div>
-					</div>
-					{this.TimeFrame(goal)}
-					<div className="extendeddailygoalyourprogress otherdailygoalheading">
-						<div className="othergoalprogress">
+						<div className="w-140 text-center my-auto" style={goal.isCompleted ? { textDecoration: "line-through" } : {}}>
+							{this.TimeFrame(goal)}
+						</div>
+						<div className="other-goal-width d-flex justify-content-end my-auto no-select">
 							{!goal.isCompleted &&
 								<Checkmark
 									completeGoal={completeGoal}
@@ -52,15 +52,17 @@ class OtherGoalsList extends Component {
 									categoryLoc={categoryLoc}
 								/>
 							}
-							<DeleteElement
-								deleteGoal={deleteGoal}
-								goalLoc={index}
-								categoryLoc={categoryLoc}
-								isDaily={false}
-							/>
+							{goal.isCompleted && 
+								<DeleteElement
+									deleteGoal={deleteGoal}
+									goalLoc={index}
+									categoryLoc={categoryLoc}
+									isDaily={false}
+								/> 
+							}
 						</div>
 					</div>
-				</div>
+				</li>
 			);
 		});
 

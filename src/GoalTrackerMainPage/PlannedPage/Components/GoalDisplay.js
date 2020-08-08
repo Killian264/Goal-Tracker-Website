@@ -1,67 +1,76 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { getToday, getDayAbbr, getMonthAbbr } from "../../../helpers/commonCommands";
-import DeleteElement from "../../Components/DeleteElement";
+import {
+    getToday,
+    getDayAbbr,
+    getMonthAbbr,
+} from "../../../helpers/commonCommands";
 import Checkmark from "../../Components/Checkmark";
 
-import {shapes} from "../../../helpers/shapes";
+import { shapes } from "../../../helpers/shapes";
 
 class GoalDisplay extends Component {
-  static propTypes = {
-    otherGoals: PropTypes.arrayOf(shapes.otherGoalShape).isRequired,
-    deleteGoal: PropTypes.func.isRequired,
-    completeGoal: PropTypes.func.isRequired
-  };
+    static propTypes = {
+        otherGoals: PropTypes.arrayOf(shapes.otherGoalShape).isRequired,
+        deleteGoal: PropTypes.func.isRequired,
+        completeGoal: PropTypes.func.isRequired,
+    };
 
-  TimeFrame = goal => {
-    let endDate = new Date(goal.endDate);
-    let timeLeft = (Math.abs(endDate - new Date(getToday())) / 8.64e7).toString();
+    TimeFrame = (goal) => {
+        let endDate = new Date(goal.endDate);
+        let timeLeft = (
+            Math.abs(endDate - new Date(getToday())) / 8.64e7
+        ).toString();
 
-    return (
-      <div className="otherdailygoalheading extendeddailygoaltimeframe">
-        <h4>
-          {timeLeft.toString().split(".")[0] += timeLeft === 1 ? " Day Left" : " Days Left"}
-          <br />
-          {getDayAbbr(endDate) + ", " + getMonthAbbr(endDate) + " " + endDate.getDate()}
-        </h4>
-      </div>
-    );
-  };
-
-  render() {
-    const { otherGoals, deleteGoal, completeGoal } = this.props;
-
-    const displayOtherGoals = otherGoals.map((goal, index) => {
-      return (
-        <div className="otherdailygoal" key={goal.id}>
-          <div className="otherdailygoalheading otherdailygoalheadingheading">
-            <div>
-              <h4>{goal.title}</h4>
-              {"-" + goal.category}
+        return (
+            <div className="otherdailygoalheading extendeddailygoaltimeframe">
+				{
+					(timeLeft.toString().split(".")[0] +=
+						timeLeft === 1 ? " Day Left" : " Days Left")
+				}
+				<br />
+				{
+					getDayAbbr(endDate) +
+					", " +
+					getMonthAbbr(endDate) +
+					" " +
+					endDate.getDate()
+				}
             </div>
-          </div>
-          {this.TimeFrame(goal)}
-          <div className="extendeddailygoalyourprogress otherdailygoalheading">
-              <div className="othergoalprogress">
-                <Checkmark
-                  completeGoal={completeGoal}
-                  goalLoc={goal.goalIndex}
-                  categoryLoc={goal.categoryIndex}
-                />
-                <DeleteElement
-                  deleteGoal={deleteGoal}
-                  goalLoc={goal.goalIndex}
-                  categoryLoc={goal.categoryIndex}
-                  isDaily={false}
-                />
-              </div>
-          </div>
-        </div>
-      );
-    });
+        );
+    };
 
-    return <React.Fragment>{displayOtherGoals}</React.Fragment>;
-  }
+    render() {
+		// deletegoal as well 
+        const { otherGoals, completeGoal } = this.props;
+
+        const displayOtherGoals = otherGoals.map((goal, index) => {
+            return (
+                <li className="list-group-item p-0 m-0" key={goal.id}>
+					<div className="d-flex justify-content-between mx-3 my-1">
+						<div className="other-goal-width no-select my-auto">
+							<div className="other-goal-width no-select my-auto">
+								{goal.title}
+								<p>- {goal.category}</p>
+							</div>
+						</div>
+						<div className="w-140 text-center my-auto">
+							{this.TimeFrame(goal)}
+						</div>
+						<div className="other-goal-width d-flex justify-content-end my-auto no-select">
+							<Checkmark
+								completeGoal={completeGoal}
+								goalLoc={goal.goalIndex}
+								categoryLoc={goal.categoryIndex}
+							/>
+						</div>
+					</div>
+                </li>
+            );
+        });
+
+        return <React.Fragment>{displayOtherGoals}</React.Fragment>;
+    }
 }
 
 export default GoalDisplay;

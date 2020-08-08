@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "../../css/app.css";
+import "../../css/app.scss";
 
 import PlannedTypeSelector from './Components/PlannedTypeSelector';
 import GoalDisplay from './Components/GoalDisplay';
@@ -100,17 +100,31 @@ class PlannedPage extends Component {
         let output = timespanLists.map((list, index)=>{
             if(list.length !== 0){
                 return(
-                    <div className="othergoals" key={index}>
-                        <div className="otherheading">
-                            <div className="otherheadingheading">
-                            <h1>{timespan[index]}</h1>
-                            </div>
+            //         <div className="card mb-3">
+			// 	<div className="card-header pl-3">
+			// 		<h3>{category.category}</h3>
+			// 	</div>
+			// 	<ul className="list-group list-group-flush">
+			// 		<OtherGoalList
+			// 			otherGoals={category.otherGoals}
+			// 			deleteGoal={deleteGoal}
+			// 			completeGoal={completeGoal}
+			// 			categoryLoc={index}
+			// 			displayCompleted={displayCompleted}
+			// 		/>
+			// 	</ul>
+            // </div>
+                    <div className="card mb-3" key={index}>
+                        <div className="card-header pl-3">
+                            <h3>{timespan[index]}</h3>
                         </div>
-                        <GoalDisplay
-                            otherGoals={list}
-                            deleteGoal={deleteGoal}
-                            completeGoal={completeGoal}
-                        />
+                        <ul className="list-group list-group-flush">
+                            <GoalDisplay
+                                otherGoals={list}
+                                deleteGoal={deleteGoal}
+                                completeGoal={completeGoal}
+                            />
+                        </ul>
                     </div>
                 )
             }
@@ -120,12 +134,14 @@ class PlannedPage extends Component {
         return (
             <React.Fragment>
                 {/* Side selector for what to render */}
-                <PlannedTypeSelector
-                    otherGoalsCategories={otherGoalsCategories}
-                    updateCategoryRender={updateCategoryRender}
-                />
-                <div className="goals">
-                    {output}
+                <div className="col-sm-4 col-md-3 col-lg-3 col-xl-2 pb-4">
+                    <PlannedTypeSelector
+                        otherGoalsCategories={otherGoalsCategories}
+                        updateCategoryRender={updateCategoryRender}
+                    />
+                </div>
+                <div className="col-sm-8 col-md-9 col-lg-9 col-xl-10">
+                        {output}
                 </div>
             </React.Fragment>
         );

@@ -74,12 +74,12 @@ class Overlay extends Component {
 							onChange={this.onChange} placeholder="Add snippit" />
 					</div>
 					<div className="button-wrap">
-						<button className={type === "daily" ? "button-clicked" : "button-not-clicked"} onClick={this.onChange} tabIndex="0" name="type" value="daily">
-							Daily Goal
+						<button className={"btn btn-sm " + (type === "daily" ? "btn-dark" : "btn-outline-dark")} onClick={this.onChange} tabIndex="0" name="type" value="daily">
+							Recurring
             			</button>
 
-						<button className={type === "daily" ? "button-not-clicked" : "button-clicked"} onClick={this.onChange} tabIndex="0" name="type" value="default">
-							Other Goal
+						<button className={"btn btn-sm ml-2 " + (type === "daily" ? "btn-outline-dark" : "btn-dark")} onClick={this.onChange} tabIndex="0" name="type" value="default">
+							Static
             			</button>
 					</div>
 					<span className="span-date">End Date:</span>
@@ -96,7 +96,7 @@ class Overlay extends Component {
 					{type !== "daily" &&
 						<div className="category">
 							<span className="span-date">Category:</span>
-							<select className="category-picker" name="category"
+							<select className="form-control-sm" name="category"
 								id="category"
 								onChange={this.categoryOnChange}
 							>
@@ -116,7 +116,9 @@ class Overlay extends Component {
 							/>
 						</div>}
 					{error && <span className="error-msg">{error}</span>}
-					<button tabIndex="0" className="overlay-button" onClick={this.onSubmit}>Create</button>
+					<div className="d-flex justify-content-end">
+						<button tabIndex="0" className="btn btn-sm btn-dark mt-2 mr-4" onClick={this.onSubmit}>Create Goal</button>
+					</div>
 				</form>
 			</div>
 		);

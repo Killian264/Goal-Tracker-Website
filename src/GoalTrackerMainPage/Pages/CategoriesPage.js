@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "../../css/app.css";
+import "../../css/app.scss";
 import DailyGoalHeading from "../Components/DailyGoals/DailyGoalHeading";
 import OtherGoals from "../Components/OtherGoals/OtherGoalCategories";
 import TypeSelector from "../Components/TypeSelector";
@@ -94,48 +94,53 @@ class CategoriesPage extends Component {
         const { goals, updateCategoryRender, updateCheckMark, deleteGoal, completeGoal} = this.props;
         const { otherStuffs } = this.state;
         return (
-                <React.Fragment>
-                    {/* Side selector for what to render */}
+            <React.Fragment>
+                {/* Side selector for what to render */}
+                <div className="col-sm-4 col-md-3 col-lg-3 col-xl-2 pb-4">
                     <TypeSelector
                         goals={goals}
                         updateRenderIfs={this.updateRenderIfs}
                         updateCategoryRender={updateCategoryRender}
                     />
-                    <div className="goals">
-                        {/* Daily Goals */}
-                        {otherStuffs.renderDaily &&
-                            goals.dailyGoals.length !== 0 &&
-                            otherStuffs.renderCurrent && (
-                                <DailyGoalHeading
-                                    updateCheckMark={updateCheckMark}
-                                    dailyGoals={goals.dailyGoals}
-                                    deleteGoal={deleteGoal}
-                                    otherStuffs={otherStuffs}
-                                />
-                            )}
-                        {/* Completed Daily Goals */}
-                        {otherStuffs.renderDaily &&
-                            goals.completed.dailyGoals.length !== 0 &&
-                            otherStuffs.renderCompleted && (
-                                <CompletedDailyGoals
-                                    dailyGoals={goals.completed.dailyGoals}
-                                    deleteGoal={deleteGoal}
-                                />
-                            )}
-                        {/* Other Goals */}
-                        {otherStuffs.renderOther &&
-                            goals.otherGoalsCategories.length !== 0 && (
-                                <OtherGoals
-                                    otherGoalCategories={goals.otherGoalsCategories}
-                                    deleteGoal={deleteGoal}
-                                    completeGoal={completeGoal}
-                                    displayCompleted={
-                                        otherStuffs.renderCompleted
-                                    }
-                                />
-                            )}
-                    </div>
-                </React.Fragment>
+                </div>
+                <div className="col-sm-8 col-md-9 col-lg-9 col-xl-10">
+                    {/* Daily Goals */}
+                    {otherStuffs.renderDaily &&
+                        goals.dailyGoals.length !== 0 &&
+                        otherStuffs.renderCurrent && (
+                            <DailyGoalHeading
+                                updateCheckMark={updateCheckMark}
+                                dailyGoals={goals.dailyGoals}
+                                deleteGoal={deleteGoal}
+                                otherStuffs={otherStuffs}
+                            />
+                        )
+                    }
+                    {/* Completed Daily Goals */}
+                    {otherStuffs.renderDaily &&
+                        goals.completed.dailyGoals.length !== 0 &&
+                        otherStuffs.renderCompleted && (
+                            <CompletedDailyGoals
+                                dailyGoals={goals.completed.dailyGoals}
+                                deleteGoal={deleteGoal}
+                            />
+                        )
+                    }
+                    {/* Other Goals */}
+                    {otherStuffs.renderOther &&
+                        goals.otherGoalsCategories.length !== 0 && (
+                            <OtherGoals
+                                otherGoalCategories={goals.otherGoalsCategories}
+                                deleteGoal={deleteGoal}
+                                completeGoal={completeGoal}
+                                displayCompleted={
+                                    otherStuffs.renderCompleted
+                                }
+                            />
+                        )
+                    }
+                </div>
+            </React.Fragment>
         );
     }
 }

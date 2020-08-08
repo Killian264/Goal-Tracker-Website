@@ -32,12 +32,11 @@ class OtherGoalCategories extends Component {
 				return null;
 			}
 			return (
-				<div className="othergoals" key={category.id}>
-					<div className="otherheading">
-						<div className="otherheadingheading">
-							<h1>{category.category}</h1>
-						</div>
-					</div>
+			<div className="card mb-3" key={index}>
+				<div className="card-header pl-3">
+					<h3>{category.category}</h3>
+				</div>
+				<ul className="list-group list-group-flush">
 					<OtherGoalList
 						otherGoals={category.otherGoals}
 						deleteGoal={deleteGoal}
@@ -45,7 +44,8 @@ class OtherGoalCategories extends Component {
 						categoryLoc={index}
 						displayCompleted={displayCompleted}
 					/>
-				</div>
+				</ul>
+			</div>
 			);
 		});
 

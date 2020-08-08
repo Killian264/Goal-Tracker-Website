@@ -48,11 +48,11 @@
 .button-not-clicked:focus{
     background: rgb(241, 241, 241);
 }
-.button-wrap button{
+/* .button-wrap button{
     padding: 7px;
     border-radius: 0px;
     margin-right: 6px;
-}
+} */
 .button-clicked{
     color: white;
     background-color: rgb(84, 85, 85);
@@ -130,7 +130,7 @@
       font-size: 12px;
       padding-top: 15px;
   }
-@media screen and (min-width: 2500px){
+/* @media screen and (min-width: 2500px){
     .goaloverlay{
         width: 500px;
         left: calc(50% - 250px);
@@ -146,12 +146,6 @@
     .button-wrap{
         padding: 12px 0px 12px 0px;    
     }
-    .button-wrap button{
-        padding: 10px 14px;
-        border-radius: 5px;
-        margin-right: 6px;
-        font-size: 18px;
-    }
     .span-date{
         font-size: 19px;
     }
@@ -163,9 +157,6 @@
     }
     .input-wrap-nopadding{
         font-size: 20px;
-    }
-    .category-picker{
-        font-size: 18px;
     }
     .error-msg{
         padding-top: 14px;
@@ -202,12 +193,6 @@
     .button-wrap{
         padding: 17px 0px 17px 0px;    
     }
-    .button-wrap button{
-        padding: 12px 22px;
-        border-radius: 5px;
-        margin-right: 6px;
-        font-size: 25px;
-    }
     .span-date{
         font-size: 28px;
     }
@@ -219,9 +204,6 @@
     }
     .input-wrap-nopadding{
         font-size: 30px;
-    }
-    .category-picker{
-        font-size: 25px;
     }
     .error-msg{
         padding-top: 20px;
@@ -241,7 +223,7 @@
         font-size: 25px;
         margin-left: 75%;
       }
-}
+} */
 
   @media screen and (max-width: 850px){
     .goaloverlay{

@@ -28,7 +28,3 @@ InputElement.propTypes = {
     type: PropTypes.string.isRequired,
     show: PropTypes.bool.isRequired,
 };
-
-const styles = {
-    
-}
