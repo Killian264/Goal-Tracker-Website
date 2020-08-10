@@ -7,27 +7,24 @@ function DailyGoalsCompleted(props) {
     const displayGoals = props.dailyGoals.map((goal, index) => {
         const totalDays = (Math.abs(new Date(goal.endDate) - new Date(goal.startDate)) / 8.64e7) + 1;
         return (
-            <div className="othergoalslist" key={goal.id}>
-                <div className="otherdailygoal">
-                    <div className="otherdailygoalheading otherdailygoalheadingheading">
+            <li className="list-group-item p-0 m-0" key={goal.id}>
+                <div className="d-flex justify-content-between mx-3 my-1">
+                    <div className="other-goal-width no-select my-auto">
                         <div style={{ textDecoration: "line-through" }}>
-                            <h4>{goal.title}</h4>
-                            {goal.snippit}
+                            {goal.title}
+                            <p >- {' '}{goal.snippit}</p>
                         </div>
                     </div>
-                    <div className="otherdailygoalheading extendeddailygoaltimeframe">
-                        <h4>
-                            {totalDays} Total Days
-                            <br /> Ended{" "}
-                            {goal.endDate.toString()}
-                        </h4>
+                    {/* FINISHED DAILY GOALS MIGHT NEED TO BE FIXED */}
+                    <div className="w-140 text-center my-auto" style={{ textDecoration: "line-through" }}>
+                        {goal.daysChecked}/{totalDays} Days
+                        <br /> Ended{" "}
+                        {goal.endDate.toString()}
                     </div>
-                    <div className="otherdailygoalheading finalProgress">
-                        <h4>
-                            {goal.percentComplete}
-                            %
-                            <br /> Completed {goal.daysChecked} Days
-                        </h4>
+                    <div className="other-goal-width-end d-flex justify-content-end my-auto no-select">
+                        {/* {goal.percentComplete}
+                        %
+                        <br /> Completed {goal.daysChecked} Days */}
                         <DeleteElement
                             deleteGoal={props.deleteGoal}
                             goalLoc={index}
@@ -36,24 +33,18 @@ function DailyGoalsCompleted(props) {
                         ></DeleteElement>
                     </div>
                 </div>
-            </div>
+            </li>
         );
     });
 
     return (
-        <div className="othergoals">
-            <div className="otherheading">
-                <div className="otherheadingheading">
-                    <h1>Daily Goals</h1>
-                </div>
-                <div className="otherheadingheading otherheadingheadingtimeframe">
-                    <h1>TimeFrame</h1>
-                </div>
-                <div className="otherheadingheading otherheadingheadingyourprogress">
-                    <h1>Final Progress</h1>
-                </div>
+        <div className="card mb-3">
+            <div className="card-header pl-3">
+                <h3>Daily Goals</h3>
             </div>
-            {displayGoals}
+            <ul className="list-group list-group-flush">
+                {displayGoals}
+            </ul>
         </div>
     );
 }

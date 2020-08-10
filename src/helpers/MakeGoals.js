@@ -25,16 +25,16 @@ function makeStaticGoals(){
 					"daysChecked": 0,
 					"weeklyChecked": [ false, true, true, true, false, false, false ]
 				},
-				// {
-				// 	"id": "0041c8a2-7e74-44a0-91d9-3557ccb2dec8",
-				// 	"title": "Site Redesign and Fixes",
-				// 	"snippit": "See Categories",
-				// 	"startDate": "2020/7/28",
-				// 	"endDate": "2020/8/31",
-				// 	"lastDayUpdated": "2019/8/26",
-				// 	"daysChecked": 0,
-				// 	"weeklyChecked": [ false, false, false, false, false, false, false ]
-				// }
+				{
+					"id": "0041c8a2-7e74-44a0-91d9-3557ccb2dec8",
+					"title": "Daily Goal Completion",
+					"snippit": "Testing",
+					"startDate": "2020/7/28",
+					"endDate": "2020/8/7",
+					"lastDayUpdated": "2019/8/26",
+					"daysChecked": 0,
+					"weeklyChecked": [ false, false, false, false, false, false, false ]
+				}
 			],
 			otherGoalsCategories: [
 				{

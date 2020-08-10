@@ -67,7 +67,7 @@ class PlannedPage extends Component {
         const { otherGoalsCategories, updateCategoryRender, completeGoal, deleteGoal} = this.props;
 
         let otherGoals = this.SortGoals();
-
+        
         // these are the timespan types
         let timespan = ["Today", "Tomorrow", "Week", "Later"];
         
@@ -91,7 +91,7 @@ class PlannedPage extends Component {
             if(goal.numDaysFromToday > 1 && goal.numDaysFromToday < 8){
                 timespanLists[2].push(goal);
             }
-            if(goal.numDaysFromToday > 8){
+            if(goal.numDaysFromToday >= 8){
                 timespanLists[3].push(goal);
             }
             return null;
@@ -100,20 +100,6 @@ class PlannedPage extends Component {
         let output = timespanLists.map((list, index)=>{
             if(list.length !== 0){
                 return(
-            //         <div className="card mb-3">
-			// 	<div className="card-header pl-3">
-			// 		<h3>{category.category}</h3>
-			// 	</div>
-			// 	<ul className="list-group list-group-flush">
-			// 		<OtherGoalList
-			// 			otherGoals={category.otherGoals}
-			// 			deleteGoal={deleteGoal}
-			// 			completeGoal={completeGoal}
-			// 			categoryLoc={index}
-			// 			displayCompleted={displayCompleted}
-			// 		/>
-			// 	</ul>
-            // </div>
                     <div className="card mb-3" key={index}>
                         <div className="card-header pl-3">
                             <h3>{timespan[index]}</h3>

@@ -1,5 +1,7 @@
 import React, { Component } from "react";
+import 'bootstrap/dist/css/bootstrap.css';
 import "../../css/app.scss";
+
 // Components
 import Overlay from "../Components/Overlay";
 import SideNav from "../Components/SideNav";

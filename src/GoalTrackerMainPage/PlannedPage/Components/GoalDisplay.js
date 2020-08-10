@@ -57,7 +57,7 @@ class GoalDisplay extends Component {
 						<div className="w-140 text-center my-auto">
 							{this.TimeFrame(goal)}
 						</div>
-						<div className="other-goal-width d-flex justify-content-end my-auto no-select">
+						<div className="other-goal-width-end d-flex justify-content-end my-auto no-select">
 							<Checkmark
 								completeGoal={completeGoal}
 								goalLoc={goal.goalIndex}

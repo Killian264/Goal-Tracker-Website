@@ -33,15 +33,6 @@ h4{
     transform: translateX(100%);
     transition: transform 0.01s ease-in;
   }
-  /* .sidenav{
-    height: 100%;
-    padding-top: 55px;
-    margin-left: -200px;
-    width: 200px;
-    transform: translateX(100%);
-    transition: transform 0.3s ease-in;
-    overflow-y: hidden;
-  } */
 
   .pages-title{
     font-size: 17px;
@@ -172,42 +163,6 @@ h4{
       border-bottom-style: solid;
     }
   }
-
-  // .topnav{
-  //   width: 88%;
-  //   margin-left: 12%;
-  //   background: rgb(40, 44, 52);
-  //   color: white;
-  //   padding-right: 5%;
-  //   display: flex;
-  //   align-content: center;
-  //   justify-content: space-between;
-  //   position: fixed;
-  //   height: 5.8%;
-  //   min-height: 50px;
-  //   z-index: 1;
-  //   border: white;
-  //   border-bottom:  1px;
-  //   border-bottom-style: solid;
-  // }
-  // .topnav h1{
-  //   padding-left: 2.5%;
-  //   /* padding-top: .25%;
-  //   padding-bottom: .75%; */
-  //   font-weight: 500;
-  //   white-space: nowrap;
-  //   margin-top: auto;
-  //   margin-bottom: auto;
-  // }
-//   .creategoalbutton{
-//     margin-top: auto;
-//     margin-bottom: auto;
-//     -moz-user-select: none;
-//     -ms-user-select: none;
-//  -khtml-user-select: none;
-// -webkit-user-select: none;
-// -webkit-touch-callout: none;
-//   }
   #button{
     white-space: nowrap;
     padding: 5px 10px;
@@ -254,28 +209,6 @@ h4{
     background-color: $secondaryColor;
     border-radius: .25rem;
   }
-  // .goaltypeselector{
-  //   background: $secondaryColor;
-  //   width: 15%;
-  //   padding: .5% 1% 3%;
-  //   color: rgb(0, 0, 0);
-  //   height: 100%;
-  //   min-width: 165px;
-  // }
-  // .goaltypeselector h2{
-  //   padding-bottom: .7vh;
-  // }
-  // .goaltypeselector h3{
-  //   padding-bottom: .7vh;
-  //   font-size: 23px;
-  // }
-  // .goaltypeselector img{
-  //   height: 13px;
-  //   padding-right: .6vw;
-  // }
-  // .goaltypeselector li:hover{
-  //   font-weight: bold;
-  // }
   .goals{
     width: 75%;
     margin-left: 4%;
@@ -293,45 +226,25 @@ h4{
     white-space: nowrap;
     font-size: 25px;
   }
-  // .dailygoals{
-  //   background: $secondaryColor;
-  //   margin-bottom: 3%;
+
+
+  // .dailyheading{
+  //   display: flex;
+  //   justify-content: space-between;
+  //   border-bottom:  1px;
+  //   border-bottom-style: solid;
+
+  //   .dailyWeekdate{
+  //     // background: $secondaryColor;
+  //     background: rgb(155, 155, 155);
+  //     border-radius: 5px;
+  //   }
+  //   h1{
+  //     padding-left: 10px;
+  //     width: 200px;
+  //     min-width: 200px;
+  //   }
   // }
-
-
-  .dailyheading{
-    display: flex;
-    justify-content: space-between;
-    border-bottom:  1px;
-    border-bottom-style: solid;
-
-    .dailyWeekdate{
-      // background: $secondaryColor;
-      background: rgb(155, 155, 155);
-      border-radius: 5px;
-    }
-    // ul{
-    //   display: flex;
-    //   list-style: none;
-    //   padding-right: 0px;
-    //   overflow: hidden;
-    // }
-    // li{
-    //   padding-top: 8px;
-    //   padding-bottom: 8px; 
-    //   text-align: center;
-    //   overflow: hidden;
-    //   min-width: 80px;
-    //   width: 50px;
-    //   font-size: 18px;
-    //   font-weight: 500;
-    // }
-    h1{
-      padding-left: 10px;
-      width: 200px;
-      min-width: 200px;
-    }
-  }
 
   .daily-goal-dates li{
     padding-top: 6px;
@@ -347,13 +260,13 @@ h4{
     // min-width: 200px;
   }
 
-  .onedailygoal{
-    padding-top: 10px;
-    padding-bottom: 10px;
-    display: flex;
-    justify-content: space-between;
-    overflow: hidden;
-  }
+  // .onedailygoal{
+  //   padding-top: 10px;
+  //   padding-bottom: 10px;
+  //   display: flex;
+  //   justify-content: space-between;
+  //   overflow: hidden;
+  // }
   .onedailygoalcheckmark ul{
     padding-right: 0px;
     display: flex;
@@ -461,9 +374,6 @@ h4{
     margin-top: auto;
     margin-bottom: auto;
   }
-  .onedailygoalcheckmark .close-container{
-    // margin-top: 23px;
-  }
   
   .leftright{
     height: 4px;
@@ -474,21 +384,6 @@ h4{
     transform: rotate(45deg);
     transition: all .3s ease-in;
   }
-.radiobtn {
-  /* display: block;
-  position: relative;
-  padding-left: 27px;
-  cursor: pointer;
-  font-size: 17px; */
-}
-
-.radiobtn input {
-  /* position: absolute;
-  opacity: 0;
-  cursor: pointer;
-  height: 0;
-  width: 0; */
-}
 
 .radiocheckmark {
   position: absolute;
@@ -623,200 +518,7 @@ h4{
   position: absolute;
   border-radius: 7px;
 }
-// @media screen and (min-width: 2500px){
-//   .pages-title{
-//     font-size: 23px;
-//   }
-//   .pages-title2{
-//     font-size: 23px;
-//   }
-//   .navlinks a {
-//     font-size: 25px;
-//   }
-//   .user a{
-//     font-size: 23px;
-//   }
-//   // .topnav h1{
-//   //   font-size: 50px;
-//   // }
-//   #button{
-//     padding: 10px 25px;
-//     font-size: 20px;
-//   }
-//   .goaltypeselector h2{
-//     font-size: 35px;
-//   }
-//   .goaltypeselector h3{
-//     font-size: 30px;
-//   }
-//   .radiobtn {
-//     font-size: 23px;
-//     padding-bottom: 10px;
-//   }
-//   .radiocheckmark {
-//     height: 25px;
-//     width: 25px;
-//   }
-//   .radiobtn .radiocheckmark:after {
-//     top:7px;
-//     left: 7px;
-//     width: 11px;
-//     height: 11px;
-//   }
-//   .radiobtn input {
-//     padding-right: 10px;
-//     margin-right: 10px;
-//   }
-//   .radiobtn span{
-//     padding-left: 5px;
-//   }
-//   .dailyheading{
-//     font-size: 21px;
-//   }
-//   .dailyheading ul li{
-//     font-size: 20px;
-//     width: 90px;
-//   }
-//   .onedailygoalheading{
-//     font-size: 20px;
-//   }
-//   .onedailygoalcheckmark li{
-//     width: 89.7px;
-//   }
-//   .checkmark {
-//     height: 40px;
-//     width: 40px;
-//   }
-//   .checkbox .checkmark:after {
-//     left: 14.5px;
-//     top: 5.5px;
-//     width: 11.5px;
-//     height: 22.5px;
-//   }
-//   .otherheadingheading{
-//     font-size: 20px;
-//   }
-//   .otherdailygoal{
-//     font-size: 20px;
-//   }
-//   .rightleft{
-//     height: 4px;
-//     width: 40px;
-//   }
-//   .leftright{
-//     height: 4px;
-//     width: 40px;
-//   }
-//   .close-container{
-//     width: 35px;
-//   }
-//   .main {
-//     padding-top: calc(3%);
-//   }
-// }
-// @media screen and (min-width: 3800px){
-//   .pages-title{
-//     font-size: 34px;
-//   }
-//   .pages-title2{
-//     font-size: 34px;
-//   }
-//   .navlinks a {
-//     font-size: 37px;
-//   }
-//   .user img{
-//     margin-bottom: 20px;
-//   }
-//   .user a{
-//     font-size: 35px;
-//   }
-//   // .topnav h1{
-//   //   font-size: 70px;
-//   // }
-//   #button{
-//     padding: 15px 35px;
-//     font-size: 25px;
-//   }
-//   .goaltypeselector h2{
-//     font-size: 48px;
-//   }
-//   .goaltypeselector h3{
-//     font-size: 40px;
-//   }
-//   .radiobtn {
-//     font-size: 33px;
-//     padding-bottom: 14px;
-//   }
-//   .radiocheckmark {
-//     height: 37px;
-//     width: 37px;
-//   }
-//   .radiobtn .radiocheckmark:after {
-//     top:10px;
-//     left: 10px;
-//     width: 17px;
-//     height: 17px;
-//   }
-//   .radiobtn input {
-//     padding-right: 10px;
-//     margin-right: 10px;
-//   }
-//   .radiobtn span{
-//     padding-left: 20px;
-//     margin-top: 2px;
-//   }
-//   .dailyheading{
-//     font-size: 28px;
-//   }
-//   .dailyheading ul li{
-//     font-size: 29px;
-//     width: 120px;
-//   }
-//   .onedailygoalheading{
-//     font-size: 30px;
-//     padding-left: .8%;
-//   }
-//   .onedailygoalcheckmark li{
-//     width: 120px;
-//     /* background: red; */
-//   }
-//   .checkmark {
-//     margin-top: 5px;
-//     height: 56px;
-//     width: 56px;
-//   }
-//   .checkbox .checkmark:after {
-//     left: 20px;
-//     top: 8px;
-//     width: 15px;
-//     height: 34px;
-//     border-width: 0 6px 6px 0;
-//   }
-//   .otherheadingheading{
-//     font-size: 25px;
-//   }
-//   .otherdailygoal{
-//     font-size: 30px;
-//   }
-//   .rightleft{
-//     margin-left: 10px;
-//     height: 6px;
-//     width: 55px;
-//   }
-//   .leftright{
-//     margin-left: 10px;
-//     height: 6px;
-//     width: 55px;
-//   }
-//   .close-container{
-//     margin: auto;
-//     width: 70px;
-//     margin-left: -5px;
-//   }
-//   .main {
-//     padding-top: calc(1.5%);
-//   }
-// }
+
 
 @media screen and (max-width: 1400px){
   .main{
@@ -828,12 +530,6 @@ h4{
     width: calc(92% - 120px);
   }
   
-  // .topnav{
-  //   width: 100%;
-  //   padding-left: 5%;
-  //   z-index: 1;
-  //   margin-left: 0%;
-  // }
   .othergoals h1{
     font-size: 25px;
   }
@@ -862,10 +558,6 @@ h4{
       background-color: rgb(219, 219, 219);
       margin: 6.5px;
   }
-  /* .creategoaloverlay{
-    width: 40%;
-    left: calc(50% - 20%);
-  } */
   .otherheadingheadingyourprogress{
     min-width: 125px;
     width: 150px;
@@ -900,10 +592,6 @@ h4{
   }
 }
 @media screen and (max-width: 669px){
-  // .topnav h1{
-  //   font-size: 25px;
-  //   margin: auto;
-  // }
   .finalProgress h4{
     padding-left: 0%;
   }
@@ -931,7 +619,7 @@ h4{
   }
 }
 
-@media screen and(max-width: 450px){
+@media screen and(max-width: 750px){
   .other-goal-width-end{
     min-width: 40px;
   }
@@ -941,18 +629,10 @@ h4{
   }
 
   body{
-    // background: -webkit-linear-gradient(-135deg, #22222e, rgb(19, 22, 24));
-    // background: -o-linear-gradient(-135deg,      #22222e, rgb(19, 22, 24));
-    // background: -moz-linear-gradient(-135deg,    #22222e, rgb(19, 22, 24));
-    // background: linear-gradient(-135deg,         #22222e, rgb(19, 22, 24));
     background: -webkit-linear-gradient(-135deg, rgb(19, 22, 24), rgb(19, 22, 24));
     background: -o-linear-gradient(-135deg,      rgb(19, 22, 24), rgb(19, 22, 24));
     background: -moz-linear-gradient(-135deg,    rgb(19, 22, 24), rgb(19, 22, 24));
     background: linear-gradient(-135deg,         rgb(19, 22, 24), rgb(19, 22, 24));
-    /* background: -webkit-linear-gradient(-135deg, #44464d, #0e1e24);
-    background: -o-linear-gradient(-135deg,      #44464d, #0e1e24);
-    background: -moz-linear-gradient(-135deg,    #44464d, #0e1e24);
-    background: linear-gradient(-135deg,         #44464d, #0e1e24); */
 
     /* background: rgb(27, 27, 27); */
     background-size: auto;
